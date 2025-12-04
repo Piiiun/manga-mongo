@@ -13,3 +13,10 @@
     --color-second: #52625b;
     --color-bgbody: #042f23;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #000 !important;
+    fill: black !important;
+    opacity: 30%;
+}

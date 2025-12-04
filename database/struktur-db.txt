@@ -1,0 +1,679 @@
+Untuk web baca manga, yang penting itu **merancang struktur database dari awal** supaya nanti gampang nambah fitur (bookmark, history, komentar, dll) tanpa bongkar total.
+
+Aku kasih versi **praktis untuk Laravel**, dengan tabel-tabel utama + relasinya.
+
+---
+
+## 🧱 1. Tabel `mangas` — data manga utama
+
+Menyimpan info tiap judul manga.
+
+Contoh kolom:
+
+* `id`
+* `title` – judul manga (One Piece)
+* `slug` – untuk URL (`one-piece`)
+* `description` – sinopsis
+* `cover_image` – path ke cover (mis: `covers/one-piece.jpg`)
+* `status` – ongoing / completed
+* `author` – nama author
+* `artist` – opsional
+* `released_at` – tahun rilis (opsional)
+* `created_at`, `updated_at`
+
+Relasi:
+
+* 1 Manga **punya banyak** Chapter
+* 1 Manga **punya banyak** Genre (Many-to-Many)
+* 1 Manga **punya banyak** Bookmark
+* 1 Manga **punya banyak** History bacaan
+
+---
+
+## 📚 2. Tabel `chapters` — data chapter per manga
+
+Contoh kolom:
+
+* `id`
+* `manga_id` – FK ke `mangas`
+* `number` – nomor chapter (mis: 1, 2, 3)
+* `title` – judul chapter (opsional, mis: “Romance Dawn”)
+* `slug` – untuk URL (`chapter-1` atau `5-5` dll)
+* `published_at` – tanggal rilis
+* `created_at`, `updated_at`
+
+Relasi:
+
+* 1 Chapter **milik** 1 Manga
+* 1 Chapter **punya banyak** Page
+* 1 Chapter **punya banyak** Comment
+* 1 Chapter bisa muncul di History bacaan user
+
+---
+
+## 🖼️ 3. Tabel `pages` — halaman gambar per chapter
+
+Ini menyimpan daftar gambar untuk 1 chapter.
+
+Contoh kolom:
+
+* `id`
+* `chapter_id` – FK ke `chapters`
+* `page_number` – urutan halaman (1, 2, 3, …)
+* `image_path` – file gambar (mis: `manga/one-piece/chapter-1/001.webp`)
+* `created_at`, `updated_at`
+
+Relasi:
+
+* 1 Page **milik** 1 Chapter
+
+Ini membuat kamu bisa load semua page 1 chapter dengan:
+
+```php
+$chapter->pages()->orderBy('page_number')->get();
+```
+
+---
+
+## 🏷️ 4. Tabel `genres` + `genre_manga` (pivot) — genre
+
+### `genres`:
+
+* `id`
+* `name` – Action, Romance, Comedy
+* `slug` – `action`, `romance`
+* `created_at`, `updated_at`
+
+### `genre_manga` (pivot):
+
+* `id`
+* `manga_id`
+* `genre_id`
+
+Relasi:
+
+* Manga ↔ Genre = **Many-to-Many**
+
+Di model:
+
+```php
+// Manga.php
+public function genres()
+{
+    return $this->belongsToMany(Genre::class, 'genre_manga');
+}
+
+// Genre.php
+public function mangas()
+{
+    return $this->belongsToMany(Manga::class, 'genre_manga');
+}
+```
+
+---
+
+## 👤 5. Tabel `users` — akun user + admin
+
+Laravel sudah punya ini dari auth (Breeze/Jetstream).
+
+Tambahkan field:
+
+* `role` atau `is_admin`
+
+Contoh:
+
+* `is_admin` (boolean) → true untuk admin uploader
+  atau
+* `role` (string) → `user` / `admin`
+
+Admin saja yang boleh:
+
+* upload manga
+* upload chapter
+* manage gambar
+
+---
+
+## ⭐ 6. Tabel `bookmarks` — manga yang disimpan user
+
+Untuk fitur **Bookmark / Favorite / Mengikuti**.
+
+Contoh kolom:
+
+* `id`
+* `user_id` – FK ke users
+* `manga_id` – FK ke mangas
+* `created_at` – kapan dibookmark
+
+Relasi:
+
+* 1 User **bisa bookmark banyak** Manga
+* 1 Manga **bisa dibookmark banyak** User
+
+Ini juga Many-to-Many, bisa juga dibuat pivot `manga_user` tapi supaya jelas pakai `bookmarks`.
+
+---
+
+## 📖 7. Tabel `reading_histories` — history bacaan user
+
+Supaya user bisa **lanjut baca terakhir**.
+
+Contoh kolom:
+
+* `id`
+* `user_id`
+* `manga_id`
+* `chapter_id` – chapter terakhir yang dibaca
+* `last_page` – nomor halaman terakhir (opsional)
+* `updated_at` – kapan terakhir baca
+
+Relasi:
+
+* 1 User bisa punya banyak history (per manga)
+* 1 Manga bisa punya banyak history (dari banyak user)
+
+Waktu user buka reader:
+
+* cari record history → arahkan ke chapter & page terakhir.
+
+---
+
+## 💬 8. Tabel `comments` — komentar user
+
+Kalau ada fitur komentar di chapter.
+
+Contoh kolom:
+
+* `id`
+* `user_id` – siapa yang komentar
+* `manga_id` (opsional)
+* `chapter_id` – komentar di chapter mana
+* `content` – isi komentar
+* `created_at`, `updated_at`
+
+Relasi:
+
+* 1 User **punya banyak** komentar
+* 1 Chapter **punya banyak** komentar
+
+---
+
+## 👁️ 9. (Opsional) `manga_views` / `chapter_views` — untuk popular list
+
+Kalau kamu mau fitur **“Populer / Trending”**, kamu bisa simpan statistik:
+
+### Cara simple:
+
+Tambahkan field di `mangas`:
+
+* `views` – jumlah total view
+
+Di setiap kali manga dibaca, increment:
+
+```php
+$manga->increment('views');
+```
+
+Kalau mau lebih detail (harian, per user, analitik):
+
+* buat tabel `manga_views` dengan:
+
+  * `id`
+  * `manga_id`
+  * `user_id` (opsional)
+  * `ip` (opsional)
+  * `viewed_at`
+
+Tapi untuk awal, field `views` saja sudah cukup.
+
+---
+
+## 🧠 Ringkasan tabel inti (versi awal yang sudah sangat bagus)
+
+**Minimal untuk web manga fungsional lengkap:**
+
+1. `mangas`
+2. `chapters`
+3. `pages`
+4. `genres`
+5. `genre_manga` (pivot)
+6. `users` (dari Laravel auth)
+7. `bookmarks`
+8. `reading_histories`
+9. `comments` (opsional, kalau mau komentar)
+
+Itu sudah cukup untuk:
+
+* list manga
+* detail manga + genre
+* list chapter
+* baca chapter halaman per halaman
+* bookmark manga
+* history bacaan per user
+* komentar per chapter
+
+---
+
+Kalau kamu mau next step, aku bisa:
+
+* buatin contoh **migration Laravel** untuk semua tabel di atas
+* atau mulai dari yang paling penting dulu: `mangas`, `chapters`, `pages`
+* atau buat **diagram relasi (ERD) versi teks** yang bisa kamu jadikan panduan saat coding.
+
+
+
+//////MODEL
+Sip, kita lanjut ke **Model + Relasi Eloquent** ya 😄
+Anggap tabel-tabel kamu sudah ada (migrations yang tadi):
+
+* `mangas`
+* `chapters`
+* `pages`
+* `genres`
+* `genre_manga`
+* `bookmarks`
+* `reading_histories`
+* `comments`
+* `users` (plus `role`)
+
+Di sini kita fokus ke:
+
+1. Command `make:model`
+2. Isi masing-masing model
+3. Cara pakainya sedikit
+
+---
+
+## 🧩 1. Buat semua modelnya
+
+Di terminal (folder project):
+
+```bash
+php artisan make:model Manga
+php artisan make:model Chapter
+php artisan make:model Page
+php artisan make:model Genre
+php artisan make:model Bookmark
+php artisan make:model ReadingHistory
+php artisan make:model Comment
+```
+
+> `User` sudah dibuat otomatis oleh Laravel.
+
+---
+
+## 📘 2. Model `Manga`
+
+`app/Models/Manga.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Manga extends Model
+{
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'cover_image',
+        'author',
+        'artist',
+        'status',
+        'released_at',
+        'views',
+    ];
+
+    // 1 Manga punya banyak Chapter
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
+
+    // 1 Manga punya banyak Page lewat Chapter (optional)
+    public function pages()
+    {
+        return $this->hasManyThrough(Page::class, Chapter::class);
+    }
+
+    // Many-to-Many dengan Genre
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'genre_manga');
+    }
+
+    // Bookmark oleh user
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    // History bacaan user
+    public function readingHistories()
+    {
+        return $this->hasMany(ReadingHistory::class);
+    }
+}
+```
+
+---
+
+## 📗 3. Model `Chapter`
+
+`app/Models/Chapter.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Chapter extends Model
+{
+    protected $fillable = [
+        'manga_id',
+        'number',
+        'title',
+        'slug',
+        'published_at',
+    ];
+
+    // Chapter milik Manga
+    public function manga()
+    {
+        return $this->belongsTo(Manga::class);
+    }
+
+    // 1 Chapter punya banyak Page
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
+    }
+
+    // Komentar di chapter ini
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function readingHistories()
+    {
+        return $this->hasMany(ReadingHistory::class);
+    }
+}
+```
+
+---
+
+## 📙 4. Model `Page`
+
+`app/Models/Page.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Page extends Model
+{
+    protected $fillable = [
+        'chapter_id',
+        'page_number',
+        'image_path',
+    ];
+
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class);
+    }
+
+    public function manga()
+    {
+        return $this->hasOneThrough(Manga::class, Chapter::class, 'id', 'id', 'chapter_id', 'manga_id');
+        // jarang dibutuhkan, sekadar contoh
+    }
+}
+```
+
+---
+
+## 🏷️ 5. Model `Genre`
+
+`app/Models/Genre.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Genre extends Model
+{
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
+
+    // Many-to-Many ke Manga
+    public function mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'genre_manga');
+    }
+}
+```
+
+---
+
+## ⭐ 6. Model `Bookmark`
+
+`app/Models/Bookmark.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Bookmark extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'manga_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function manga()
+    {
+        return $this->belongsTo(Manga::class);
+    }
+}
+```
+
+---
+
+## 📖 7. Model `ReadingHistory`
+
+`app/Models/ReadingHistory.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ReadingHistory extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'manga_id',
+        'chapter_id',
+        'last_page',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function manga()
+    {
+        return $this->belongsTo(Manga::class);
+    }
+
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class);
+    }
+}
+```
+
+---
+
+## 💬 8. Model `Comment`
+
+`app/Models/Comment.php`
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Comment extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'chapter_id',
+        'content',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class);
+    }
+}
+```
+
+---
+
+## 👤 9. Tambahan di `User` model (role + relasi)
+
+`app/Models/User.php`
+
+Tambahkan:
+
+```php
+public function bookmarks()
+{
+    return $this->hasMany(Bookmark::class);
+}
+
+public function readingHistories()
+{
+    return $this->hasMany(ReadingHistory::class);
+}
+
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
+// helper kecil
+public function isAdmin(): bool
+{
+    return $this->role === 'admin';    // kalau pakai enum 'user'/'admin'
+    // atau: return (bool) $this->is_admin;
+}
+```
+
+---
+
+## 🔍 10. Contoh cara pakai relasi ini
+
+Beberapa contoh praktis:
+
+### 📌 Ambil semua chapter suatu manga (terurut):
+
+```php
+$manga = Manga::where('slug', $slug)->firstOrFail();
+$chapters = $manga->chapters()->orderBy('number', 'desc')->get();
+```
+
+### 📌 Ambil semua page dalam satu chapter:
+
+```php
+$chapter = Chapter::where('slug', $chapterSlug)->firstOrFail();
+$pages = $chapter->pages()->orderBy('page_number')->get();
+```
+
+### 📌 Ambil semua genre suatu manga:
+
+```php
+$manga->genres; // collection Genre
+```
+
+### 📌 Tambah genre ke manga (sync dari form):
+
+```php
+$manga->genres()->sync($request->genre_ids); // array id genre
+```
+
+### 📌 Bookmark manga untuk user yang login:
+
+```php
+auth()->user()->bookmarks()->firstOrCreate([
+    'manga_id' => $manga->id,
+]);
+```
+
+### 📌 Simpan / update history bacaan:
+
+```php
+ReadingHistory::updateOrCreate(
+    [
+        'user_id' => auth()->id(),
+        'manga_id' => $manga->id,
+    ],
+    [
+        'chapter_id' => $chapter->id,
+        'last_page'  => $currentPage,
+    ]
+);
+```
+
+---
+
+Kalau kamu mau, langkah berikutnya bisa:
+
+* **buat Controller + Route** untuk:
+
+  * list manga
+  * detail manga
+  * baca chapter
+  * bookmark toggle
+  * history lanjut baca
+
+Kalimat kuncinya kalau mau lanjut:
+
+> lanjut ke controller dan route
+
+Nanti saya susunkan alur web manga dari route → controller → view.
