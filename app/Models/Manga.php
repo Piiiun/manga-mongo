@@ -28,7 +28,6 @@ class Manga extends Model
 
     protected $casts = [
         'last_update' => 'datetime',
-        'released_at' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
