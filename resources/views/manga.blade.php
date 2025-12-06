@@ -1,7 +1,16 @@
 <x-layout title="Daftar Manga">
-    <div class="min-h-screen bg-gradient-to-b from-gray-950 to-black">
+    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+        {{-- Breadcrumb --}}
+        <div class="px-4 sm:px-6 lg:px-8 py-4">
+            <nav class="flex items-center gap-2 text-sm text-gray-400">
+                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Home</a>
+                <span>/</span>
+                <span class="text-white">Manga</span>
+            </nav>
+        </div>
+        
         {{-- Header --}}
-        <div class="px-4 sm:px-6 lg:px-8 py-6">
+        <div class="px-4 sm:px-6 lg:px-8 py-6 pt-2">
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-white mb-2">Daftar Manga</h1>
                 <p class="text-gray-400">Temukan manga favoritmu</p>
@@ -68,8 +77,8 @@
                 <div class="mt-4 flex flex-wrap gap-3" id="extraFilters" style="display: none;">
                     <select name="status" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
                         <option value="">Semua Status</option>
-                        <option value="ongoing" {{ request('status') == 'ongoing' ? 'selected' : '' }}>Ongoing</option>
-                        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                        <option value="Ongoing" {{ request('status') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+                        <option value="Completed" {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
                     </select>
                     
                     <select name="type" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
@@ -86,7 +95,7 @@
             </form>
 
             {{-- Grid Manga --}}
-            <div class="grid gap-5 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="grid md:gap-5 gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 @foreach($mangas as $manga)
                     <a href="{{ route('manga.detail', $manga->slug) }}" class="block group">
                         <x-manga-card-list :manga="$manga" />
@@ -101,11 +110,11 @@
                         {{-- Previous Button --}}
                         @if($mangas->onFirstPage())
                             <span class="px-3 py-2 bg-gray-900/50 text-gray-600 rounded-lg cursor-not-allowed text-sm">
-                                ←
+                                &lt;
                             </span>
                         @else
                             <a href="{{ $mangas->previousPageUrl() . $queryString }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
-                                ←
+                                &lt;
                             </a>
                         @endif
 
@@ -125,11 +134,11 @@
                         {{-- Next Button --}}
                         @if($mangas->hasMorePages())
                             <a href="{{ $mangas->nextPageUrl() . $queryString }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
-                                →
+                                &gt;
                             </a>
                         @else
-                            <span class="px-3 py-2 bg-gray-900/50 text-gray-600 rounded-lg cursor-not-allowed text-sm">
-                                →
+                            <span class=" px-3 py-2 bg-gray-900/50 text-gray-600 rounded-lg cursor-not-allowed text-sm">
+                                &gt;
                             </span>
                         @endif
                     </nav>

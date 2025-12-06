@@ -20,7 +20,7 @@
     {{-- COVER IMAGE --}}
     <div class="relative aspect-3/4 overflow-hidden">
         <img 
-            src="{{ asset('storage/' . $manga->cover_image) }}" 
+            src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
             alt="{{ $manga->title }}"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         >
@@ -34,7 +34,7 @@
         {{-- Genres --}}
         <div class="flex flex-wrap gap-1.5 mb-2">
             @foreach($manga->genres->take(2) as $genre)
-                <span class="bg-gray-800/70 text-gray-300 text-xs px-2 py-1 rounded-md border border-gray-700">
+                <span class="bg-gray-800/70 text-gray-300 text-xs md:px-2 px-1 md:py-1 py-0.5 rounded-md border border-gray-700">
                     {{ $genre->name }}
                 </span>
             @endforeach

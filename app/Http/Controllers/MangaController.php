@@ -51,26 +51,30 @@ class MangaController extends Controller
         }
 
         // Pagination dengan 12 item per halaman
-        $mangas = $query->paginate(12);
+        $mangas = $query->paginate(15);
 
-        $queryParams = $request->except('page');
+        $mangas->appends($request->except('page'));
+        $queryParams = array_filter($request->except('page'), function($value) {
+            return !is_null($value) && $value !== '';
+        });
         $queryString = $queryParams ? '&' . http_build_query($queryParams) : '';
 
-        // Tambahkan query parameters ke pagination links
-        $mangas->appends([
-            'sort' => $sort,
-            'search' => $search,
-            'status' => $status,
-            'type' => $type,
-        ]);
-
         // Untuk view
-        return view('manga', compact('mangas'));
+        return view('manga', compact('mangas', 'queryString'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $manga = Manga::with('genres', 'chapters')->findOrFail($id);
-        return view('manga', compact('manga'));
+        // Cari manga berdasarkan slug
+        $manga = Manga::with(['genres', 'chapters.pages', 'bookmarks'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Increment views
+        $manga->increment('views');
+
+        // Return view detail
+        return view('manga-detail', compact('manga'));
     }
+
 }

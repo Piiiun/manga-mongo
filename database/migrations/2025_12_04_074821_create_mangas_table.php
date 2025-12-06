@@ -15,13 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('alternative_title')->nullable();
             $table->text('description')->nullable();
             $table->string('cover_image')->nullable();
             $table->string('author')->nullable();
             $table->string('artist')->nullable();
-            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
+            $table->enum('status', ['Ongoing', 'Completed'])->default('Ongoing');
+            $table->string('type')->default('Manga');
+            $table->float('rating')->default(0);
             $table->year('released_at')->nullable();
-            $table->unsignedBigInteger('views')->default(0); // untuk fitur populer
+            $table->string('serialization')->nullable();
+            $table->unsignedInteger('total_chapters')->default(0);
+            $table->timestamp('last_update')->nullable();
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

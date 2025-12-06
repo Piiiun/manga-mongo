@@ -10,9 +10,7 @@
             <div class="space-y-4">
                 <div class="flex items-center gap-2">
                     <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-amber-500 to-red-500 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                        </svg>
+                        <img src="{{ asset('manga-mobile.png') }}" alt="Manga" class="h-8 w-auto">
                     </div>
                     <h3 class="text-2xl font-black text-white">Manga-Mongo</h3>
                 </div>
@@ -224,10 +222,12 @@
     </div>
 
     {{-- Scroll to Top Button --}}
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
-            class="fixed bottom-18 md:bottom-8 right-5 md:right-8 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-amber-500 to-red-500 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-amber-500/50">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
+    @if(!request()->routeIs('manga.read'))
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                class="fixed bottom-18 md:bottom-8 right-5 md:right-8 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-amber-500 to-red-500 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-amber-500/50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </button>
+    @endif
 </footer>

@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const heroSwiperEl = document.querySelector('.hero-swiper');
     if (heroSwiperEl) {

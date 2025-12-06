@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('manga_id')->constrained()->onDelete('cascade');
             $table->integer('number');
             $table->string('title')->nullable();
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable();
             $table->timestamp('published_at')->nullable();
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

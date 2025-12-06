@@ -5,32 +5,32 @@
     <div class="mb-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {{-- Title --}}
-            <h2 class="text-2xl font-extrabold text-white">POPULER</h2>
+            <h2 class="bg-linear-to-r from-amber-400 via-yellow-400 to-amber-500 bg-clip-text text-2xl font-extrabold text-transparent">POPULER</h2>
             
             {{-- Lihat Semua - Desktop --}}
-            <a href="#" class="hidden items-center gap-2 text-sm font-semibold text-amber-500 transition-colors hover:text-amber-400 sm:flex">
+            <a href="{{ route('manga.list', ['sort' => 'popular']) }}" class="hidden sm:flex scale-90 sm:scale-100 group flex items-center gap-2 rounded-full bg-linear-to-r from-amber-500/10 to-red-500/10 px-5 py-2.5 font-semibold text-amber-400 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
                 <span>Lihat Semua</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </a>
         </div>
 
         {{-- Tabs Filter --}}
-        <div class="mt-4 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            <button class="flex-shrink-0 rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-amber-600 sm:px-6">
+        <div class="mt-4 sm:mt-2 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <button class="shrink-0 rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-amber-600 sm:px-6">
                 Hari Ini
             </button>
-            <button class="flex-shrink-0 rounded-lg bg-gray-700/50 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700 hover:text-white sm:px-6">
+            <button class="shrink-0 rounded-lg bg-gray-700/50 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700 hover:text-white sm:px-6">
                 Minggu Ini
             </button>
-            <button class="flex-shrink-0 rounded-lg bg-gray-700/50 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700 hover:text-white sm:px-6">
+            <button class="shrink-0 rounded-lg bg-gray-700/50 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700 hover:text-white sm:px-6">
                 Bulan Ini
             </button>
         </div>
 
         {{-- Lihat Semua - Mobile --}}
-        <a href="#" class="mt-3 flex items-center justify-center gap-2 rounded-lg bg-gray-800/50 py-2.5 text-sm font-semibold text-amber-500 transition-colors hover:bg-gray-800 sm:hidden">
+        <a href="{{ route('manga.list', ['sort' => 'popular']) }}" class="mt-3 flex items-center justify-center gap-2 rounded-lg bg-gray-800/50 py-2.5 text-sm font-semibold text-amber-500 transition-colors hover:bg-gray-800 sm:hidden">
             <span>Lihat Semua</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -41,14 +41,14 @@
     {{-- List Populer Manga --}}
     <div class="space-y-4">
         @foreach ($popularMangas as $index => $manga)
-            <article class="group relative flex items-center gap-4 overflow-hidden rounded-xl bg-gradient-to-r from-gray-800/80 to-gray-900/80 backdrop-blur-sm transition-all duration-300 hover:from-gray-800 hover:to-gray-900 hover:shadow-xl hover:shadow-amber-500/10">
+            <article class="group relative flex items-center gap-4 overflow-hidden rounded-xl bg-linear-to-r from-gray-800/80 to-gray-900/80 backdrop-blur-sm transition-all duration-300 hover:from-gray-800 hover:to-gray-900 hover:shadow-xl hover:shadow-amber-500/10">
                 
                 {{-- Background Image Overlay --}}
                 <div class="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30">
-                    <img src="{{ asset('storage/' . $manga->cover_image) }}" 
+                    <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
                          class="h-full w-full object-cover blur-xs">
-                    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-900/20"></div>
+                    <div class="absolute inset-0 bg-linear-to-r from-gray-900 via-gray-900/90 to-gray-900/20"></div>
                 </div>
 
                 {{-- Nomor Ranking --}}
@@ -61,8 +61,8 @@
                 </div>
 
                 {{-- Cover Image --}}
-                <div class="relative z-10 h-32 w-24 flex-shrink-0 overflow-hidden rounded-lg shadow-lg">
-                    <img src="{{ asset('storage/' . $manga->cover_image) }}" 
+                <div class="relative z-10 h-32 w-24 shrink-0 overflow-hidden rounded-lg shadow-lg">
+                    <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
                          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
                 </div>
@@ -71,14 +71,14 @@
                 <div class="relative z-10 flex flex-1 flex-col gap-2 py-4 pr-6">
                     {{-- Title dan Badge --}}
                     <div class="flex items-start gap-3">
-                        <a href="#" class="group/title flex-1">
+                        <a href="{{ route('manga.detail', $manga->slug) }}" class="group/title flex-1">
                             <h3 class="line-clamp-2 text-base font-bold text-white transition-colors group-hover/title:text-amber-400">
                                 {{ $manga->title }}
                             </h3>
                         </a>
                         
-                        @if ($manga->is_hot)
-                            <span class="rounded bg-gradient-to-r from-red-600 to-red-500 px-2 py-1 text-xs font-bold text-white shadow-lg">
+                        @if ($manga->rating >= 8.0)
+                            <span class="rounded bg-linear-to-r from-red-600 to-red-500 px-2 py-1 text-xs font-bold text-white shadow-lg">
                                 HOT
                             </span>
                         @endif
@@ -123,7 +123,7 @@
                 </div>
 
                 {{-- Hover Indicator --}}
-                <div class="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-amber-500 to-red-500 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                <div class="absolute right-0 top-0 h-full w-1 bg-linear-to-b from-amber-500 to-red-500 opacity-0 transition-opacity group-hover:opacity-100"></div>
             </article>
         @endforeach
     </div>

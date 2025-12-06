@@ -8,7 +8,7 @@
 
                         {{-- background blur besar (opsional) --}}
                         <div class="pointer-events-none absolute inset-0 opacity-60">
-                            <img src="{{ asset('storage/' . $manga->cover_image) }}" alt="" class="grayscale-50 w-full h-full object-cover blur-xl scale-110">
+                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-50 w-full h-full object-cover blur-xl scale-110">
                         </div>
 
                         {{-- KONTEN KIRI --}}
@@ -47,7 +47,7 @@
 
                             {{-- tombol --}}
                             <div class="flex flex-wrap gap-3 pt-2">
-                                <a href="#"
+                                <a href="{{ route('manga.detail', $manga->slug) }}"
                                    class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-black hover:bg-amber-400 transition">
                                     📖 Baca
                                 </a>
@@ -65,7 +65,7 @@
                         {{-- KONTEN KANAN: COVER --}}
                         <div class="relative w-full max-w-[220px] self-center lg:self-stretch">
                             <div class="overflow-hidden rounded-3xl shadow-xl shadow-black/40">
-                                <img src="{{ asset('storage/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
+                                <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
                                      class="h-full w-full object-cover">
                             </div>
 

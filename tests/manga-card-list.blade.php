@@ -4,7 +4,7 @@
     
     {{-- COVER --}}
     <div class="relative">
-        <img src="{{ asset('storage/' . $manga->cover_image) }}"
+        <img src="{{ asset('storage/manga/' . $manga->cover_image) }}"
              alt="{{ $manga->title }}"
              class="h-64 w-full object-cover">
 
