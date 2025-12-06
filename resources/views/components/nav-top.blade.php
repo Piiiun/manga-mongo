@@ -1,4 +1,4 @@
-<nav class=" bg-manga px-10 py-3 top-0 z-50 font-manga fixed w-full">
+<nav class=" bg-manga px-10 py-3 top-0 z-50 fixed w-full">
     <div class=" flex items-center md:justify-between max-w-8xl mx-auto justify-center">
         <div>
             <a href="{{  route('home') }}">

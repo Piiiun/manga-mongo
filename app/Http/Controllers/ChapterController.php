@@ -38,7 +38,7 @@ class ChapterController extends Controller
             ->first();
 
         // Increment chapter views (optional)
-        // $chapter->increment('views');
+        $chapter->increment('views');
 
         return view('read', compact(
             'manga',

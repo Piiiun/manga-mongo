@@ -150,7 +150,7 @@
         </div>
 
         {{-- Manga Pages - Vertical Scroll --}}
-        <div class="max-w-4xl mx-auto px-4 pb-16 sm:pb-24">
+        <div class="max-w-4xl mx-auto px-3 pb-16 sm:pb-24">
             <div id="manga-pages" class="space-y-0">
                 @foreach($chapter->pages->sortBy('page_number') as $page)
                     <div class="manga-page w-full" data-page="{{ $page->page_number }}">

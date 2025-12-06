@@ -18,7 +18,7 @@
                 <div class="lg:col-span-3">
                     <div class="sticky top-24">
                         {{-- Cover Image --}}
-                        <div class="relative rounded-xl overflow-hidden shadow-2xl mb-4">
+                        <div class="relative rounded-xl overflow-hidden shadow-2xl mb-4 md:mx-auto md:max-w-xs">
                             @if($manga->rating >= 8.5)
                                 <div class="absolute top-3 left-3 z-10">
                                     <span class="bg-linear-to-r from-red-600 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">
@@ -155,7 +155,7 @@
                         <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-6">
                             <h2 class="text-xl font-bold text-white mb-3">Sinopsis</h2>
                             <p class="text-gray-300 leading-relaxed">
-                                {{ $manga->description ?? 'Deskripsi belum tersedia untuk manga ini.' }}
+                                {{ $manga->description ? Str::limit($manga->description, 300, '...') : 'Deskripsi belum tersedia untuk manga ini.' }}
                             </p>
                         </div>
 

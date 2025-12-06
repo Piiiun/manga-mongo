@@ -54,9 +54,12 @@ class AdminMangaController extends Controller
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
             $coverImage = $request->file('cover_image');
-            $filename = Str::slug($request->title) . '-' . time() . '.' . $coverImage->extension();
-            $path = $coverImage->storeAs('manga/covers', $filename, 'public');
-            $validated['cover_image'] = $path;
+            $slug = Str::slug($request->title);
+            $filename = $slug . '.' . $coverImage->extension();
+            
+            // Save to manga/covers/
+            $coverImage->storeAs('manga/covers', $filename, 'public');
+            $validated['cover_image'] = 'covers/' . $filename;
         }
 
         // Auto-generate slug from title
@@ -103,15 +106,26 @@ class AdminMangaController extends Controller
 
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
-            // Delete old cover
-            if ($manga->cover_image) {
+            // Delete old cover if exists
+            if ($manga->cover_image && Storage::disk('public')->exists($manga->cover_image)) {
                 Storage::disk('public')->delete($manga->cover_image);
             }
 
             $coverImage = $request->file('cover_image');
-            $filename = Str::slug($request->title) . '-' . time() . '.' . $coverImage->extension();
-            $path = $coverImage->storeAs('manga/covers', $filename, 'public');
-            $validated['cover_image'] = $path;
+            $slug = Str::slug($request->title);
+            $filename = $slug . '.' . $coverImage->extension();
+            
+            // Ensure directory exists
+            Storage::disk('public')->makeDirectory('manga/covers');
+            
+            // Save to manga/covers/
+            $path = $coverImage->storeAs('public/covers', $filename, 'public');
+            
+            if ($path) {
+                $validated['cover_image'] = 'covers/' . $filename;
+            } else {
+                return back()->with('error', 'Gagal upload cover image!');
+            }
         }
 
         // Update manga
