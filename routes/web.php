@@ -33,4 +33,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('manga/{manga}/chapters/{chapter}/edit', [AdminMangaController::class, 'editChapter'])->name('manga.chapters.edit');
     Route::put('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'updateChapter'])->name('manga.chapters.update');
     Route::delete('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'destroyChapter'])->name('manga.chapters.destroy');
+    Route::post('manga/{manga}/chapters/{chapter}/sync', [AdminMangaController::class, 'syncChapterImages'])->name('manga.chapters.sync');
+    Route::post('manga/{manga}/chapters/sync-all', [AdminMangaController::class, 'syncAllChapters'])->name('manga.chapters.sync-all');
 });

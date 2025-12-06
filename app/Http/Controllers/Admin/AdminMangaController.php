@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Manga;
+use App\Models\Page;
 use App\Models\Genre;
+use App\Models\Manga;
 use App\Models\Chapter;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AdminMangaController extends Controller
 {
@@ -269,5 +270,137 @@ class AdminMangaController extends Controller
         return redirect()
             ->route('admin.manga.chapters', $manga)
             ->with('success', "Chapter berhasil dihapus!");
+    }
+
+    // ============================================
+    // SYNC IMAGES FROM FOLDER
+    // ============================================
+
+    public function syncChapterImages(Manga $manga, Chapter $chapter)
+    {
+        try {
+            // Define chapter folder path
+            $chapterFolderPath = "manga/pages/{$manga->slug}/chapter-{$chapter->number}";
+            $fullPath = storage_path("app/public/{$chapterFolderPath}");
+
+            // Check if folder exists
+            if (!file_exists($fullPath)) {
+                return back()->with('error', "Folder tidak ditemukan: {$chapterFolderPath}");
+            }
+
+            // Get all image files
+            $imageFiles = glob($fullPath . "/page-*.{jpg,jpeg,png,webp}", GLOB_BRACE);
+            
+            if (empty($imageFiles)) {
+                return back()->with('error', "Tidak ada gambar ditemukan di folder: {$chapterFolderPath}");
+            }
+
+            // Sort files by page number
+            usort($imageFiles, function($a, $b) {
+                preg_match('/page-(\d+)/', basename($a), $matchA);
+                preg_match('/page-(\d+)/', basename($b), $matchB);
+                return (int)($matchA[1] ?? 0) - (int)($matchB[1] ?? 0);
+            });
+
+            // Delete existing pages
+            $chapter->pages()->delete();
+
+            // Insert new pages
+            $insertedPages = 0;
+            foreach ($imageFiles as $index => $imageFile) {
+                $filename = basename($imageFile);
+                $imagePath = "{$chapterFolderPath}/{$filename}";
+
+                // Extract page number from filename
+                preg_match('/page-(\d+)/', $filename, $match);
+                $pageNumber = $match[1] ?? ($index + 1);
+
+                Page::create([
+                    'chapter_id' => $chapter->id,
+                    'page_number' => $pageNumber,
+                    'image_path' => $imagePath,
+                ]);
+
+                $insertedPages++;
+            }
+
+            // Update manga's last_update
+            $manga->update(['last_update' => now()]);
+
+            return back()->with('success', "Berhasil sync {$insertedPages} halaman untuk Chapter {$chapter->number}!");
+
+        } catch (\Exception $e) {
+            return back()->with('error', "Error: " . $e->getMessage());
+        }
+    }
+
+    public function syncAllChapters(Manga $manga)
+    {
+        try {
+            $totalSynced = 0;
+            $errors = [];
+
+            $chapters = $manga->chapters()->get();
+
+            foreach ($chapters as $chapter) {
+                // Define chapter folder path
+                $chapterFolderPath = "manga/pages/{$manga->slug}/chapter-{$chapter->number}";
+                $fullPath = storage_path("app/public/{$chapterFolderPath}");
+
+                // Skip if folder doesn't exist
+                if (!file_exists($fullPath)) {
+                    $errors[] = "Chapter {$chapter->number}: Folder tidak ditemukan";
+                    continue;
+                }
+
+                // Get all image files
+                $imageFiles = glob($fullPath . "/page-*.{jpg,jpeg,png,webp}", GLOB_BRACE);
+                
+                if (empty($imageFiles)) {
+                    $errors[] = "Chapter {$chapter->number}: Tidak ada gambar";
+                    continue;
+                }
+
+                // Sort files
+                usort($imageFiles, function($a, $b) {
+                    preg_match('/page-(\d+)/', basename($a), $matchA);
+                    preg_match('/page-(\d+)/', basename($b), $matchB);
+                    return (int)($matchA[1] ?? 0) - (int)($matchB[1] ?? 0);
+                });
+
+                // Delete existing pages
+                $chapter->pages()->delete();
+
+                // Insert new pages
+                foreach ($imageFiles as $index => $imageFile) {
+                    $filename = basename($imageFile);
+                    $imagePath = "{$chapterFolderPath}/{$filename}";
+
+                    preg_match('/page-(\d+)/', $filename, $match);
+                    $pageNumber = $match[1] ?? ($index + 1);
+
+                    Page::create([
+                        'chapter_id' => $chapter->id,
+                        'page_number' => $pageNumber,
+                        'image_path' => $imagePath,
+                    ]);
+                }
+
+                $totalSynced++;
+            }
+
+            // Update manga's last_update
+            $manga->update(['last_update' => now()]);
+
+            $message = "Berhasil sync {$totalSynced} chapter!";
+            if (!empty($errors)) {
+                $message .= " Errors: " . implode(', ', $errors);
+            }
+
+            return back()->with('success', $message);
+
+        } catch (\Exception $e) {
+            return back()->with('error', "Error: " . $e->getMessage());
+        }
     }
 }
