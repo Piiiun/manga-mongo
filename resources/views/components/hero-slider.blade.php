@@ -26,7 +26,7 @@
                             {{-- info chapter --}}
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 font-semibold">
-                                    Chapter {{ $manga->latest_chapter ?? '1' }}
+                                    Chapter {{ $manga->chapters->count() ?? 0 }}
                                 </span>
                                 <span>Baru dirilis</span>
                             </div>
@@ -38,7 +38,7 @@
 
                             {{-- genre pill --}}
                             <div class="flex flex-wrap gap-2">
-                                @foreach ($manga->genres as $genre)
+                                @foreach ($manga->genres->take(4) as $genre)
                                     <span class="rounded-md bg-white/5 px-3 py-1 text-xs font-medium text-gray-200">
                                         {{ $genre->name }}
                                     </span>

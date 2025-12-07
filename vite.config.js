@@ -14,7 +14,7 @@ export default defineConfig({
     //     host: '0.0.0.0',   // biar bisa diakses dari device lain
     //     port: 5173,
     //     hmr: {
-    //         host: '192.168.18.153', // ganti dengan IP LAN PC kamu
+    //         host: 'localhost', // ganti dengan IP LAN PC kamu
     //     },
     // },
 });

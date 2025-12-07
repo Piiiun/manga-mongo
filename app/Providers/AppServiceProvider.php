@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Manga;
 use App\Observers\MangaObserver;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Manga::observe(MangaObserver::class);
+        // URL::forceScheme('https');
     }
 }

@@ -65,7 +65,7 @@
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
                 <div
-                    class="group/chapter rounded-lg bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
+                    class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
                     
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"

@@ -2,13 +2,13 @@
     <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-10">
         <div class="max-w-7xl mx-auto px-4">
             {{-- Header --}}
-            <div class="flex items-center justify-between mb-8">
+            <div class="sm:flex items-center justify-between mb-8">
                 <div>
                     <h1 class="text-3xl font-bold text-white mb-2">Manga Management</h1>
                     <p class="text-gray-400">Kelola semua manga di website</p>
                 </div>
                 <a href="{{ route('admin.manga.create') }}" 
-                   class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                   class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors flex items-center gap-2 mt-5 w-58">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -30,11 +30,11 @@
                         <thead class="bg-gray-800/50">
                             <tr>
                                 <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Cover</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Title</th>
+                                <th class="px-15 py-4 text-left text-xs font-medium text-gray-400 uppercase">Title</th>
                                 <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Type</th>
                                 <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Chapters</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Rating</th>
+                                <th class="px-10 py-4 text-left text-xs font-medium text-gray-400 uppercase">Chapters</th>
+                                <th class="px-7 py-4 text-left text-xs font-medium text-gray-400 uppercase">Rating</th>
                                 <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Views</th>
                                 <th class="px-6 py-4 text-right text-xs font-medium text-gray-400 uppercase">Actions</th>
                             </tr>
@@ -118,7 +118,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8" class="px-6 py-12 text-center text-gray-400">
-                                        Belum ada manga. <a href="{{ route('admin.manga.create') }}" class="text-amber-400 hover:text-amber-300">Tambah manga baru</a>
+                                        Belum ada manga. <a href="{{ route('admin.manga.create') }}" class="text-amber-400 hover:text-amber-300 ">Tambah manga baru</a>
                                     </td>
                                 </tr>
                             @endforelse
