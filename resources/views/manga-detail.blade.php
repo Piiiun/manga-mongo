@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Manga Detail - MangaMongo">
     <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
@@ -132,7 +132,7 @@
                     {{-- Tabs --}}
                     <div class="mb-8">
                         <div class="border-b border-gray-800">
-                            <nav class="flex gap-6">
+                            <nav class="flex gap-6 overflow-auto">
                                 <button onclick="showTab('chapters')" id="tab-chapters" class="tab-button text-amber-400 border-b-2 border-amber-400 px-1 py-3 font-bold">
                                     Chapters
                                 </button>

@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Home Page</title>
+    <title>{{ $title ?? 'MangaMongo - Baca Manga Online' }}</title>
 </head>
 <body class=" bg-linear-to-b from-gray-900 to-black">
     <x-nav-top />
