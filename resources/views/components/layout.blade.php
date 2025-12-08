@@ -25,7 +25,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Home Page</title>
 </head>
-<body class=" bg-[#001f24]">
+<body class=" bg-linear-to-b from-gray-900 to-black">
     <x-nav-top />
     <x-nav-bottom />
     <main class="pt-17">

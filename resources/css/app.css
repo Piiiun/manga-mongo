@@ -10,8 +10,10 @@
     /* --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji'; */
     --font-manga: "Inter", sans-serif;
-    --color-manga: #001810;
+    /* --color-manga: #001810; */
+    --color-manga: #070224;
     --color-second: #52625b;
+    /* --color-second: #070224 ; */
     --color-bgbody: #042f23;
 }
 

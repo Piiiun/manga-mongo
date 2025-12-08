@@ -54,7 +54,9 @@
         <div class="flex flex-wrap gap-2">
             @foreach ($manga->genres->take(3) as $genre)
                 <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-500/20 to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-300 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
+                    <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                     {{ $genre->name }}
+                    </a>
                 </span>
             @endforeach
         </div>

@@ -95,7 +95,7 @@
                 <h4 class="mb-4 text-lg font-bold text-white">Genre Populer</h4>
                 <ul class="space-y-2.5">
                     <li>
-                        <a href="#" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
+                        <a href="{{ route('manga.list', ['genre' => 'action']) }}" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -103,7 +103,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
+                        <a href="{{ route('manga.list', ['genre' => 'romance']) }}" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
+                        <a href="{{ route('manga.list', ['genre' => 'comedy']) }}" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -119,7 +119,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
+                        <a href="{{ route('manga.list', ['genre' => 'fantasy']) }}" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -127,7 +127,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
+                        <a href="{{ route('manga.list', ['genre' => 'isekai']) }}" class="group flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-amber-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -195,7 +195,7 @@
                     <h4 class="mb-1 text-lg font-bold text-white">📬 Dapatkan Update Terbaru</h4>
                     <p class="text-sm text-gray-400">Subscribe untuk mendapatkan notifikasi manga terbaru</p>
                 </div>
-                <form class="flex w-full max-w-md gap-2">
+                <form class="flex flex-col items-center md:flex-row w-full max-w-md gap-2">
                     <input type="email" 
                            placeholder="Masukkan email Anda" 
                            class="flex-1 rounded-lg bg-gray-800 px-4 py-2.5 text-sm text-white placeholder-gray-500 ring-1 ring-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">

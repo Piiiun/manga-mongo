@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\Manga;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class MangaController extends Controller
         $search = $request->get('search');
         $status = $request->get('status');
         $type = $request->get('type');
-
+        $genres = Genre::orderBy('name')->get();
         $query = Manga::with('genres');
 
         // Search
@@ -31,6 +32,13 @@ class MangaController extends Controller
         // Filter by type
         if ($type) {
             $query->where('type', $type);
+        }
+
+        // Filter berdasarkan genre
+        if ($request->filled('genre')) {
+            $query->whereHas('genres', function ($q) use ($request) {
+                $q->where('slug', $request->genre);
+            });
         }
 
         // Sorting
@@ -60,7 +68,7 @@ class MangaController extends Controller
         $queryString = $queryParams ? '&' . http_build_query($queryParams) : '';
 
         // Untuk view
-        return view('manga', compact('mangas', 'queryString'));
+        return view('manga', compact('mangas', 'genres', 'queryString'));
     }
 
     public function show($slug)

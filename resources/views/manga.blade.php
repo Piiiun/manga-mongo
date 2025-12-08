@@ -6,13 +6,22 @@
                 <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Home</a>
                 <span>/</span>
                 <span class="text-white">Manga</span>
+                @if(request('genre'))
+                    <span>/</span>
+                    <span class="text-amber-400">{{ ucfirst(request('genre')) }}</span>
+                @endif
             </nav>
         </div>
         
         {{-- Header --}}
         <div class="px-4 sm:px-6 lg:px-8 py-6 pt-2">
             <div class="mb-8">
-                <h1 class="text-4xl font-bold text-white mb-2">Daftar Manga</h1>
+                <h1 class="text-4xl font-bold text-white mb-2">
+                    Daftar Manga
+                    @if(request('genre'))
+                        <span class="text-amber-400">- {{ ucfirst(request('genre')) }}</span>
+                    @endif
+                </h1>
                 <p class="text-gray-400">Temukan manga favoritmu</p>
             </div>
 
@@ -87,6 +96,16 @@
                         <option value="manhwa" {{ request('type') == 'manhwa' ? 'selected' : '' }}>Manhwa</option>
                         <option value="manhua" {{ request('type') == 'manhua' ? 'selected' : '' }}>Manhua</option>
                     </select>
+
+                    {{-- Genre Filter --}}
+                    <select name="genre" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
+                        <option value="">Semua Genre</option>
+                        @foreach($genres as $genreItem)
+                            <option value="{{ $genreItem->slug }}" {{ request('genre') == $genreItem->slug ? 'selected' : '' }}>
+                                {{ $genreItem->name }}
+                            </option>
+                        @endforeach
+                    </select>
                     
                     <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white rounded-xl px-4 py-2 text-sm">
                         Terapkan Filter
@@ -94,13 +113,56 @@
                 </div>
             </form>
 
+            {{-- Active Filters Display --}}
+            @if(request('genre') || request('status') || request('type') || request('search'))
+                <div class="mb-6 flex flex-wrap gap-2">
+                    <span class="text-gray-400 text-sm">Filter Aktif:</span>
+                    
+                    @if(request('genre'))
+                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                            Genre: {{ ucfirst(request('genre')) }}
+                            <a href="{{ route('manga.list', array_merge(request()->except('genre'), request()->only(['search', 'sort', 'status', 'type']))) }}" 
+                               class="hover:text-white">×</a>
+                        </span>
+                    @endif
+
+                    @if(request('status'))
+                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                            Status: {{ request('status') }}
+                            <a href="{{ route('manga.list', array_merge(request()->except('status'), request()->only(['search', 'sort', 'genre', 'type']))) }}" 
+                               class="hover:text-white">×</a>
+                        </span>
+                    @endif
+
+                    @if(request('type'))
+                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                            Tipe: {{ ucfirst(request('type')) }}
+                            <a href="{{ route('manga.list', array_merge(request()->except('type'), request()->only(['search', 'sort', 'genre', 'status']))) }}" 
+                               class="hover:text-white">×</a>
+                        </span>
+                    @endif
+
+                    @if(request('search'))
+                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                            Pencarian: "{{ request('search') }}"
+                            <a href="{{ route('manga.list', array_merge(request()->except('search'), request()->only(['sort', 'genre', 'status', 'type']))) }}" 
+                               class="hover:text-white">×</a>
+                        </span>
+                    @endif
+                </div>
+            @endif
+
             {{-- Grid Manga --}}
             <div class="grid md:gap-5 gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                @foreach($mangas as $manga)
+                @forelse($mangas as $manga)
                     <a href="{{ route('manga.detail', $manga->slug) }}" class="block group">
                         <x-manga-card-list :manga="$manga" />
                     </a>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-400 text-lg">Tidak ada manga ditemukan</p>
+                    </div>
+                @endforelse
             </div>
 
             {{-- Pagination dengan menjaga query parameters --}}
@@ -113,7 +175,7 @@
                                 &lt;
                             </span>
                         @else
-                            <a href="{{ $mangas->previousPageUrl() . $queryString }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                            <a href="{{ $mangas->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
                                 &lt;
                             </a>
                         @endif
@@ -125,7 +187,7 @@
                                     {{ $page }}
                                 </span>
                             @else
-                                <a href="{{ $mangas->url($page) . $queryString }}" class="px-4 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                                <a href="{{ $mangas->appends(request()->query())->url($page) }}" class="px-4 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
                                     {{ $page }}
                                 </a>
                             @endif
@@ -133,7 +195,7 @@
 
                         {{-- Next Button --}}
                         @if($mangas->hasMorePages())
-                            <a href="{{ $mangas->nextPageUrl() . $queryString }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                            <a href="{{ $mangas->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
                                 &gt;
                             </a>
                         @else
