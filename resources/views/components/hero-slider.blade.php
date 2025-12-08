@@ -52,13 +52,19 @@
                                     📖 Baca
                                 </a>
 
-                                <form method="post" action="">
-                                    @csrf
-                                    <button type="submit"
-                                            class="inline-flex items-center justify-center rounded-full bg-white/10 px-6 py-2 text-sm font-semibold text-gray-200 hover:bg-white/20 transition">
-                                        🤍 Simpan
-                                    </button>
-                                </form>
+                                {{-- Tombol Bookmark --}}
+                                <button 
+                                    type="button"
+                                    data-manga-id="{{ $manga->id }}"
+                                    class="bookmark-toggle inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-6 py-2 text-sm font-semibold text-gray-200 hover:bg-white/20 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="bookmark-icon-outline w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="bookmark-icon-filled w-5 h-5 hidden">
+                                        <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="bookmark-text">Simpan</span>
+                                </button>
                             </div>
                         </div>
 
@@ -95,3 +101,114 @@
         </div>
     </div>
 </div>
+
+{{-- Script untuk handle bookmark (gunakan class .bookmark-toggle) --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeBookmarkButtons();
+    });
+
+    // Fungsi untuk initialize semua bookmark buttons
+    function initializeBookmarkButtons() {
+        updateAllBookmarkUI();
+        
+        // Add event listeners
+        document.querySelectorAll('.bookmark-toggle').forEach(btn => {
+            // Remove existing listener jika ada (prevent duplicate)
+            btn.replaceWith(btn.cloneNode(true));
+        });
+        
+        // Re-attach listeners
+        document.querySelectorAll('.bookmark-toggle').forEach(btn => {
+            btn.addEventListener('click', handleBookmarkClick);
+        });
+    }
+
+    // Handle bookmark click
+    function handleBookmarkClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const btn = e.currentTarget;
+        const mangaId = parseInt(btn.dataset.mangaId);
+        
+        if (typeof bookmarkManager === 'undefined') {
+            console.error('BookmarkManager not loaded');
+            alert('Bookmark system tidak tersedia. Pastikan bookmark.js sudah di-load.');
+            return;
+        }
+        
+        const isBookmarked = bookmarkManager.toggle(mangaId);
+        updateBookmarkUI(btn, isBookmarked);
+        updateNavbarCounter();
+        showBookmarkNotification(isBookmarked);
+    }
+
+    // Update semua bookmark button UI
+    function updateAllBookmarkUI() {
+        if (typeof bookmarkManager === 'undefined') return;
+        
+        document.querySelectorAll('.bookmark-toggle').forEach(btn => {
+            const mangaId = parseInt(btn.dataset.mangaId);
+            const isBookmarked = bookmarkManager.isBookmarked(mangaId);
+            updateBookmarkUI(btn, isBookmarked);
+        });
+    }
+
+    // Update single bookmark button UI
+    function updateBookmarkUI(btn, isBookmarked) {
+        const outlineIcon = btn.querySelector('.bookmark-icon-outline');
+        const filledIcon = btn.querySelector('.bookmark-icon-filled');
+        const text = btn.querySelector('.bookmark-text');
+        
+        if (isBookmarked) {
+            outlineIcon?.classList.add('hidden');
+            filledIcon?.classList.remove('hidden');
+            btn.classList.remove('bg-white/10', 'hover:bg-white/20');
+            btn.classList.add('bg-amber-500', 'hover:bg-amber-600', 'text-black');
+            if (text) text.textContent = 'Tersimpan';
+        } else {
+            outlineIcon?.classList.remove('hidden');
+            filledIcon?.classList.add('hidden');
+            btn.classList.add('bg-white/10', 'hover:bg-white/20');
+            btn.classList.remove('bg-amber-500', 'hover:bg-amber-600', 'text-black');
+            if (text) text.textContent = 'Simpan';
+        }
+    }
+
+    // Update navbar counter
+    function updateNavbarCounter() {
+        if (typeof bookmarkManager === 'undefined') return;
+        
+        const count = bookmarkManager.count();
+        const navCounter = document.getElementById('nav-bookmark-count');
+        if (navCounter) navCounter.textContent = count;
+    }
+
+    // Show notification
+    function showBookmarkNotification(isBookmarked) {
+        const message = isBookmarked ? 'Ditambahkan ke bookmark ✓' : 'Dihapus dari bookmark';
+        const bgColor = isBookmarked ? 'bg-green-500' : 'bg-red-500';
+        
+        const notification = document.createElement('div');
+        notification.className = `fixed bottom-20 md:bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300`;
+        notification.style.opacity = '0';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.style.opacity = '1', 10);
+        
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
+    // Listen for storage changes (sync across tabs)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'manga_bookmarks') {
+            updateAllBookmarkUI();
+            updateNavbarCounter();
+        }
+    });
+</script>

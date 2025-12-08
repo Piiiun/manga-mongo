@@ -11,15 +11,22 @@
         <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
 
         {{-- Badge Baru --}}
-        <div class=" absolute left-2 top-2 flex items-center gap-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 px-2 py-1 text-[10px] font-bold text-white shadow-md backdrop-blur-sm md:left-3 md:top-3 md:px-3 md:py-1.5 md:text-xs md:rounded-lg md:shadow-lg">
+        <div class="absolute left-2 top-2 flex items-center gap-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 px-2 py-1 text-[10px] font-bold text-white shadow-md backdrop-blur-sm md:left-3 md:top-3 md:px-3 md:py-1.5 md:text-xs md:rounded-lg md:shadow-lg">
             BARU
         </div>
 
-        {{-- Icon Love dengan animasi --}}
+        {{-- Icon Bookmark dengan animasi --}}
         <button
-            class="absolute right-1 md:right-3 top-1 md:top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-red-500 hover:shadow-red-500/50">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5 transition-all hover:fill-current">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            data-manga-id="{{ $manga->id }}"
+            class="bookmark-btn absolute right-1 md:right-3 top-1 md:top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-amber-500 hover:shadow-amber-500/50"
+            title="Tambah ke Bookmark">
+            {{-- Icon Bookmark Outline (default) --}}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="bookmark-icon-outline h-5 w-5 transition-all">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            {{-- Icon Bookmark Filled (saat di-bookmark) --}}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="bookmark-icon-filled h-5 w-5 hidden">
+                <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
             </svg>
         </button>
 
@@ -55,7 +62,7 @@
             @foreach ($manga->genres->take(3) as $genre)
                 <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-500/20 to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-300 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
                     <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
-                    {{ $genre->name }}
+                        {{ $genre->name }}
                     </a>
                 </span>
             @endforeach
@@ -66,16 +73,12 @@
 
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
-                <div
-                    class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
-                    
+                <div class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"
-                        class="flex items-center gap-2 text-sm font-semibold text-amber-400 transition-colors hover:text-amber-300">
+                           class="flex items-center gap-2 text-sm font-semibold text-amber-400 transition-colors hover:text-amber-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                             </svg>
                             <span>Chapter {{ $chapter->number }}</span>
                         </a>
@@ -88,12 +91,121 @@
             @endforeach
         </div>
 
-
         {{-- Read button --}}
         <a href="{{ route('manga.detail', $manga->slug) }}">
-        <button class="mt-2 w-full rounded-lg bg-linear-to-r from-amber-500 to-yellow-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:from-amber-600 hover:to-yellow-600 hover:shadow-amber-500/50">
-            Baca Sekarang
-        </button>
+            <button class="mt-2 w-full rounded-lg bg-linear-to-r from-amber-500 to-yellow-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:from-amber-600 hover:to-yellow-600 hover:shadow-amber-500/50">
+                Baca Sekarang
+            </button>
         </a>
     </div>
 </article>
+
+{{-- Script untuk handle bookmark (pastikan bookmark.js sudah di-include di layout) --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update semua bookmark button status
+        updateAllBookmarkButtons();
+        
+        // Add event listeners ke semua bookmark buttons
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const mangaId = parseInt(this.dataset.mangaId);
+                
+                if (typeof bookmarkManager === 'undefined') {
+                    console.error('BookmarkManager not loaded');
+                    return;
+                }
+                
+                const isBookmarked = bookmarkManager.toggle(mangaId);
+                updateBookmarkButton(this, isBookmarked);
+                
+                // Update navbar counter jika ada
+                updateNavbarCounter();
+                
+                // Show notification
+                showBookmarkNotification(isBookmarked);
+            });
+        });
+    });
+
+    function updateAllBookmarkButtons() {
+        if (typeof bookmarkManager === 'undefined') return;
+        
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            const mangaId = parseInt(btn.dataset.mangaId);
+            const isBookmarked = bookmarkManager.isBookmarked(mangaId);
+            updateBookmarkButton(btn, isBookmarked);
+        });
+    }
+
+    function updateBookmarkButton(btn, isBookmarked) {
+        const outlineIcon = btn.querySelector('.bookmark-icon-outline');
+        const filledIcon = btn.querySelector('.bookmark-icon-filled');
+        
+        if (isBookmarked) {
+            outlineIcon.classList.add('hidden');
+            filledIcon.classList.remove('hidden');
+            btn.classList.add('bg-amber-500');
+            btn.classList.remove('bg-black/50');
+            btn.title = 'Hapus dari Bookmark';
+        } else {
+            outlineIcon.classList.remove('hidden');
+            filledIcon.classList.add('hidden');
+            btn.classList.remove('bg-amber-500');
+            btn.classList.add('bg-black/50');
+            btn.title = 'Tambah ke Bookmark';
+        }
+    }
+
+    function updateNavbarCounter() {
+        if (typeof bookmarkManager === 'undefined') return;
+        
+        const count = bookmarkManager.count();
+        const navCounter = document.getElementById('nav-bookmark-count');
+        if (navCounter) navCounter.textContent = count;
+    }
+
+    function showBookmarkNotification(isBookmarked) {
+        const message = isBookmarked ? 'Ditambahkan ke bookmark ✓' : 'Dihapus dari bookmark';
+        const bgColor = isBookmarked ? 'bg-green-500' : 'bg-red-500';
+        
+        const notification = document.createElement('div');
+        notification.className = `fixed bottom-20 md:bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
+    // Listen for storage changes (sync across tabs)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'manga_bookmarks') {
+            updateAllBookmarkButtons();
+            updateNavbarCounter();
+        }
+    });
+</script>
+
+<style>
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out;
+    }
+</style>

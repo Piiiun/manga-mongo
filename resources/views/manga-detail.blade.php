@@ -35,11 +35,13 @@
 
                         {{-- Action Buttons --}}
                         <div class="grid grid-cols-2 gap-3 mb-4">
-                            <button class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
+                            <button id="bookmark-btn"
+                                    data-manga-id="{{ $manga->id }}"
+                                    class="bg-gray-900 hover:bg-amber-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                                 </svg>
-                                <span class="text-sm font-medium">Bookmark</span>
+                                <span id="bookmark-text" class="text-sm font-medium">Bookmark</span>
                             </button>
                             <button class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,9 +80,11 @@
                         {{-- Genres --}}
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($manga->genres as $genre)
-                                <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
-                                    {{ $genre->name }}
-                                </span>
+                                <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
+                                    <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
+                                        {{ $genre->name }}
+                                    </span>
+                                </a>
                             @endforeach
                         </div>
 
@@ -115,7 +119,7 @@
                         {{-- Stats --}}
                         <div class="grid grid-cols-3 gap-4 mt-4">
                             <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-amber-400">{{ number_format($manga->views) }}</p>
+                                <p class="text-2xl font-bold text-amber-400">{{ $manga->formatted_views }}</p>
                                 <p class="text-gray-400 text-sm mt-1">Views</p>
                             </div>
                             <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
@@ -172,9 +176,10 @@
                             {{-- Search Chapter --}}
                             <div class="mb-4">
                                 <input 
-                                    type="text" 
+                                    type="number" 
                                     id="chapterSearch"
-                                    placeholder="Cari chapter (contoh: 1, 10, 100)..." 
+                                    placeholder="Cari chapter..." 
+                                    autocomplete="off"    
                                     class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
                                 >
                             </div>
@@ -485,5 +490,48 @@
                 }
             });
         });
+    </script>
+    <script>
+        const bookmarkBtn = document.getElementById('bookmark-btn');
+        const bookmarkText = document.getElementById('bookmark-text');
+        const mangaId = parseInt(bookmarkBtn.dataset.mangaId);
+
+        // Update UI berdasarkan status bookmark
+        function updateBookmarkUI() {
+            if (bookmarkManager.isBookmarked(mangaId)) {
+                bookmarkBtn.classList.remove('bg-gray-900', 'bg-gray-800', 'text-white');
+                bookmarkBtn.classList.add('bg-amber-500', 'text-black', 'hover:bg-amber-600');
+                bookmarkText.textContent = 'Bookmarked';
+            } else {
+                bookmarkBtn.classList.remove('bg-amber-500', 'text-black', 'hover:bg-amber-600');
+                bookmarkBtn.classList.add('bg-gray-900', 'text-white', 'hover:bg-gray-800');
+                bookmarkText.textContent = 'Bookmark';
+            }
+        }
+
+        // Toggle bookmark
+        bookmarkBtn.addEventListener('click', function() {
+            const isBookmarked = bookmarkManager.toggle(mangaId);
+            updateBookmarkUI();
+            
+            // Show notification
+            const message = isBookmarked ? 'Ditambahkan ke bookmark' : 'Dihapus dari bookmark';
+            const bgColor = isBookmarked ? 'bg-green-500' : 'bg-red-500';
+            showNotification(message);
+        });
+
+        // Initialize
+        updateBookmarkUI();
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-18 md:bottom-4 left-5 md:left-6 bg-gray-900 text-white text-sm px-5 py-3 rounded-lg shadow-lg z-50 animate-spin';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
     </script>
 </x-layout>

@@ -10,7 +10,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
-                        <span class="hidden sm:inline">Chapter Sebelumnya</span>
+                        <span class="hidden sm:inline">Kembali Ke Manga</span>
                     </a>
 
                     {{-- Center: Server Selector --}}
@@ -30,9 +30,15 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                             </svg>
                         </button>
-                        <button class="p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Bookmark">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button 
+                            type="button"
+                            data-manga-id="{{ $manga->id }}"
+                            class="bookmark-toggle p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Bookmark">
+                            <svg class="bookmark-icon-outline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                            <svg class="bookmark-icon-filled w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd"/>
                             </svg>
                         </button>
                         <button class="p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Share">
@@ -370,4 +376,5 @@
             }
         });
     </script>
+    <script src="{{ asset('js/bookmark-ui.js') }}"></script>
 </x-layout>

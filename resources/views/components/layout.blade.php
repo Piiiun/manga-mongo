@@ -30,6 +30,9 @@
     <x-nav-bottom />
     <main class="pt-17">
         {{ $slot }}
+        
+    <script src="{{ asset('js/bookmark.js') }}"></script>
+    {{-- <script src="{{ asset('js/bookmark-ui.js') }}"></script> --}}
     </main>
     <x-footer />
 </body>
