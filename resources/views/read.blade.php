@@ -1,4 +1,7 @@
-<x-layout>
+<x-layout
+    :title="'Chapter ' . $chapter->number . ' - ' . Str::limit($manga->title, 20) . ' - Baca di MangaMongo'"
+    :description="Str::limit($manga->description, 150)"
+>
     <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
         {{-- Header Navigation --}}
         <div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
@@ -376,5 +379,4 @@
             }
         });
     </script>
-    <script src="{{ asset('js/bookmark-ui.js') }}"></script>
 </x-layout>

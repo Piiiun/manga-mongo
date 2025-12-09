@@ -1,4 +1,7 @@
-<x-layout title="Manga Detail - MangaMongo">
+<x-layout
+    :title="$manga->title . ' - Baca di MangaMongo'"
+    :description="Str::limit($manga->description, 150)"
+>
     <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
@@ -35,13 +38,16 @@
 
                         {{-- Action Buttons --}}
                         <div class="grid grid-cols-2 gap-3 mb-4">
-                            <button id="bookmark-btn"
+                            <button type="button"
                                     data-manga-id="{{ $manga->id }}"
-                                    class="bg-gray-900 hover:bg-amber-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    class="bookmark-toggle bg-gray-900 hover:bg-amber-500 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
+                                <svg class="bookmark-icon-filled hidden w-5 h-5" fill="#f59e0b" viewBox="0 0 20 20">
                                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                                 </svg>
-                                <span id="bookmark-text" class="text-sm font-medium">Bookmark</span>
+                                <svg class="bookmark-icon-outline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                                </svg>
+                                <span class="bookmark-text text-sm font-medium">Bookmark</span>
                             </button>
                             <button class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,8 +164,8 @@
                         {{-- Sinopsis --}}
                         <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-6">
                             <h2 class="text-xl font-bold text-white mb-3">Sinopsis</h2>
-                            <p class="text-gray-300 leading-relaxed">
-                                {{ $manga->description ? Str::limit($manga->description, 300, '...') : 'Deskripsi belum tersedia untuk manga ini.' }}
+                            <p class="text-gray-300 leading-relaxed line-clamp-3">
+                                {{ $manga->description ?? 'Deskripsi belum tersedia untuk manga ini.' }}
                             </p>
                         </div>
 
@@ -490,48 +496,5 @@
                 }
             });
         });
-    </script>
-    <script>
-        const bookmarkBtn = document.getElementById('bookmark-btn');
-        const bookmarkText = document.getElementById('bookmark-text');
-        const mangaId = parseInt(bookmarkBtn.dataset.mangaId);
-
-        // Update UI berdasarkan status bookmark
-        function updateBookmarkUI() {
-            if (bookmarkManager.isBookmarked(mangaId)) {
-                bookmarkBtn.classList.remove('bg-gray-900', 'bg-gray-800', 'text-white');
-                bookmarkBtn.classList.add('bg-amber-500', 'text-black', 'hover:bg-amber-600');
-                bookmarkText.textContent = 'Bookmarked';
-            } else {
-                bookmarkBtn.classList.remove('bg-amber-500', 'text-black', 'hover:bg-amber-600');
-                bookmarkBtn.classList.add('bg-gray-900', 'text-white', 'hover:bg-gray-800');
-                bookmarkText.textContent = 'Bookmark';
-            }
-        }
-
-        // Toggle bookmark
-        bookmarkBtn.addEventListener('click', function() {
-            const isBookmarked = bookmarkManager.toggle(mangaId);
-            updateBookmarkUI();
-            
-            // Show notification
-            const message = isBookmarked ? 'Ditambahkan ke bookmark' : 'Dihapus dari bookmark';
-            const bgColor = isBookmarked ? 'bg-green-500' : 'bg-red-500';
-            showNotification(message);
-        });
-
-        // Initialize
-        updateBookmarkUI();
-
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'fixed bottom-18 md:bottom-4 left-5 md:left-6 bg-gray-900 text-white text-sm px-5 py-3 rounded-lg shadow-lg z-50 animate-spin';
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
     </script>
 </x-layout>

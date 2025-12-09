@@ -70,7 +70,7 @@ function updateBookmarkUI(btn, isBookmarked) {
         // Update styling (sesuaikan dengan design Anda)
         btn.classList.add('bookmarked'); // Custom class untuk styling
         
-        if (text) text.textContent = 'Tersimpan';
+        if (text) text.textContent = 'Bookmarked';
         btn.title = 'Hapus dari Bookmark';
     } else {
         // State: Not Bookmarked
@@ -80,7 +80,7 @@ function updateBookmarkUI(btn, isBookmarked) {
         // Update styling
         btn.classList.remove('bookmarked');
         
-        if (text) text.textContent = 'Simpan';
+        if (text) text.textContent = 'Bookmark';
         btn.title = 'Tambah ke Bookmark';
     }
 }

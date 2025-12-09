@@ -7,8 +7,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-[#111827]/90 p-5 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 mx-2 md:mx-8">
 
                         {{-- background blur besar (opsional) --}}
-                        <div class="pointer-events-none absolute inset-0 opacity-60">
-                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-50 w-full h-full object-cover blur-xl scale-110">
+                        <div class="pointer-events-none absolute inset-0 opacity-50">
+                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-50 w-full h-full object-cover blur-lg scale-110">
                         </div>
 
                         {{-- KONTEN KIRI --}}
@@ -49,7 +49,7 @@
                             <div class="flex flex-wrap gap-3 pt-2">
                                 <a href="{{ route('manga.detail', $manga->slug) }}"
                                    class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-black hover:bg-amber-400 transition">
-                                    📖 Baca
+                                    📖 Read
                                 </a>
 
                                 {{-- Tombol Bookmark --}}
@@ -63,7 +63,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="bookmark-icon-filled w-5 h-5 hidden">
                                         <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="bookmark-text">Simpan</span>
+                                    <span class="bookmark-text">Bookmark</span>
                                 </button>
                             </div>
                         </div>

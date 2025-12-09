@@ -1,6 +1,6 @@
 @props(['manga'])
 
-<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-gray-900 to-gray-800 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-600/20">
+<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-gray-900 to-gray-800 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-600/20">
     {{-- COVER + BADGE --}}
     <div class="relative overflow-hidden">
         <img src="{{ asset('storage/manga/' . $manga->cover_image) }}"
@@ -12,7 +12,7 @@
 
         {{-- Badge Baru --}}
         <div class="absolute left-2 top-2 flex items-center gap-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 px-2 py-1 text-[10px] font-bold text-white shadow-md backdrop-blur-sm md:left-3 md:top-3 md:px-3 md:py-1.5 md:text-xs md:rounded-lg md:shadow-lg">
-            BARU
+            NEW
         </div>
 
         {{-- Icon Bookmark dengan animasi --}}
@@ -94,7 +94,7 @@
         {{-- Read button --}}
         <a href="{{ route('manga.detail', $manga->slug) }}">
             <button class="mt-2 w-full rounded-lg bg-linear-to-r from-amber-500 to-yellow-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:from-amber-600 hover:to-yellow-600 hover:shadow-amber-500/50">
-                Baca Sekarang
+                Read Now
             </button>
         </a>
     </div>

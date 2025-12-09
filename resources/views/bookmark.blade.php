@@ -1,4 +1,7 @@
-<x-layout title="Bookmark Manga">
+<x-layout
+    title="Bookmark - MangaMongo"
+    description="Baca manga dan komik terbaru dengan kualitas terbaik di MangaMongo. Update setiap hari."
+> 
     <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
         {{-- Header --}}
         <div class="px-4 sm:px-6 lg:px-8 py-6">
