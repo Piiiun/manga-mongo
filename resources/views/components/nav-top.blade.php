@@ -1,4 +1,4 @@
-<nav class="bg-gradient-to-r from-manga via-manga/95 to-manga px-4 md:px-10 py-3 top-0 z-50 fixed w-full shadow-lg backdrop-blur-sm border-b border-white/10">
+<nav class="bg-linear-to-r from-manga via-manga/95 to-manga px-4 md:px-10 py-3 top-0 z-51 fixed w-full shadow-lg backdrop-blur-sm border-b border-white/10">
     <div class="flex items-center md:justify-between max-w-8xl mx-auto">
         <div class="shrink-0 mr-3 md:mr-0">
             <a href="{{ route('home') }}" class="group">
@@ -40,7 +40,7 @@
                 {{-- User sudah login --}}
                 <div class="relative group">
                     <button class="flex items-center gap-2 hover:text-second transition-colors duration-200 focus:outline-none">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-second to-yellow-400 flex items-center justify-center text-black font-bold text-sm uppercase ring-2 ring-white/20">
+                        <div class="w-8 h-8 rounded-full bg-linear-to-br from-second to-yellow-400 flex items-center justify-center text-black font-bold text-sm uppercase ring-2 ring-white/20">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                         <span class="hidden lg:block">{{ Auth::user()->name }}</span>
@@ -56,8 +56,8 @@
                                 <p class="text-sm text-gray-400">Signed in as</p>
                                 <p class="text-sm font-medium truncate">{{ Auth::user()->email }}</p>
                             </div>
-                            {{-- {{ route('profile.edit') }} --}}
-                            <a href="" class="block px-4 py-2 text-sm hover:bg-white/10 hover:text-second transition-colors">
+                            
+                            <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm hover:bg-white/10 hover:text-second transition-colors">
                                 <span class="flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -101,7 +101,6 @@
         </div>
     </div>
 </nav>
-
 <script>
     function updateBookmarkCounter() {
         if (typeof bookmarkManager !== 'undefined') {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manga;
 use App\Models\Chapter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChapterController extends Controller
 {
@@ -39,6 +40,10 @@ class ChapterController extends Controller
 
         // Increment chapter views (optional)
         $chapter->increment('views');
+
+        if (Auth::check()) {
+        Auth::user()->trackReading($manga->id, $chapter->number);
+        }
 
         return view('read', compact(
             'manga',

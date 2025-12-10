@@ -32,6 +32,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'role',
+        'profile_picture',
+        'bio',
     ];
 
     /**
@@ -51,11 +53,42 @@ class User extends Authenticatable
         return $this->hasMany(Bookmark::class);
     }
 
-    // public function readingHistories()
-    // {
-    //     return $this->hasMany(ReadingHistory::class);
-    // }
+    public function readingHistories()
+    {
+        return $this->hasMany(ReadingHistory::class)->orderBy('last_read_at', 'desc');
+    }
 
+    public function getProfilePictureUrlAttribute()
+    {
+        if ($this->profile_picture) {
+            return asset('storage/' . $this->profile_picture);
+        }
+        
+        // Default avatar using UI Avatars
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&size=200&background=f59e0b&color=000';
+    }
+
+    public function trackReading($mangaId, $chapterNumber, $page = 1)
+    {
+        return $this->readingHistories()->updateOrCreate(
+            [
+                'manga_id' => $mangaId,
+                'chapter_number' => $chapterNumber,
+            ],
+            [
+                'last_page' => $page,
+                'last_read_at' => now(),
+            ]
+        );
+    }
+
+    public function getLastReadChapter($mangaId)
+    {
+        return $this->readingHistories()
+            ->where('manga_id', $mangaId)
+            ->orderBy('last_read_at', 'desc')
+            ->first();
+    }
     // public function comments()
     // {
     //     return $this->hasMany(Comment::class);

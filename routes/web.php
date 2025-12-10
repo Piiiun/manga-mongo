@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\ReadingHistoryController;
 use App\Http\Controllers\Admin\AdminMangaController;
 
 // Route::get('/', function () {
@@ -33,4 +35,18 @@ Route::middleware(['auth', 'admin'])
         Route::delete('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'destroyChapter'])->name('manga.chapters.destroy');
         Route::post('manga/{manga}/chapters/{chapter}/sync', [AdminMangaController::class, 'syncChapterImages'])->name('manga.chapters.sync');
         Route::post('manga/{manga}/chapters/sync-all', [AdminMangaController::class, 'syncAllChapters'])->name('manga.chapters.sync-all');
+});
+
+Route::middleware('auth')->group(function () {
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.delete-photo');
+    
+    // Reading History
+    Route::get('/history', [ReadingHistoryController::class, 'index'])->name('history.index');
+    Route::post('/history', [ReadingHistoryController::class, 'store'])->name('history.store');
+    Route::delete('/history/{id}', [ReadingHistoryController::class, 'destroy'])->name('history.destroy');
+    Route::delete('/history', [ReadingHistoryController::class, 'clear'])->name('history.clear');
 });
