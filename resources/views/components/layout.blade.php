@@ -1,9 +1,10 @@
 @props([
     'title' => 'MangaMongo - Baca Manga Online',
-
     'description' => null,
-
     'bodyClass' => '',
+    'noFooter' => false,
+    'noNav' => false,
+    'noPadding' => false,
 ])
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +37,18 @@
     @stack('head')
 </head>
 <body class="bg-linear-to-b from-gray-900 to-black text-white {{ $bodyClass }}">
+    @unless($noNav)
     <x-nav-top />
     <x-nav-bottom />
+    @endunless
 
-    <main class="pt-17 min-h-screen">
+    <main class="{{ $noPadding ? '' : 'pt-17' }} min-h-screen">
         {{ $slot }}
     </main>
 
-    <x-footer />
+    @unless($noFooter)
+        <x-footer />
+    @endunless
 
     <script src="{{ asset('js/bookmark.js') }}"></script>
     <script src="{{ asset('js/bookmark-ui.js') }}"></script>
