@@ -48,7 +48,7 @@
                             {{-- tombol --}}
                             <div class="flex flex-wrap gap-3 pt-2">
                                 <a href="{{ route('manga.detail', $manga->slug) }}"
-                                   class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-black hover:bg-amber-400 transition">
+                                   class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-white hover:bg-amber-400 transition">
                                     📖 Read
                                 </a>
 

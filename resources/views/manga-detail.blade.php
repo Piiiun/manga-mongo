@@ -57,10 +57,15 @@
                             </button>
                         </div>
 
-                        <button class="w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors mb-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
+                        <button
+                            type="button"
+                            id="share-button"
+                            class="share-button w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors mb-4 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-950 disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Share {{ $manga->title }}"
+                            data-manga-title="{{ $manga->title }}"
+                            data-manga-url="{{ route('manga.detail', $manga->slug) }}"
+                        >
+                            <x-icons.share class="share-icon" />
                             <span class="text-sm font-medium">Share</span>
                         </button>
 
@@ -434,8 +439,128 @@
 
                     <div id="content-gallery" class="tab-content hidden">
                         <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-                            <h2 class="text-xl font-bold text-white mb-4">Gallery</h2>
-                            <p class="text-gray-400 text-center py-12">Galeri akan menampilkan preview halaman manga</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-white">Gallery</h2>
+                                
+                                @auth
+                                    @if(Auth::user()->isAdmin())
+                                        <a href="{{ route('admin.gallery.create', $manga) }}" 
+                                        class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-black font-bold px-4 py-2 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                            Upload Gambar
+                                        </a>
+                                    @endif
+                                @endauth
+                            </div>
+
+                            @if($manga->galleries->count() > 0)
+                                {{-- Gallery Grid with Lightbox --}}
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    @foreach($manga->galleries as $index => $gallery)
+                                        <div class="group relative aspect-[3/4] rounded-lg overflow-hidden bg-gray-800 cursor-pointer"
+                                            onclick="openLightbox({{ $index }})">
+                                            <img src="{{ $gallery->image_url }}" 
+                                                alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            
+                                            {{-- Overlay --}}
+                                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
+                                                </svg>
+                                            </div>
+
+                                            {{-- Type Badge --}}
+                                            <div class="absolute top-2 left-2">
+                                                <span class="bg-amber-500 text-black text-xs font-bold px-2 py-1 rounded">
+                                                    {{ ucfirst($gallery->type) }}
+                                                </span>
+                                            </div>
+
+                                            {{-- Admin Actions --}}
+                                            @auth
+                                                @if(Auth::user()->isAdmin())
+                                                    <div class="absolute top-2 right-2 flex gap-1">
+                                                        <button onclick="event.stopPropagation(); editGallery({{ $gallery->id }})"
+                                                                class="p-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded transition-colors">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                            </svg>
+                                                        </button>
+                                                        <form method="POST" action="{{ route('admin.gallery.destroy', $gallery) }}" class="inline"
+                                                            onsubmit="event.stopPropagation(); return confirm('Hapus gambar ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="p-1.5 bg-red-500 hover:bg-red-600 text-white rounded transition-colors">
+                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            @endauth
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                {{-- Lightbox Modal --}}
+                                <div id="lightbox" class="hidden fixed inset-0 bg-black/80
+                                 z-50 flex items-center justify-center p-4">
+                                    <button onclick="closeLightbox()" 
+                                            class="absolute top-4 right-4 text-white hover:text-amber-400 transition-colors z-10">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+
+                                    <button onclick="previousImage()" 
+                                            class="absolute left-4 text-white hover:text-amber-400 transition-colors">
+                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                        </svg>
+                                    </button>
+
+                                    <div class="max-w-6xl max-h-full flex flex-col items-center ">
+                                        <img id="lightbox-image" 
+                                            src="" 
+                                            alt="" 
+                                            class="max-w-full max-h-[80vh] object-contain">
+                                        
+                                        <div id="lightbox-info" class="mt-4 text-center text-white">
+                                            <h3 id="lightbox-title" class="text-xl font-bold mb-2"></h3>
+                                            <p id="lightbox-description" class="text-gray-400"></p>
+                                            <p id="lightbox-counter" class="text-sm text-gray-500 mt-2"></p>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="nextImage()" 
+                                            class="absolute right-4 text-white hover:text-amber-400 transition-colors">
+                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                            @else
+                                <div class="text-center py-12">
+                                    <svg class="w-20 h-20 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <p class="text-gray-400 text-lg mb-4">Belum ada gambar di gallery</p>
+                                    
+                                    @auth
+                                        @if(Auth::user()->isAdmin())
+                                            <a href="{{ route('admin.gallery.create', $manga) }}" 
+                                            class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-3 rounded-lg transition-colors">
+                                                Upload Gambar Pertama
+                                            </a>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -452,8 +577,8 @@
             
             // Remove active state from all tabs
             document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('text-amber-400', 'border-amber-400');
-                button.classList.add('text-gray-400', 'border-transparent');
+                button.classList.remove('text-amber-400', 'border-amber-400', 'font-bold', 'hover:text-amber-400');
+                button.classList.add('text-gray-400', 'border-transparent', 'font-normal', 'hover:text-white');
             });
             
             // Show selected tab content
@@ -461,8 +586,8 @@
             
             // Add active state to selected tab
             const activeTab = document.getElementById('tab-' + tabName);
-            activeTab.classList.remove('text-gray-400', 'border-transparent');
-            activeTab.classList.add('text-amber-400', 'border-amber-400');
+            activeTab.classList.remove('text-gray-400', 'border-transparent', 'font-normal', 'hover:text-white');
+            activeTab.classList.add('text-amber-400', 'border-amber-400', 'font-bold', 'hover:text-amber-400');
         }
 
         // Chapter Search and Sort Functionality
@@ -569,4 +694,228 @@
             });
         });
     </script>
+    <script>
+        @php
+            $galleriesData = $manga->galleries->map(function($g) {
+                return [
+                    'url' => $g->image_url,
+                    'title' => $g->title,
+                    'description' => $g->description,
+                    'type' => $g->type
+                ];
+            });
+        @endphp
+        const galleries = @json($galleriesData);
+
+        let currentImageIndex = 0;
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleries.length) % galleries.length;
+            updateLightbox();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleries.length;
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            const gallery = galleries[currentImageIndex];
+            document.getElementById('lightbox-image').src = gallery.url;
+            document.getElementById('lightbox-title').textContent = gallery.title || 'Untitled';
+            document.getElementById('lightbox-description').textContent = gallery.description || '';
+            document.getElementById('lightbox-counter').textContent = `${currentImageIndex + 1} / ${galleries.length}`;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') previousImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        // Close on click outside
+        document.getElementById('lightbox')?.addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+    </script>
+    {{-- Share modal fallback (hidden by default) --}}
+    <div id="share-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 id="share-modal-title" class="text-lg font-bold text-white">Share Manga</h3>
+                <button onclick="closeShareModal()" class="text-gray-400 hover:text-white transition-colors" aria-label="Close share modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="shareViaCopyLink()" class="share-option w-full bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-4 py-3 flex items-center gap-3 transition-colors" aria-label="Copy link to clipboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    Copy Link
+                </button>
+
+                <a href="https://twitter.com/intent/tweet?text={{ urlencode($manga->title) }}&url={{ urlencode(route('manga.detail', $manga->slug)) }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="share-option block w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-3 flex items-center gap-3 transition-colors"
+                   aria-label="Share on Twitter">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                    Share on Twitter
+                </a>
+
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('manga.detail', $manga->slug)) }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="share-option block w-full bg-blue-800 hover:bg-blue-900 text-white rounded-lg px-4 py-3 flex items-center gap-3 transition-colors"
+                   aria-label="Share on Facebook">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Share on Facebook
+                </a>
+            </div>
+
+            <div id="share-status" class="mt-4 text-sm text-center hidden">
+                <span id="share-status-text" class="text-green-400"></span>
+            </div>
+        </div>
+    </div>
+
+    {{-- Add this JavaScript at the end of the file, before </x-layout> --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const shareButton = document.getElementById('share-button');
+        const shareModal = document.getElementById('share-modal');
+        const shareStatus = document.getElementById('share-status');
+        const shareStatusText = document.getElementById('share-status-text');
+        
+        // Share button click handler
+        shareButton.addEventListener('click', async function() {
+            const title = this.dataset.mangaTitle;
+            const url = this.dataset.mangaUrl;
+            
+            // Disable button during share operation
+            shareButton.disabled = true;
+            shareButton.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            try {
+                // Try Web Share API first (mobile browsers)
+                if (navigator.share) {
+                    await navigator.share({
+                        title: title,
+                        text: `Check out this manga: ${title}`,
+                        url: url
+                    });
+                    showShareStatus('Shared successfully!', 'success');
+                } else {
+                    // Fallback to modal for desktop or unsupported browsers
+                    openShareModal();
+                }
+            } catch (error) {
+                console.error('Share failed:', error);
+                
+                // Handle different error types
+                if (error.name === 'AbortError') {
+                    // User cancelled share
+                    showShareStatus('Share cancelled', 'info');
+                } else {
+                    // Other errors - show fallback modal
+                    showShareStatus('Share failed, using fallback options', 'error');
+                    openShareModal();
+                }
+            } finally {
+                // Re-enable button
+                shareButton.disabled = false;
+                shareButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        });
+        
+        function openShareModal() {
+            shareModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus management
+            shareModal.querySelector('[aria-label="Close share modal"]').focus();
+        }
+        
+        function closeShareModal() {
+            shareModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            shareButton.focus(); // Return focus to button
+        }
+        
+        function showShareStatus(message, type) {
+            shareStatusText.textContent = message;
+            shareStatusText.className = type === 'success' ? 'text-green-400' : 
+                                    type === 'error' ? 'text-red-400' : 'text-blue-400';
+            shareStatus.classList.remove('hidden');
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                shareStatus.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Copy link functionality
+        window.shareViaCopyLink = async function() {
+            const url = shareButton.dataset.mangaUrl;
+            
+            try {
+                await navigator.clipboard.writeText(url);
+                showShareStatus('Link copied to clipboard!', 'success');
+                closeShareModal();
+            } catch (error) {
+                console.error('Copy failed:', error);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showShareStatus('Link copied to clipboard!', 'success');
+                closeShareModal();
+            }
+        };
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!shareModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    closeShareModal();
+                }
+            }
+        });
+        
+        // Close modal on outside click
+        shareModal.addEventListener('click', function(e) {
+            if (e.target === shareModal) {
+                closeShareModal();
+            }
+        });
+    });
+    </script>
+
 </x-layout>

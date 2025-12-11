@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ReadingHistoryController;
 use App\Http\Controllers\Admin\AdminMangaController;
+use App\Http\Controllers\Admin\MangaGalleryController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -36,6 +37,11 @@ Route::middleware(['auth', 'admin'])
         Route::delete('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'destroyChapter'])->name('manga.chapters.destroy');
         Route::post('manga/{manga}/chapters/{chapter}/sync', [AdminMangaController::class, 'syncChapterImages'])->name('manga.chapters.sync');
         Route::post('manga/{manga}/chapters/sync-all', [AdminMangaController::class, 'syncAllChapters'])->name('manga.chapters.sync-all');
+        Route::get('/manga/{manga}/gallery/create', [MangaGalleryController::class, 'create'])->name('gallery.create');
+        Route::post('/manga/{manga}/gallery', [MangaGalleryController::class, 'store'])->name('gallery.store');
+        Route::put('/gallery/{gallery}', [MangaGalleryController::class, 'update'])->name('gallery.update');
+        Route::delete('/gallery/{gallery}', [MangaGalleryController::class, 'destroy'])->name('gallery.destroy');
+        Route::post('/manga/{manga}/gallery/reorder', [MangaGalleryController::class, 'reorder'])->name('gallery.reorder');
 });
 
 Route::middleware('auth')->group(function () {

@@ -93,6 +93,9 @@ class MangaController extends Controller
                 'chapters' => function($q) {
                     $q->orderBy('number', 'desc');
                 },
+                'galleries' => function($q) {
+                    $q->ordered();
+                },
                 'comments' => function($q) {
                     $q->topLevel()
                     ->with(['user', 'replies.user'])
@@ -104,7 +107,7 @@ class MangaController extends Controller
         // Increment views
         $manga->increment('views');
 
-        return view('manga.detail', compact('manga'));
+        return view('manga.detail', compact('manga',));
     }
 
 }

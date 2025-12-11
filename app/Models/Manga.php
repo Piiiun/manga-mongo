@@ -85,4 +85,9 @@ class Manga extends Model
     {
         return $this->hasMany(Comment::class); // Include chapter comments
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(MangaGallery::class)->ordered();
+    }
 }

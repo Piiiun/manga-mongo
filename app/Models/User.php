@@ -104,4 +104,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function galleryUploads()
+    {
+        return $this->hasMany(MangaGallery::class, 'uploaded_by');
+    }
 }
