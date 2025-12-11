@@ -49,10 +49,14 @@
                                 <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd"/>
                             </svg>
                         </button>
-                        <button class="p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Share">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
+                        <button 
+                            type="button"
+                            id="share-button"
+                            class="share-button p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Share">
+                            aria-label="Share {{ $manga->title }}"
+                            data-manga-title="{{ $manga->title }}"
+                            data-manga-url="{{ route('manga.read', [$manga->slug, $chap->number]) }}"
+                            <x-icons.share class="share-icon" />
                         </button>
                         <button class="p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Settings">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -72,7 +72,7 @@
                         <div class="relative w-full max-w-[220px] self-center lg:self-stretch">
                             <div class="overflow-hidden rounded-3xl shadow-xl shadow-black/40">
                                 <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
-                                     class="h-full w-full object-cover">
+                                     class="h-88 w-full object-cover">
                             </div>
 
                             {{-- badge rating / favorit --}}

@@ -44,16 +44,26 @@
                             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                         <input type="password" 
+                            id="password"
                             name="password" 
                             required
                             placeholder="••••••••"
-                            class="pl-10 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                            class="pl-10 pr-12 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                        
+                        <button type="button" 
+                            onclick="togglePassword('password', this)"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-amber-500 transition-colors">
+                            <!-- Eye Icon (show) -->
+                            <svg class="eye-open" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <!-- Eye Off Icon (hide) -->
+                            <svg class="eye-closed hidden" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        </button>
+                        
                         @error('password')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
-                
+                </div>               
                 <div class="flex items-center justify-between mb-6">
                     <label class="flex items-center text-gray-300">
                         <input type="checkbox" name="remember" class="mr-2 rounded">

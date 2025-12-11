@@ -5,6 +5,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import { togglePassword } from './togglePassword';
+window.togglePassword = togglePassword;
+
+import { initShareFeature } from './share';
+initShareFeature();
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const heroSwiperEl = document.querySelector('.hero-swiper');
