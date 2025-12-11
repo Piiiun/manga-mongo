@@ -245,8 +245,80 @@
 
                     <div id="content-comments" class="tab-content hidden">
                         <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-                            <h2 class="text-xl font-bold text-white mb-4">Comments</h2>
-                            <p class="text-gray-400 text-center py-12">Fitur komentar akan segera hadir</p>
+                            <h2 class="text-xl font-bold text-white mb-6">
+                                Comment ({{ $manga->comments()->topLevel()->count() }} komentar)
+                            </h2>
+
+                            {{-- Success/Error Messages --}}
+                            @if (session('success'))
+                                <div class="bg-green-500/20 border border-green-500 text-green-400 px-4 py-3 rounded-lg mb-4">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-4">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+
+                            {{-- Comment Form --}}
+                            @auth
+                                <form method="POST" action="{{ route('comments.store.manga', $manga) }}" class="mb-8">
+                                    @csrf
+                                    
+                                    <textarea name="content" 
+                                            rows="4" 
+                                            required
+                                            placeholder="Tulis komentar kamu tentang manga ini..."
+                                            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                                    
+                                    <div class="flex items-center justify-between mt-3">
+                                        <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
+                                            <input type="checkbox" name="is_spoiler" value="1" class="rounded border-gray-600 text-amber-500 focus:ring-amber-500">
+                                            Tandai sebagai spoiler
+                                        </label>
+                                        
+                                        <button type="submit"
+                                            class="px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base
+                                                bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors">
+                                            Kirim Komentar
+                                        </button>
+                                    </div>
+                                </form>
+                            @else
+                                <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
+                                    <p class="text-gray-400 mb-4">Login untuk berkomentar</p>
+                                    <a href="{{ route('login') }}" 
+                                    class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                                        Login
+                                    </a>
+                                </div>
+                            @endauth
+
+                            {{-- Comments List --}}
+                            @php
+                                $comments = $manga->comments()
+                                    ->topLevel()
+                                    ->with(['user', 'replies.user', 'replies.replies.user'])
+                                    ->orderBy('created_at', 'desc')
+                                    ->get();
+                            @endphp
+
+                            @if($comments->count() > 0)
+                                <div class="space-y-4">
+                                    @foreach($comments as $comment)
+                                        <x-comment-item :comment="$comment" />
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-12">
+                                    <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                    <p class="text-gray-400">Belum ada komentar. Jadilah yang pertama!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

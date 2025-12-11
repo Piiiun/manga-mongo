@@ -85,4 +85,26 @@ class MangaController extends Controller
         return view('manga-detail', compact('manga'));
     }
 
+    public function detail($slug)
+    {
+        $manga = Manga::where('slug', $slug)
+            ->with([
+                'genres',
+                'chapters' => function($q) {
+                    $q->orderBy('number', 'desc');
+                },
+                'comments' => function($q) {
+                    $q->topLevel()
+                    ->with(['user', 'replies.user'])
+                    ->orderBy('created_at', 'desc');
+                }
+            ])
+            ->firstOrFail();
+
+        // Increment views
+        $manga->increment('views');
+
+        return view('manga.detail', compact('manga'));
+    }
+
 }

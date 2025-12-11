@@ -17,9 +17,16 @@ class ChapterController extends Controller
         // Cari chapter berdasarkan number
         $chapter = Chapter::where('manga_id', $manga->id)
             ->where('number', $chapter_number)
-            ->with(['pages' => function($query) {
+            ->with([
+                'pages' => function($query) {
                 $query->orderBy('page_number', 'asc');
-            }])
+                },
+                'comments' => function($q) {
+                    $q->topLevel()
+                    ->with(['user', 'replies.user', 'replies.replies.user'])
+                    ->orderBy('created_at', 'desc');
+                }
+            ])
             ->firstOrFail();
 
         // Get all chapters untuk dropdown
@@ -42,7 +49,7 @@ class ChapterController extends Controller
         $chapter->increment('views');
 
         if (Auth::check()) {
-        Auth::user()->trackReading($manga->id, $chapter->number);
+            Auth::user()->trackReading($manga->id, $chapter->number);
         }
 
         return view('read', compact(

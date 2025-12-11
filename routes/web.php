@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ReadingHistoryController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\Admin\AdminMangaController;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/manga', [MangaController::class, 'index'])->name('manga.list');
 Route::get('/manga/{slug}', [MangaController::class, 'show'])->name('manga.detail');
 Route::get('/manga/{manga_slug}/{chapter_number}', [ChapterController::class, 'read'])->name('manga.read');
@@ -49,4 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/history', [ReadingHistoryController::class, 'store'])->name('history.store');
     Route::delete('/history/{id}', [ReadingHistoryController::class, 'destroy'])->name('history.destroy');
     Route::delete('/history', [ReadingHistoryController::class, 'clear'])->name('history.clear');
+
+    // Comment
+    Route::post('/manga/{manga}/comments', [CommentController::class, 'storeManga'])->name('comments.store.manga');
+    Route::post('/manga/{manga}/chapter/{chapter}/comments', [CommentController::class, 'storeChapter'])->name('comments.store.chapter');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/comments/{comment}/like', [CommentController::class, 'toggleLike'])->name('comments.like');
+
 });

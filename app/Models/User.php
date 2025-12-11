@@ -89,10 +89,17 @@ class User extends Authenticatable
             ->orderBy('last_read_at', 'desc')
             ->first();
     }
-    // public function comments()
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'comment_likes')->withTimestamps();
+    }
+    
     public function isAdmin(): bool
     {
         return $this->role === 'admin';

@@ -75,9 +75,14 @@ class Manga extends Model
         
         return number_format($views);
     }
-    // // History bacaan user
-    // public function readingHistories()
-    // {
-    //     return $this->hasMany(ReadingHistory::class);
-    // }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('chapter_id');
+    }
+
+    public function allComments()
+    {
+        return $this->hasMany(Comment::class); // Include chapter comments
+    }
 }

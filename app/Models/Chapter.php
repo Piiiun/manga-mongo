@@ -46,14 +46,8 @@ class Chapter extends Model
         ]);
     }
 
-    // // Komentar di chapter ini
-    // public function comments()
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
-
-    // public function readingHistories()
-    // {
-    //     return $this->hasMany(ReadingHistory::class);
-    // }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
