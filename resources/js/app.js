@@ -17,6 +17,12 @@ initBookmarkFeature();
 import { initReaderToggle } from './reader-toggle';
 initReaderToggle();
 
+import { initAutoScroll } from './reader-autoscroll';
+initAutoScroll();
+
+import { initReader } from './reader';
+initReader();
+
 // Expose bookmark helpers for the bookmark page
 import * as bookmarkLocal from './bookmark/local';
 import { fetchUserBookmarks, toggleUserBookmark } from './bookmark/user';
