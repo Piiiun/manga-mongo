@@ -104,7 +104,7 @@
                         {{-- Genres --}}
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($manga->genres as $genre)
-                                <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
+                                <a class="mb-2 sm:mb-0" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                                     <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
                                         {{ $genre->name }}
                                     </span>
@@ -269,10 +269,12 @@
 
                     <div id="content-comments" class="tab-content hidden">
                         <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-                            <h2 class="text-xl font-bold text-white mb-6">
-                                Comment ({{ $manga->comments()->topLevel()->count() }} komentar)
-                            </h2>
-
+                           <div class="sm:flex items-center justify-between mb-2 sm:mb-6">
+                                <h2 class="text-xl font-bold text-white">
+                                    Comment
+                                </h2>
+                                <span class="text-xs sm:text-sm font-normal text-gray-400">({{ $manga->comments()->topLevel()->count() }} komentar)</span>
+                            </div>
                             {{-- Success/Error Messages --}}
                             @if (session('success'))
                                 <div class="bg-green-500/20 border border-green-500 text-green-400 px-4 py-3 rounded-lg mb-4">
@@ -305,8 +307,11 @@
                                         
                                         <button type="submit"
                                             class="px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base
-                                                bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors">
-                                            Kirim Komentar
+                                                bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
+                                            <span class="hidden sm:block">Kirim Komentar</span>
+                                            <svg class="sm:hidden w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+                                                <path d="M11.5003 12H5.41872M5.24634 12.7972L4.24158 15.7986C3.69128 17.4424 3.41613 18.2643 3.61359 18.7704C3.78506 19.21 4.15335 19.5432 4.6078 19.6701C5.13111 19.8161 5.92151 19.4604 7.50231 18.7491L17.6367 14.1886C19.1797 13.4942 19.9512 13.1471 20.1896 12.6648C20.3968 12.2458 20.3968 11.7541 20.1896 11.3351C19.9512 10.8529 19.1797 10.5057 17.6367 9.81135L7.48483 5.24303C5.90879 4.53382 5.12078 4.17921 4.59799 4.32468C4.14397 4.45101 3.77572 4.78336 3.60365 5.22209C3.40551 5.72728 3.67772 6.54741 4.22215 8.18767L5.24829 11.2793C5.34179 11.561 5.38855 11.7019 5.407 11.8459C5.42338 11.9738 5.42321 12.1032 5.40651 12.231C5.38768 12.375 5.34057 12.5157 5.24634 12.7972Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                                            </svg>
                                         </button>
                                     </div>
                                 </form>
@@ -468,7 +473,7 @@
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                             </svg>
-                                            Upload Gambar
+                                            <span class="hidden sm:block">Upload Gambar</span>
                                         </a>
                                     @endif
                                 @endauth

@@ -11,7 +11,7 @@
 
             {{-- Profile Card --}}
             <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-8">
-                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start scale-90 sm:scale-100">
                     
                     {{-- Profile Picture --}}
                     <div class="relative">
@@ -80,6 +80,16 @@
                                     Logout
                                 </button>
                             </form>
+
+                            @if(Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.manga.index') }}" 
+                                class="inline-flex items-center gap-2 bg-green-700 hover:bg-gray-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench">
+                                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>
+                                    </svg>
+                                    Admin Panel
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -92,7 +102,7 @@
                     @if($readingHistories->count() > 0)
                         <a href="{{ route('history.index') }}" 
                            class="text-amber-400 hover:text-amber-300 text-sm font-semibold">
-                            Lihat Semua →
+                            See All →
                         </a>
                     @endif
                 </div>

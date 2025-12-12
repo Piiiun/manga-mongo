@@ -20,7 +20,7 @@
                             @csrf
                             <button type="submit" 
                                     onclick="return confirm('Sync semua chapters? Ini akan scan folder dan update pages di database.')"
-                                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                                    class="text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                 </svg>
@@ -28,7 +28,7 @@
                             </button>
                         </form>
                         <a href="{{ route('admin.manga.chapters.create', $manga) }}" 
-                           class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                           class="text-sm bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
