@@ -4,9 +4,9 @@
     :noNav="true"
     :noPadding="true    "
 >
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+    <div id="reader-area" class="min-h-screen bg-linear-to-b from-gray-950 to-black">
         {{-- Header Navigation --}}
-        <div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+        <div id="reader-topbar" class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
             <div class="px-4 sm:px-6 lg:px-8 py-3">
                 <div class="flex items-center justify-between">
                     {{-- Left: Back Button --}}
@@ -184,103 +184,106 @@
             </div>
         </div>
 
-        {{-- Bottom Navigation - Desktop Version --}}
-        <div class="hidden sm:block fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 py-4 z-40">
-            <div class="max-w-4xl mx-auto px-4">
-                <div class="flex items-center justify-between gap-4">
-                    {{-- Previous Chapter --}}
-                    @if($previousChapter)
-                        <a href="{{ route('manga.read', [$manga->slug, $previousChapter->number]) }}" 
-                           class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                            </svg>
-                            <span class="font-medium">Chapter {{ $previousChapter->number }}</span>
-                        </a>
-                    @else
-                        <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-6 py-3 rounded-lg text-center cursor-not-allowed">
-                            <span class="font-medium">Tidak Ada</span>
-                        </div>
-                    @endif
+        {{-- Bottom Navigation --}}
+        <div id="reader-bottombar">
+            {{-- Bottom Navigation - Desktop Version --}}
+            <div class="reader-bar hidden sm:block fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 py-4 z-40">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="flex items-center justify-between gap-4">
+                        {{-- Previous Chapter --}}
+                        @if($previousChapter)
+                            <a href="{{ route('manga.read', [$manga->slug, $previousChapter->number]) }}" 
+                               class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                <span class="font-medium">Chapter {{ $previousChapter->number }}</span>
+                            </a>
+                        @else
+                            <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-6 py-3 rounded-lg text-center cursor-not-allowed">
+                                <span class="font-medium">Tidak Ada</span>
+                            </div>
+                        @endif
 
-                    {{-- Back to Manga Info --}}
-                    <a href="{{ route('manga.detail', $manga->slug) }}" 
-                       class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                        Manga Info
-                    </a>
-
-                    {{-- Next Chapter --}}
-                    @if($nextChapter)
-                        <a href="{{ route('manga.read', [$manga->slug, $nextChapter->number]) }}" 
-                           class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
-                            <span class="font-medium">Chapter {{ $nextChapter->number }}</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
+                        {{-- Back to Manga Info --}}
+                        <a href="{{ route('manga.detail', $manga->slug) }}" 
+                           class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            Manga Info
                         </a>
-                    @else
-                        <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-6 py-3 rounded-lg text-center cursor-not-allowed">
-                            <span class="font-medium">Tidak Ada</span>
-                        </div>
-                    @endif
+
+                        {{-- Next Chapter --}}
+                        @if($nextChapter)
+                            <a href="{{ route('manga.read', [$manga->slug, $nextChapter->number]) }}" 
+                               class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                                <span class="font-medium">Chapter {{ $nextChapter->number }}</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        @else
+                            <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-6 py-3 rounded-lg text-center cursor-not-allowed">
+                                <span class="font-medium">Tidak Ada</span>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Bottom Navigation - Mobile Version --}}
-        <div class="sm:hidden fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 z-50">
-            <div class="px-3 py-2">
-                <div class="flex items-center justify-between gap-2">
-                    {{-- Previous Chapter --}}
-                    @if($previousChapter)
-                        <a href="{{ route('manga.read', [$manga->slug, $previousChapter->number]) }}" 
-                           class="flex-1 bg-gray-800 active:bg-gray-700 border border-gray-700 text-white px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors touch-manipulation">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                            </svg>
-                            <span class="text-sm font-medium">Prev</span>
+            {{-- Bottom Navigation - Mobile Version --}}
+            <div class="reader-bar sm:hidden fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 z-50">
+                <div class="px-3 py-2">
+                    <div class="flex items-center justify-between gap-2">
+                        {{-- Previous Chapter --}}
+                        @if($previousChapter)
+                            <a href="{{ route('manga.read', [$manga->slug, $previousChapter->number]) }}" 
+                               class="flex-1 bg-gray-800 active:bg-gray-700 border border-gray-700 text-white px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors touch-manipulation">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                <span class="text-sm font-medium">Prev</span>
+                            </a>
+                        @else
+                            <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-3 py-2.5 rounded-lg text-center cursor-not-allowed">
+                                <span class="text-sm font-medium">-</span>
+                            </div>
+                        @endif
+
+                        {{-- Back to Manga Info --}}
+                        <a href="{{ route('manga.detail', $manga->slug) }}" 
+                           class="bg-amber-500 active:bg-amber-600 text-white px-4 py-2.5 rounded-lg font-medium transition-colors text-sm touch-manipulation">
+                            Info
                         </a>
-                    @else
-                        <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-3 py-2.5 rounded-lg text-center cursor-not-allowed">
-                            <span class="text-sm font-medium">-</span>
-                        </div>
-                    @endif
 
-                    {{-- Back to Manga Info --}}
-                    <a href="{{ route('manga.detail', $manga->slug) }}" 
-                       class="bg-amber-500 active:bg-amber-600 text-white px-4 py-2.5 rounded-lg font-medium transition-colors text-sm touch-manipulation">
-                        Info
-                    </a>
-
-                    {{-- Next Chapter --}}
-                    @if($nextChapter)
-                        <a href="{{ route('manga.read', [$manga->slug, $nextChapter->number]) }}" 
-                           class="flex-1 bg-gray-800 active:bg-gray-700 border border-gray-700 text-white px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors touch-manipulation">
-                            <span class="text-sm font-medium">Next</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    @else
-                        <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-3 py-2.5 rounded-lg text-center cursor-not-allowed">
-                            <span class="text-sm font-medium">-</span>
-                        </div>
-                    @endif
+                        {{-- Next Chapter --}}
+                        @if($nextChapter)
+                            <a href="{{ route('manga.read', [$manga->slug, $nextChapter->number]) }}" 
+                               class="flex-1 bg-gray-800 active:bg-gray-700 border border-gray-700 text-white px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors touch-manipulation">
+                                <span class="text-sm font-medium">Next</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        @else
+                            <div class="flex-1 bg-gray-900 border border-gray-800 text-gray-600 px-3 py-2.5 rounded-lg text-center cursor-not-allowed">
+                                <span class="text-sm font-medium">-</span>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Scroll to Top Button --}}
-        <button id="scroll-to-top" 
-                class="hidden fixed bottom-16 sm:bottom-24 right-4 sm:right-6 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all z-30 touch-manipulation"
-                onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-            </svg>
-        </button>
+            {{-- Scroll to Top Button --}}
+            <button id="scroll-to-top" 
+                    class="reader-aux hidden fixed bottom-16 sm:bottom-24 right-4 sm:right-6 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all z-30 touch-manipulation"
+                    onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                </svg>
+            </button>
+        </div>
 
         {{-- Comment Section --}}
-        <div class="max-w-4xl mx-auto px-4 mt-12 mb-24">
+        <div id="comments-section" class="max-w-4xl mx-auto px-4 mt-12 mb-24">
             <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6">
                 <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -23,3 +23,23 @@
     fill: black !important;
     opacity: 30%;
 }
+
+/* Reader UI fade/slide when toggled */
+#reader-topbar,
+#reader-bottombar .reader-bar,
+#reader-bottombar .reader-aux {
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+#reader-area.reader-ui-hidden #reader-topbar {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+#reader-area.reader-ui-hidden #reader-bottombar .reader-bar,
+#reader-area.reader-ui-hidden #reader-bottombar .reader-aux {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+}

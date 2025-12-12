@@ -14,6 +14,9 @@ initShareFeature();
 import { initBookmarkFeature } from './bookmark';
 initBookmarkFeature();
 
+import { initReaderToggle } from './reader-toggle';
+initReaderToggle();
+
 // Expose bookmark helpers for the bookmark page
 import * as bookmarkLocal from './bookmark/local';
 import { fetchUserBookmarks, toggleUserBookmark } from './bookmark/user';
