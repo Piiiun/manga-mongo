@@ -11,6 +11,16 @@ window.togglePassword = togglePassword;
 import { initShareFeature } from './share';
 initShareFeature();
 
+import { initBookmarkFeature } from './bookmark';
+initBookmarkFeature();
+
+// Expose bookmark helpers for the bookmark page
+import * as bookmarkLocal from './bookmark/local';
+import { fetchUserBookmarks, toggleUserBookmark } from './bookmark/user';
+window.bookmarkLocal = bookmarkLocal;
+window.fetchUserBookmarks = fetchUserBookmarks;
+window.toggleUserBookmark = toggleUserBookmark;
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

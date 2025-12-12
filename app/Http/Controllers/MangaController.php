@@ -74,7 +74,8 @@ class MangaController extends Controller
     public function show($slug)
     {
         // Cari manga berdasarkan slug
-        $manga = Manga::with(['genres', 'chapters.pages', 'bookmarks'])
+        $manga = Manga::with(['genres', 'chapters.pages'])
+            ->withCount('bookmarks')
             ->where('slug', $slug)
             ->firstOrFail();
 

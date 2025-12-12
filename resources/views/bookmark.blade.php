@@ -89,6 +89,8 @@
             
             let currentView = 'grid'; // default view
 
+            const isLoggedIn = Boolean(window.authUser);
+
             // Load bookmarks
             loadBookmarks();
 
@@ -114,7 +116,15 @@
             });
 
             async function loadBookmarks() {
-                const bookmarkIds = bookmarkManager.getAll();
+                let bookmarkIds = [];
+                try {
+                    bookmarkIds = isLoggedIn
+                        ? await window.fetchUserBookmarks()
+                        : window.bookmarkLocal.getBookmarkIds();
+                } catch (error) {
+                    console.error('Gagal mengambil bookmark', error);
+                }
+
                 bookmarkCount.textContent = bookmarkIds.length;
 
                 if (bookmarkIds.length === 0) {
@@ -205,11 +215,20 @@
             }
 
             // Global function untuk remove bookmark
-            window.removeBookmark = function(mangaId) {
-                if (confirm('Hapus manga dari bookmark?')) {
-                    bookmarkManager.remove(mangaId);
-                    loadBookmarks();
+            window.removeBookmark = async function(mangaId) {
+                if (!confirm('Hapus manga dari bookmark?')) return;
+
+                try {
+                    if (isLoggedIn) {
+                        await window.toggleUserBookmark(mangaId);
+                    } else {
+                        window.bookmarkLocal.removeBookmark(mangaId);
+                    }
+                } catch (error) {
+                    console.error('Gagal menghapus bookmark', error);
                 }
+
+                loadBookmarks();
             };
         });
     </script>

@@ -20,7 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/manga', [MangaController::class, 'index'])->name('manga.list');
 Route::get('/manga/{slug}', [MangaController::class, 'show'])->name('manga.detail');
 Route::get('/manga/{manga_slug}/{chapter_number}', [ChapterController::class, 'read'])->name('manga.read');
-Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark.index');
+Route::get('/bookmark', [BookmarkController::class, 'page'])->name('bookmark.index');
 Route::post('/bookmark/get-mangas', [BookmarkController::class, 'getMangas'])->name('bookmark.get-mangas');
 
 Route::middleware(['auth', 'admin'])
@@ -69,4 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/manga/{manga}/rating', [RatingController::class, 'store'])->name('rating.store');
     Route::get('/manga/{manga}/ratings', [RatingController::class, 'index'])->name('rating.index');
     Route::delete('/manga/{manga}/rating', [RatingController::class, 'destroy'])->name('rating.destroy');
+
+    // Bookmarks (user)
+    Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+    Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+    Route::post('/bookmarks/sync', [BookmarkController::class, 'sync'])->name('bookmarks.sync');
 });

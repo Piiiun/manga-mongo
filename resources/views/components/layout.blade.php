@@ -26,6 +26,10 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="MangaMongo">
 
+    <script>
+        window.authUser = @json(Auth::user());
+    </script>
+
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,9 +53,6 @@
     @unless($noFooter)
         <x-footer />
     @endunless
-
-    <script src="{{ asset('js/bookmark.js') }}"></script>
-    <script src="{{ asset('js/bookmark-ui.js') }}"></script>
 
     @stack('scripts')
 </body>

@@ -109,21 +109,3 @@
         </div>
     </div>
 </nav>
-<script>
-    function updateBookmarkCounter() {
-        if (typeof bookmarkManager !== 'undefined') {
-            const count = bookmarkManager.count();
-            const navCounter = document.getElementById('nav-bookmark-count');
-            
-            if (navCounter) navCounter.textContent = count;
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', updateBookmarkCounter);
-
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'manga_bookmarks') {
-            updateBookmarkCounter();
-        }
-    });
-</script>

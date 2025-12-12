@@ -17,8 +17,9 @@
 
         {{-- Icon Bookmark dengan animasi --}}
         <button
+            type="button"
             data-manga-id="{{ $manga->id }}"
-            class="bookmark-btn absolute right-1 md:right-3 top-1 md:top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-amber-500 hover:shadow-amber-500/50"
+            class="bookmark-toggle absolute right-1 md:right-3 top-1 md:top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-amber-500 hover:shadow-amber-500/50"
             title="Tambah ke Bookmark">
             {{-- Icon Bookmark Outline (default) --}}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="bookmark-icon-outline h-5 w-5 transition-all">
@@ -99,99 +100,6 @@
         </a>
     </div>
 </article>
-
-{{-- Script untuk handle bookmark (pastikan bookmark.js sudah di-include di layout) --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Update semua bookmark button status
-        updateAllBookmarkButtons();
-        
-        // Add event listeners ke semua bookmark buttons
-        document.querySelectorAll('.bookmark-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const mangaId = parseInt(this.dataset.mangaId);
-                
-                if (typeof bookmarkManager === 'undefined') {
-                    console.error('BookmarkManager not loaded');
-                    return;
-                }
-                
-                const isBookmarked = bookmarkManager.toggle(mangaId);
-                updateBookmarkButton(this, isBookmarked);
-                
-                // Update navbar counter jika ada
-                updateNavbarCounter();
-                
-                // Show notification
-                showBookmarkNotification(isBookmarked);
-            });
-        });
-    });
-
-    function updateAllBookmarkButtons() {
-        if (typeof bookmarkManager === 'undefined') return;
-        
-        document.querySelectorAll('.bookmark-btn').forEach(btn => {
-            const mangaId = parseInt(btn.dataset.mangaId);
-            const isBookmarked = bookmarkManager.isBookmarked(mangaId);
-            updateBookmarkButton(btn, isBookmarked);
-        });
-    }
-
-    function updateBookmarkButton(btn, isBookmarked) {
-        const outlineIcon = btn.querySelector('.bookmark-icon-outline');
-        const filledIcon = btn.querySelector('.bookmark-icon-filled');
-        
-        if (isBookmarked) {
-            outlineIcon.classList.add('hidden');
-            filledIcon.classList.remove('hidden');
-            btn.classList.add('bg-amber-500');
-            btn.classList.remove('bg-black/50');
-            btn.title = 'Hapus dari Bookmark';
-        } else {
-            outlineIcon.classList.remove('hidden');
-            filledIcon.classList.add('hidden');
-            btn.classList.remove('bg-amber-500');
-            btn.classList.add('bg-black/50');
-            btn.title = 'Tambah ke Bookmark';
-        }
-    }
-
-    function updateNavbarCounter() {
-        if (typeof bookmarkManager === 'undefined') return;
-        
-        const count = bookmarkManager.count();
-        const navCounter = document.getElementById('nav-bookmark-count');
-        if (navCounter) navCounter.textContent = count;
-    }
-
-    function showBookmarkNotification(isBookmarked) {
-        const message = isBookmarked ? 'Ditambahkan ke bookmark ✓' : 'Dihapus dari bookmark';
-        const bgColor = isBookmarked ? 'bg-green-500' : 'bg-red-500';
-        
-        const notification = document.createElement('div');
-        notification.className = `fixed bottom-20 md:bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            notification.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 2000);
-    }
-
-    // Listen for storage changes (sync across tabs)
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'manga_bookmarks') {
-            updateAllBookmarkButtons();
-            updateNavbarCounter();
-        }
-    });
-</script>
 
 <style>
     @keyframes fade-in {

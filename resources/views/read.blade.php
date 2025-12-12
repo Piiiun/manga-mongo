@@ -52,10 +52,10 @@
                         <button 
                             type="button"
                             id="share-button"
-                            class="share-button p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Share">
+                            class="share-button p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Share"
                             aria-label="Share {{ $manga->title }}"
                             data-manga-title="{{ $manga->title }}"
-                            data-manga-url="{{ route('manga.read', [$manga->slug, $chap->number]) }}"
+                            data-manga-url="{{ route('manga.read', [$manga->slug, $chapter->number]) }}">
                             <x-icons.share class="share-icon" />
                         </button>
                         <button class="p-2 hover:bg-gray-800 rounded-lg text-gray-300 hover:text-white transition-colors" title="Settings">
