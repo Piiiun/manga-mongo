@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookmarks', function (Blueprint $table) {
+        Schema::create('manga_ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('manga_id')->constrained()->onDelete('cascade');
-            $table->unique(['user_id', 'manga_id']); // tidak double bookmark
+            $table->integer('rating')->unsigned(); // 1-10
+            $table->text('review')->nullable();
             $table->timestamps();
+            
+            // Unique constraint: user hanya bisa rating manga sekali
+            $table->unique(['user_id', 'manga_id']);
+            $table->index('manga_id');
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookmarks');
+        Schema::dropIfExists('manga_ratings');
     }
 };

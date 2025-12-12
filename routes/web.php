@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MangaController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -64,4 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/comments/{comment}/like', [CommentController::class, 'toggleLike'])->name('comments.like');
 
+    // Ratings
+    Route::post('/manga/{manga}/rating', [RatingController::class, 'store'])->name('rating.store');
+    Route::get('/manga/{manga}/ratings', [RatingController::class, 'index'])->name('rating.index');
+    Route::delete('/manga/{manga}/rating', [RatingController::class, 'destroy'])->name('rating.destroy');
 });

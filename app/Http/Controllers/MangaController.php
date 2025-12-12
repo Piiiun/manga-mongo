@@ -96,12 +96,16 @@ class MangaController extends Controller
                 'galleries' => function($q) {
                     $q->ordered();
                 },
+                'ratings' => function($q) {
+                    $q->with('user')->latest()->take(20);
+                },
                 'comments' => function($q) {
                     $q->topLevel()
                     ->with(['user', 'replies.user'])
                     ->orderBy('created_at', 'desc');
                 }
             ])
+            ->withCount(['rating'])
             ->firstOrFail();
 
         // Increment views

@@ -109,4 +109,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(MangaGallery::class, 'uploaded_by');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(MangaRating::class);
+    }
+
+    // Helper: Get user's rating for manga
+    public function getRatingFor($mangaId)
+    {
+        return $this->ratings()->where('manga_id', $mangaId)->first();
+    }
+
 }

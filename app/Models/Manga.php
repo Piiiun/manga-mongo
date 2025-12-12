@@ -90,4 +90,28 @@ class Manga extends Model
     {
         return $this->hasMany(MangaGallery::class)->ordered();
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(MangaRating::class);
+    }
+
+    // Get average rating
+    public function getAverageRatingAttribute()
+    {
+        return round($this->ratings()->avg('rating'), 1);
+    }
+
+    // Get total ratings count
+    public function getTotalRatingsAttribute()
+    {
+        return $this->ratings()->count();
+    }
+
+    // Check if user rated
+    public function isRatedBy($user)
+    {
+        if (!$user) return false;
+        return $this->ratings()->where('user_id', $user->id)->exists();
+    }
 }
