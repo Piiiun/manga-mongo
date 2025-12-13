@@ -20,7 +20,7 @@
         </div>
 
         {{-- Tabs Filter --}}
-        <div class="mt-4 sm:mt-2 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        {{-- <div class="mt-4 sm:mt-2 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             <button class="shrink-0 rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-amber-600 sm:px-6">
                 Hari Ini
             </button>
@@ -30,7 +30,7 @@
             <button class="shrink-0 rounded-lg bg-gray-700/50 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700 hover:text-white sm:px-6">
                 Bulan Ini
             </button>
-        </div>
+        </div> --}}
 
         {{-- Lihat Semua - Mobile --}}
         <a href="{{ route('manga.list', ['sort' => 'popular']) }}" 

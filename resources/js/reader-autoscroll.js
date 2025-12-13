@@ -165,22 +165,24 @@ function handleManualScroll() {
     }
 }
 
-function showLoginModal() {
-    const modal = document.getElementById('autoscroll-login-modal');
+function showLoginModal(modalId = 'autoscroll-login-modal') {
+    const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.remove('hidden');
     }
 }
 
-function closeLoginModal() {
-    const modal = document.getElementById('autoscroll-login-modal');
+function closeLoginModal(modalId = 'autoscroll-login-modal') {
+    const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.add('hidden');
     }
 }
 
-// Expose close function globally
-window.closeAutoscrollLoginModal = closeLoginModal;
+// Expose functions globally for reuse
+window.showLoginModal = showLoginModal;
+window.closeLoginModal = closeLoginModal;
+window.closeAutoscrollLoginModal = () => closeLoginModal('autoscroll-login-modal');
 
 function setupAutoScroll() {
     readerArea = document.getElementById('reader-area');

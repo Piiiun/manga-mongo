@@ -14,6 +14,7 @@
                     name="search" 
                     placeholder="Cari Manga.." 
                     value="{{ request('search') }}" 
+                    autocomplete="off"
                     class="w-full md:min-w-[300px] rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 pr-10 text-base text-white border border-white/20 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-second focus:border-transparent transition-all duration-300 sm:text-sm"
                 >
                 <button 
