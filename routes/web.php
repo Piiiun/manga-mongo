@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\RatingController;
@@ -22,6 +23,13 @@ Route::get('/manga/{slug}', [MangaController::class, 'show'])->name('manga.detai
 Route::get('/manga/{manga_slug}/{chapter_number}', [ChapterController::class, 'read'])->name('manga.read');
 Route::get('/bookmark', [BookmarkController::class, 'page'])->name('bookmark.index');
 Route::post('/bookmark/get-mangas', [BookmarkController::class, 'getMangas'])->name('bookmark.get-mangas');
+
+Route::get('/page/{slug}', [HelpController::class, 'show'])->name('help.show');
+Route::get('/about', fn() => redirect()->route('help.show', 'tentang-kami'))->name('about');
+Route::get('/contact', fn() => redirect()->route('help.show', 'kontak'))->name('contact');
+Route::get('/faq', fn() => redirect()->route('page.help', 'faq'))->name('faq');
+Route::get('/privacy', fn() => redirect()->route('help.show', 'privacy-policy'))->name('privacy');
+Route::get('/terms', fn() => redirect()->route('help.show', 'terms-of-service'))->name('terms');
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
