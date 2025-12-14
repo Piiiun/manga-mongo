@@ -225,8 +225,112 @@ class AdminMangaController extends Controller
             ->with('success', "Chapter {$validated['number']} berhasil ditambahkan!");
     }
 
+    public function createBulkChapters(Manga $manga)
+    {
+        return view('admin.manga.bulk-create-chapter', compact('manga'));
+    }
+
+    public function storeBulkChapters(Request $request, Manga $manga)
+    {
+        $validated = $request->validate([
+            'chapters' => 'required|string',
+            'published_at' => 'nullable|date',
+        ]);
+
+        // Parse chapter numbers from input
+        // Support formats: "1,2,3" or "1-10" or "1,2,3-5,7"
+        $chaptersInput = trim($validated['chapters']);
+        $chapterNumbers = [];
+
+        // Split by comma first
+        $parts = explode(',', $chaptersInput);
+        
+        foreach ($parts as $part) {
+            $part = trim($part);
+            
+            // Check if it's a range (e.g., "1-10")
+            if (strpos($part, '-') !== false) {
+                $range = explode('-', $part);
+                if (count($range) == 2) {
+                    $start = (float)trim($range[0]);
+                    $end = (float)trim($range[1]);
+                    
+                    // Support decimal increments (0.5 step)
+                    $step = 1;
+                    if ($start != floor($start) || $end != floor($end)) {
+                        $step = 0.5;
+                    }
+                    
+                    for ($i = $start; $i <= $end; $i += $step) {
+                        $chapterNumbers[] = round($i, 1);
+                    }
+                }
+            } else {
+                // Single number
+                $chapterNumbers[] = (float)$part;
+            }
+        }
+
+        // Remove duplicates and sort
+        $chapterNumbers = array_unique($chapterNumbers);
+        sort($chapterNumbers);
+
+        if (empty($chapterNumbers)) {
+            return back()
+                ->withErrors(['chapters' => 'Tidak ada chapter number yang valid!'])
+                ->withInput();
+        }
+
+        // Get existing chapter numbers
+        $existingNumbers = $manga->chapters()
+            ->whereIn('number', $chapterNumbers)
+            ->pluck('number')
+            ->toArray();
+
+        // Filter out existing chapters
+        $newChapterNumbers = array_diff($chapterNumbers, $existingNumbers);
+        $skippedCount = count($chapterNumbers) - count($newChapterNumbers);
+
+        if (empty($newChapterNumbers)) {
+            return back()
+                ->withErrors(['chapters' => 'Semua chapter sudah ada!'])
+                ->withInput();
+        }
+
+        // Create chapters
+        $createdCount = 0;
+        $publishedAt = $validated['published_at'] ?? now();
+
+        foreach ($newChapterNumbers as $number) {
+            Chapter::create([
+                'manga_id' => $manga->id,
+                'number' => $number,
+                'title' => null, // Title kosong sesuai permintaan
+                'slug' => Str::slug("chapter-{$number}"),
+                'published_at' => $publishedAt,
+            ]);
+            $createdCount++;
+        }
+
+        // Update manga's total chapters
+        $manga->update([
+            'total_chapters' => $manga->chapters()->count(),
+            'last_update' => now(),
+        ]);
+
+        $message = "Berhasil membuat {$createdCount} chapter!";
+        if ($skippedCount > 0) {
+            $message .= " ({$skippedCount} chapter sudah ada dan dilewati)";
+        }
+
+        return redirect()
+            ->route('admin.manga.chapters', $manga)
+            ->with('success', $message);
+    }
+
     public function editChapter(Manga $manga, Chapter $chapter)
     {
+        $chapter->loadCount('pages');
         return view('admin.manga.edit-chapter', compact('manga', 'chapter'));
     }
 

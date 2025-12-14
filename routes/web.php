@@ -41,6 +41,8 @@ Route::middleware(['auth', 'admin'])
         Route::get('manga/{manga}/chapters', [AdminMangaController::class, 'chapters'])->name('manga.chapters');
         Route::get('manga/{manga}/chapters/create', [AdminMangaController::class, 'createChapter'])->name('manga.chapters.create');
         Route::post('manga/{manga}/chapters', [AdminMangaController::class, 'storeChapter'])->name('manga.chapters.store');
+        Route::get('manga/{manga}/chapters/bulk-create', [AdminMangaController::class, 'createBulkChapters'])->name('manga.chapters.bulk-create');
+        Route::post('manga/{manga}/chapters/bulk-store', [AdminMangaController::class, 'storeBulkChapters'])->name('manga.chapters.bulk-store');
         Route::get('manga/{manga}/chapters/{chapter}/edit', [AdminMangaController::class, 'editChapter'])->name('manga.chapters.edit');
         Route::put('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'updateChapter'])->name('manga.chapters.update');
         Route::delete('manga/{manga}/chapters/{chapter}', [AdminMangaController::class, 'destroyChapter'])->name('manga.chapters.destroy');

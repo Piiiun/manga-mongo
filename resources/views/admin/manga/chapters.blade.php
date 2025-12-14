@@ -27,6 +27,13 @@
                                 Sync All Chapters
                             </button>
                         </form>
+                        <a href="{{ route('admin.manga.chapters.bulk-create', $manga) }}" 
+                           class="text-sm bg-green-600 hover:bg-green-700 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Bulk Create
+                        </a>
                         <a href="{{ route('admin.manga.chapters.create', $manga) }}" 
                            class="text-sm bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
