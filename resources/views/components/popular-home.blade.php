@@ -48,7 +48,7 @@
             <article class="group relative flex items-center gap-3 sm:gap-4 overflow-hidden rounded-xl bg-linear-to-r from-gray-800/80 to-gray-900/80 backdrop-blur-sm transition-all duration-300 hover:from-gray-800 hover:to-gray-900 hover:shadow-xl hover:shadow-amber-500/10">
                 
                 {{-- Background Image Overlay --}}
-                <div class="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30">
+                <div class="absolute inset-0 opacity-30 transition-opacity group-hover:opacity-40">
                     <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
                          class="h-full w-full object-cover blur-xs">

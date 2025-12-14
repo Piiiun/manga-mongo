@@ -189,7 +189,7 @@
         <div class="my-8 h-px bg-linear-to-r from-transparent via-gray-700 to-transparent"></div>
 
         {{-- Newsletter Section --}}
-        <div class="mb-8 rounded-2xl bg-linear-to-r from-amber-500/10 to-red-500/10 p-6 ring-1 ring-amber-500/20">
+        {{-- <div class="mb-8 rounded-2xl bg-linear-to-r from-amber-500/10 to-red-500/10 p-6 ring-1 ring-amber-500/20">
             <div class="flex flex-col items-center gap-4 md:flex-row md:justify-between">
                 <div class="text-center md:text-left">
                     <h4 class="mb-1 text-lg font-bold text-white">📬 Dapatkan Update Terbaru</h4>
@@ -205,7 +205,7 @@
                     </button>
                 </form>
             </div>
-        </div>
+        </div> --}}
 
         {{-- Bottom Bar --}}
         <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
