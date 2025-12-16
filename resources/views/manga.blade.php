@@ -2,16 +2,17 @@
     title="Daftar Manga - MangaMongo"
     description="Baca manga dan komik terbaru dengan kualitas terbaik di MangaMongo. Update setiap hari."
 > 
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+    <div class="min-h-screen bg-linear-to-b from-card-2 to-transparent">
+        {{-- Navigation Top --}}
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
-            <nav class="flex items-center gap-2 text-sm text-gray-400">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Home</a>
+            <nav class="flex items-center gap-2 text-sm text-text-second">
+                <a href="{{ route('home') }}" class="hover:text-accent-hover transition-colors">Home</a>
                 <span>/</span>
                 <span class="text-white">Manga</span>
                 @if(request('genre'))
                     <span>/</span>
-                    <span class="text-amber-400">{{ ucfirst(request('genre')) }}</span>
+                    <span class="text-accent-hover">{{ ucfirst(request('genre')) }}</span>
                 @endif
             </nav>
         </div>
@@ -22,10 +23,10 @@
                 <h1 class="text-4xl font-bold text-white mb-2">
                     Daftar Manga
                     @if(request('genre'))
-                        <span class="text-amber-400">- {{ ucfirst(request('genre')) }}</span>
+                        <span class="text-accent-hover">- {{ ucfirst(request('genre')) }}</span>
                     @endif
                 </h1>
-                <p class="text-gray-400">Temukan manga favoritmu</p>
+                <p class="text-text-second">Temukan manga favoritmu</p>
             </div>
 
             {{-- FORM UNTUK SORTING DAN FILTER --}}
@@ -38,9 +39,9 @@
                             name="search" 
                             placeholder="Cari manga..." 
                             value="{{ request('search') }}"
-                            class="w-full bg-gray-900/70 border border-gray-800 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent"
+                            class="w-full bg-gray-900/70 border border-gray-800 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent"
                         >
-                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-400">
+                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-second hover:text-accent-hover">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
@@ -51,7 +52,7 @@
                     <div class="flex gap-3">
                         {{-- Sorting Dropdown --}}
                         <select name="sort" 
-                                class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm"
+                                class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent/50 text-sm"
                                 onchange="this.form.submit()">
                             <option value="a-z" {{ request('sort', 'a-z') == 'a-z' ? 'selected' : '' }} class="bg-gray-900">
                                 A-Z
@@ -118,7 +119,7 @@
                         @endforeach
                     </select>
                     
-                    <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white rounded-xl px-4 py-2 text-sm">
+                    <button type="submit" class="bg-accent hover:bg-accent-hover text-white rounded-xl px-4 py-2 text-sm">
                         Terapkan Filter
                     </button>
                 </div>
@@ -127,10 +128,10 @@
             {{-- Active Filters Display --}}
             @if(request('genre') || request('status') || request('type') || request('search'))
                 <div class="mb-6 flex flex-wrap items-center gap-2">
-                    <span class="text-gray-400 text-sm">Filter Aktif:</span>
+                    <span class="text-text-second text-sm">Filter Aktif:</span>
                     
                     @if(request('genre'))
-                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                        <span class="bg-accent/20 text-accent-hover px-3 py-1 rounded-full text-sm flex items-center gap-2">
                             Genre: {{ ucfirst(request('genre')) }}
                             <a href="{{ route('manga.list', array_merge(request()->except('genre'), request()->only(['search', 'sort', 'status', 'type']))) }}" 
                                class="hover:text-white">×</a>
@@ -138,7 +139,7 @@
                     @endif
 
                     @if(request('status'))
-                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                        <span class="bg-accent/20 text-accent-hover px-3 py-1 rounded-full text-sm flex items-center gap-2">
                             Status: {{ request('status') }}
                             <a href="{{ route('manga.list', array_merge(request()->except('status'), request()->only(['search', 'sort', 'genre', 'type']))) }}" 
                                class="hover:text-white">×</a>
@@ -146,7 +147,7 @@
                     @endif
 
                     @if(request('type'))
-                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                        <span class="bg-accent/20 text-accent-hover px-3 py-1 rounded-full text-sm flex items-center gap-2">
                             Tipe: {{ ucfirst(request('type')) }}
                             <a href="{{ route('manga.list', array_merge(request()->except('type'), request()->only(['search', 'sort', 'genre', 'status']))) }}" 
                                class="hover:text-white">×</a>
@@ -154,7 +155,7 @@
                     @endif
 
                     @if(request('search'))
-                        <span class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                        <span class="bg-accent/20 text-accent-hover px-3 py-1 rounded-full text-sm flex items-center gap-2">
                             Pencarian: "{{ request('search') }}"
                             <a href="{{ route('manga.list', array_merge(request()->except('search'), request()->only(['sort', 'genre', 'status', 'type']))) }}" 
                                class="hover:text-white">×</a>
@@ -171,7 +172,7 @@
                     </a>
                 @empty
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-400 text-lg">Tidak ada manga ditemukan</p>
+                        <p class="text-text-second text-lg">Tidak ada manga ditemukan</p>
                     </div>
                 @endforelse
             </div>
@@ -186,7 +187,7 @@
                                 &lt;
                             </span>
                         @else
-                            <a href="{{ $mangas->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                            <a href="{{ $mangas->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-accent text-white rounded-lg transition-colors text-sm">
                                 &lt;
                             </a>
                         @endif
@@ -194,11 +195,11 @@
                         {{-- Page Numbers --}}
                         @foreach(range(1, min(5, $mangas->lastPage())) as $page)
                             @if($page == $mangas->currentPage())
-                                <span class="px-4 py-2 bg-amber-500 text-black font-bold rounded-lg text-sm">
+                                <span class="px-4 py-2 bg-accent text-black font-bold rounded-lg text-sm">
                                     {{ $page }}
                                 </span>
                             @else
-                                <a href="{{ $mangas->appends(request()->query())->url($page) }}" class="px-4 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                                <a href="{{ $mangas->appends(request()->query())->url($page) }}" class="px-4 py-2 bg-gray-900 hover:bg-accent text-white rounded-lg transition-colors text-sm">
                                     {{ $page }}
                                 </a>
                             @endif
@@ -206,7 +207,7 @@
 
                         {{-- Next Button --}}
                         @if($mangas->hasMorePages())
-                            <a href="{{ $mangas->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-amber-500 text-white rounded-lg transition-colors text-sm">
+                            <a href="{{ $mangas->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 bg-gray-900 hover:bg-accent text-white rounded-lg transition-colors text-sm">
                                 &gt;
                             </a>
                         @else

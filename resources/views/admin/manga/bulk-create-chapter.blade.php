@@ -4,14 +4,14 @@
             {{-- Header --}}
             <div class="mb-8">
                 <a href="{{ route('admin.manga.chapters', $manga) }}" 
-                   class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
+                   class="text-text-second hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Kembali ke Chapters
                 </a>
                 <h1 class="text-3xl font-bold text-white">Tambah Banyak Chapter Sekaligus</h1>
-                <p class="text-gray-400 mt-2">Manga: {{ $manga->title }}</p>
+                <p class="text-text-second mt-2">Manga: {{ $manga->title }}</p>
             </div>
 
             {{-- Form --}}
@@ -24,24 +24,24 @@
                     <label class="block text-white font-medium mb-2">Chapter Numbers <span class="text-red-500">*</span></label>
                     <input type="text" name="chapters" value="{{ old('chapters') }}" required
                            placeholder="Contoh: 1-10 atau 1,2,3,5 atau 1-5,7,10-15"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('chapters')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                    <p class="text-gray-400 text-sm mt-2">
+                    <p class="text-text-second text-sm mt-2">
                         Format: 
-                        <span class="text-amber-400">1-10</span> (range), 
-                        <span class="text-amber-400">1,2,3,5</span> (list), atau 
-                        <span class="text-amber-400">1-5,7,10-15</span> (kombinasi)
+                        <span class="text-accent-hover">1-10</span> (range), 
+                        <span class="text-accent-hover">1,2,3,5</span> (list), atau 
+                        <span class="text-accent-hover">1-5,7,10-15</span> (kombinasi)
                     </p>
-                    <p class="text-gray-400 text-sm mt-1">Support decimal: 1, 1.5, 2, 2.5, etc</p>
+                    <p class="text-text-second text-sm mt-1">Support decimal: 1, 1.5, 2, 2.5, etc</p>
                 </div>
 
                 {{-- Published Date --}}
                 <div>
                     <label class="block text-white font-medium mb-2">Published Date</label>
                     <input type="date" name="published_at" value="{{ old('published_at', date('Y-m-d')) }}"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('published_at')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -68,12 +68,12 @@
                 {{-- Examples Box --}}
                 <div class="bg-amber-900/20 border border-amber-800 rounded-lg p-4">
                     <div class="flex gap-3">
-                        <svg class="w-6 h-6 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-accent-hover shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                         <div class="text-sm text-gray-300">
-                            <p class="font-medium mb-2 text-amber-400">Contoh Input:</p>
-                            <ul class="space-y-1 text-gray-400">
+                            <p class="font-medium mb-2 text-accent-hover">Contoh Input:</p>
+                            <ul class="space-y-1 text-text-second">
                                 <li><code class="bg-gray-800 px-2 py-1 rounded">1-10</code> → Membuat chapter 1 sampai 10</li>
                                 <li><code class="bg-gray-800 px-2 py-1 rounded">1,2,3,5,7</code> → Membuat chapter 1, 2, 3, 5, dan 7</li>
                                 <li><code class="bg-gray-800 px-2 py-1 rounded">1-5,7,10-15</code> → Membuat chapter 1-5, 7, dan 10-15</li>
@@ -86,7 +86,7 @@
                 {{-- Submit Button --}}
                 <div class="flex gap-4">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
+                            class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-3 rounded-lg transition-colors">
                         Simpan Chapters
                     </button>
                     <a href="{{ route('admin.manga.chapters', $manga) }}"

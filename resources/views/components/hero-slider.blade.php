@@ -14,7 +14,7 @@
                         {{-- KONTEN KIRI --}}
                         <div class="relative flex-1 space-y-4 text-white">
                             {{-- badge NEW --}}
-                            <div class="inline-flex items-center rounded-full bg-amber-500 px-3 py-1 text-lg font-semibold">
+                            <div class="inline-flex items-center rounded-full bg-accent px-3 py-1 text-lg font-semibold">
                                 NEW
                             </div>
 
@@ -48,7 +48,7 @@
                             {{-- tombol --}}
                             <div class="flex flex-wrap gap-3 pt-2">
                                 <a href="{{ route('manga.detail', $manga->slug) }}"
-                                   class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-white hover:bg-amber-400 transition">
+                                   class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-2 text-sm font-semibold text-white hover:bg-accent-hover transition">
                                     📖 Read
                                 </a>
 
@@ -76,7 +76,7 @@
                             </div>
 
                             {{-- badge rating / favorit --}}
-                            <div class="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-xs font-semibold text-amber-400">
+                            <div class="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-xs font-semibold text-accent-hover">
                                 ⭐ {{ $manga->rating ?? '7.0' }}
                             </div>
                         </div>

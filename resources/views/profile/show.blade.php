@@ -17,8 +17,8 @@
                     <div class="relative">
                         <img src="{{ $user->profile_picture_url }}" 
                              alt="{{ $user->name }}"
-                             class="w-32 h-32 rounded-full object-cover border-4 border-amber-500 shadow-lg">
-                        <div class="absolute -bottom-2 -right-2 bg-amber-500 text-black rounded-full p-2">
+                             class="w-32 h-32 rounded-full object-cover border-4 border-accent shadow-lg">
+                        <div class="absolute -bottom-2 -right-2 bg-accent text-black rounded-full p-2">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
@@ -28,7 +28,7 @@
                     {{-- Profile Info --}}
                     <div class="flex-1 text-center md:text-left">
                         <h1 class="text-3xl font-bold text-white mb-2">{{ $user->name }}</h1>
-                        <p class="text-gray-400 mb-4">{{ $user->email }}</p>
+                        <p class="text-text-second mb-4">{{ $user->email }}</p>
                         
                         @if($user->bio)
                             <p class="text-gray-300 mb-6 max-w-2xl">{{ $user->bio }}</p>
@@ -39,23 +39,23 @@
                         {{-- Stats --}}
                         <div class="flex flex-wrap gap-6 justify-center md:justify-start mb-6">
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-amber-400">{{ $readingHistories->total() }}</div>
-                                <div class="text-sm text-gray-400">Manga Dibaca</div>
+                                <div class="text-2xl font-bold text-accent-hover">{{ $readingHistories->total() }}</div>
+                                <div class="text-sm text-text-second">Manga Dibaca</div>
                             </div>
                             <div class="text-center">   
-                                <div class="text-2xl font-bold text-amber-400" id="bookmark-count">0</div>
-                                <div class="text-sm text-gray-400">Bookmark</div>
+                                <div class="text-2xl font-bold text-accent-hover" id="bookmark-count">0</div>
+                                <div class="text-sm text-text-second">Bookmark</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-amber-400">{{ (int) $user->created_at->diffInDays(now()) }}</div>
-                                <div class="text-sm text-gray-400">Hari Bergabung</div>
+                                <div class="text-2xl font-bold text-accent-hover">{{ (int) $user->created_at->diffInDays(now()) }}</div>
+                                <div class="text-sm text-text-second">Hari Bergabung</div>
                             </div>
                         </div>
 
                         {{-- Action Buttons --}}
                         <div class="flex flex-wrap gap-3 justify-center md:justify-start">
                             <a href="{{ route('profile.edit') }}" 
-                               class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                               class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
@@ -101,7 +101,7 @@
                     <h2 class="text-2xl font-bold text-white">Terakhir Dibaca</h2>
                     @if($readingHistories->count() > 0)
                         <a href="{{ route('history.index') }}" 
-                           class="text-amber-400 hover:text-amber-300 text-sm font-semibold">
+                           class="text-accent-hover hover:text-amber-300 text-sm font-semibold">
                             See All →
                         </a>
                     @endif
@@ -126,7 +126,7 @@
                                     <h3 class="text-white text-sm font-semibold line-clamp-2 mb-1">
                                         {{ $history->manga->title }}
                                     </h3>
-                                    <p class="text-gray-400 text-xs">
+                                    <p class="text-text-second text-xs">
                                         {{ $history->last_read_at->diffForHumans() }}
                                     </p>
                                 </a>
@@ -147,9 +147,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                         </div>
-                        <p class="text-gray-400 mb-4">Belum ada history bacaan</p>
+                        <p class="text-text-second mb-4">Belum ada history bacaan</p>
                         <a href="{{ route('manga.list') }}" 
-                           class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                           class="inline-block bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                             Mulai Baca Manga
                         </a>
                     </div>

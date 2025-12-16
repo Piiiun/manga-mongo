@@ -1,17 +1,17 @@
 @props(['manga'])
 
-<article class="group relative bg-linear-to-b from-gray-900/80 to-gray-950/80 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-500 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/20">
+<article class="group relative bg-linear-to-b from-card/80 to-card-2/80 rounded-xl overflow-hidden border border-gray-800 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20">
     
     {{-- Hot Badge --}}
     @if($manga->rating >= 8.0)
         <div class="absolute top-3 left-3 z-10">
-            <span class="bg-linear-to-r from-red-600 to-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+            <span class="bg-linear-to-r from-badge-1 to-badge-2 text-text text-xs font-bold px-2.5 py-1 rounded-full">
                 Hot
             </span>
         </div>
     @elseif($manga->created_at->diffInDays(now()) <= 3)
         <div class="absolute top-3 left-3 z-10">
-            <span class="bg-linear-to-r from-blue-600 to-blue-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+            <span class="bg-linear-to-r from-accent-strong to-accent text-text text-xs font-bold px-2.5 py-1 rounded-full">
                 New
             </span>
         </div>
@@ -26,7 +26,7 @@
         >
         
         {{-- Dark Overlay Bottom --}}
-        <div class="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-black/90 via-black/50 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-overlay/90 via-overlay/50 to-transparent"></div>
     </div>
 
     {{-- CONTENT --}}
@@ -34,14 +34,14 @@
         {{-- Genres --}}
         <div class="flex flex-wrap gap-1.5 mb-2">
             @foreach($manga->genres->take(2) as $genre)
-                <span class="bg-gray-800/70 text-gray-300 text-xs md:px-2 px-1 md:py-1 py-0.5 rounded-md border border-gray-700">
+                <span class="bg-card/70 text-genre-text text-xs md:px-2 px-1 md:py-1 py-0.5 rounded-md border border-border">
                     {{ $genre->name }}
                 </span>
             @endforeach
         </div>
 
         {{-- Title --}}
-        <h3 class="font-bold text-white text-[15px] line-clamp-2 leading-tight mb-2 group-hover:text-amber-300 transition-colors">
+        <h3 class="font-bold text-text text-[15px] line-clamp-2 leading-tight mb-2 group-hover:text-accent-hover transition-colors">
             {{ $manga->title }}
         </h3>
 
@@ -52,7 +52,7 @@
                 @if($manga->status == 'Ongoing')
                     bg-green-900/40 text-green-400 border-green-800/50
                 @else
-                    bg-gray-800/40 text-gray-400 border-gray-700/50
+                    bg-gray-800/40 text-info border-gray-700/50
                 @endif
             ">
                 {{ $manga->status ?? 'Ongoing' }}
@@ -60,8 +60,8 @@
 
             {{-- Rating --}}
             <div class="flex items-center gap-1">
-                <span class="text-amber-400 text-sm">★</span>
-                <span class="text-white font-bold text-sm">{{ number_format($manga->rating ?? 7.5, 1) }}</span>
+                <span class="text-genre-text text-sm">★</span>
+                <span class="text-text font-bold text-sm">{{ number_format($manga->rating ?? 7.5, 1) }}</span>
             </div>
         </div>
     </div>

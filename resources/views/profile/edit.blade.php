@@ -4,7 +4,7 @@
             
             <div class="mb-6">
                 <a href="{{ route('profile.show') }}" 
-                   class="inline-flex items-center text-amber-400 hover:text-amber-300 transition-colors">
+                   class="inline-flex items-center text-accent-hover hover:text-amber-300 transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
@@ -37,7 +37,7 @@
                             <img id="preview-image" 
                                  src="{{ $user->profile_picture_url }}" 
                                  alt="Profile Preview"
-                                 class="w-24 h-24 rounded-full object-cover border-4 border-amber-500">
+                                 class="w-24 h-24 rounded-full object-cover border-4 border-accent">
                             
                             <div class="flex-1">
                                 <input type="file" 
@@ -49,7 +49,7 @@
                                 <div class="flex gap-3">
                                     <button type="button" 
                                             onclick="document.getElementById('profile_picture').click()"
-                                            class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                                            class="bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                                         Upload Foto Baru
                                     </button>
                                     
@@ -62,7 +62,7 @@
                                     @endif
                                 </div>
                                 
-                                <p class="text-gray-400 text-sm mt-2">
+                                <p class="text-text-second text-sm mt-2">
                                     JPG, PNG. Max 2MB
                                 </p>
                             </div>
@@ -76,7 +76,7 @@
                                name="name" 
                                value="{{ old('name', $user->name) }}" 
                                required
-                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50">
                     </div>
 
                     {{-- Email --}}
@@ -86,7 +86,7 @@
                                name="email" 
                                value="{{ old('email', $user->email) }}" 
                                required
-                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50">
                     </div>
 
                     {{-- Bio --}}
@@ -96,14 +96,14 @@
                                   rows="4"
                                   maxlength="500"
                                   placeholder="Ceritakan tentang dirimu..."
-                                  class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">{{ old('bio', $user->bio) }}</textarea>
-                        <p class="text-gray-400 text-sm mt-1">Max 500 karakter</p>
+                                  class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50">{{ old('bio', $user->bio) }}</textarea>
+                        <p class="text-text-second text-sm mt-1">Max 500 karakter</p>
                     </div>
 
                     {{-- Submit Button --}}
                     <div class="flex gap-3">
                         <button type="submit" 
-                                class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-lg transition-colors">
+                                class="bg-accent hover:bg-accent-hover text-black font-bold px-8 py-3 rounded-lg transition-colors">
                             Simpan Perubahan
                         </button>
                         

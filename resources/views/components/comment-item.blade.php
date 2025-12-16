@@ -1,6 +1,6 @@
 @props(['comment', 'level' => 0, 'manga' => null, 'chapter' => null])
 
-<div class="comment-item {{ $level > 0 ? 'ml-1 sm:ml-2 pl-3 sm:pl-4 border-l-2 border-amber-500/30' : '' }}" data-comment-id="{{ $comment->id }}">
+<div class="comment-item {{ $level > 0 ? 'ml-1 sm:ml-2 pl-3 sm:pl-4 border-l-2 border-accent/30' : '' }}" data-comment-id="{{ $comment->id }}">
     <div class="flex gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-800/30 rounded-lg {{ $comment->is_spoiler ? 'border-2 border-red-500/30' : '' }}">
         {{-- Avatar --}}
         <div class="flex-shrink-0">
@@ -33,7 +33,7 @@
                 
                 @if($comment->is_spoiler)
                     <button onclick="toggleSpoiler(this)" 
-                            class="mt-2 text-xs sm:text-sm text-amber-400 hover:text-amber-300 font-semibold">
+                            class="mt-2 text-xs sm:text-sm text-accent hover:text-accent-hover font-semibold cursor-pointer">
                         Klik untuk lihat spoiler
                     </button>
                 @endif
@@ -44,7 +44,7 @@
                 {{-- Like Button --}}
                 @auth
                     <button onclick="likeComment({{ $comment->id }})" 
-                            class="like-button flex items-center gap-1 text-xs sm:text-sm {{ $comment->isLikedBy(Auth::user()) ? 'text-red-400' : 'text-gray-400' }} hover:text-red-400 transition-colors active:scale-95"
+                            class="like-button flex items-center gap-1 text-xs sm:text-sm {{ $comment->isLikedBy(Auth::user()) ? 'text-red-400' : 'text-text-second' }} hover:text-red-400 transition-colors active:scale-95"
                             data-liked="{{ $comment->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5 {{ $comment->isLikedBy(Auth::user()) ? 'fill-current' : '' }}" 
                              fill="none" 
@@ -55,7 +55,7 @@
                         <span class="likes-count font-semibold">{{ $comment->likes }}</span>
                     </button>
                 @else
-                    <div class="flex items-center gap-1 text-xs sm:text-sm text-gray-400">
+                    <div class="flex items-center gap-1 text-xs sm:text-sm text-text-second">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
@@ -67,7 +67,7 @@
                 @auth
                     @if($level < 3)
                         <button onclick="showReplyForm({{ $comment->id }})" 
-                                class="text-xs sm:text-sm text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
+                                class="text-xs sm:text-sm text-text-second hover:text-accent-hover transition-colors active:scale-95">
                             Balas
                         </button>
                     @endif
@@ -77,7 +77,7 @@
                 @auth
                     @if($comment->user_id === Auth::id())
                         <button onclick="showEditForm({{ $comment->id }})" 
-                                class="text-xs sm:text-sm text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
+                                class="text-xs sm:text-sm text-text-second hover:text-accent-hover transition-colors active:scale-95">
                             Edit
                         </button>
                         
@@ -88,7 +88,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" 
-                                    class="text-xs sm:text-sm text-gray-400 hover:text-red-400 transition-colors active:scale-95">
+                                    class="text-xs sm:text-sm text-text-second hover:text-red-400 transition-colors active:scale-95">
                                 Hapus
                             </button>
                         </form>
@@ -107,10 +107,10 @@
                                   rows="2" 
                                   required
                                   placeholder="Tulis balasan..."
-                                  class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                                  class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none focus:border-accent resize-none"></textarea>
                         
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mt-2">
-                            <label class="flex items-center gap-2 text-xs sm:text-sm text-gray-400">
+                            <label class="flex items-center gap-2 text-xs sm:text-sm text-text-second">
                                 <input type="checkbox" name="is_spoiler" value="1" class="rounded w-4 h-4">
                                 <span>Spoiler</span>
                             </label>
@@ -122,7 +122,7 @@
                                     Batal
                                 </button>
                                 <button type="submit" 
-                                        class="flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg text-xs sm:text-sm transition-colors active:scale-95">
+                                        class="flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 sm:py-2 bg-accent hover:bg-accent-hover text-black font-bold rounded-lg text-xs sm:text-sm transition-colors active:scale-95">
                                     Kirim
                                 </button>
                             </div>
@@ -142,10 +142,10 @@
                             <textarea name="content" 
                                       rows="2" 
                                       required
-                                      class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base focus:outline-none focus:border-amber-500 resize-none">{{ $comment->content }}</textarea>
+                                      class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base focus:outline-none focus:border-accent resize-none">{{ $comment->content }}</textarea>
                             
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mt-2">
-                                <label class="flex items-center gap-2 text-xs sm:text-sm text-gray-400">
+                                <label class="flex items-center gap-2 text-xs sm:text-sm text-text-second">
                                     <input type="checkbox" name="is_spoiler" value="1" {{ $comment->is_spoiler ? 'checked' : '' }} class="rounded w-4 h-4">
                                     <span>Spoiler</span>
                                 </label>
@@ -157,7 +157,7 @@
                                         Batal
                                     </button>
                                     <button type="submit" 
-                                            class="flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg text-xs sm:text-sm transition-colors active:scale-95">
+                                            class="flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 sm:py-2 bg-accent hover:bg-accent-hover text-black font-bold rounded-lg text-xs sm:text-sm transition-colors active:scale-95">
                                         Update
                                     </button>
                                 </div>
@@ -234,12 +234,12 @@
             const heartSvg = likeButton.querySelector('svg');
 
             if (data.liked) {
-                likeButton.classList.remove('text-gray-400');
+                likeButton.classList.remove('text-text-second');
                 likeButton.classList.add('text-red-400');
                 heartSvg.classList.add('fill-current');
             } else {
                 likeButton.classList.remove('text-red-400');
-                likeButton.classList.add('text-gray-400');
+                likeButton.classList.add('text-text-second');
                 heartSvg.classList.remove('fill-current');
             }
 

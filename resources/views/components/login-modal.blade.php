@@ -15,12 +15,12 @@
         <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 max-w-md w-full">
             <div class="text-center">
                 {{-- Icon --}}
-                <div class="mx-auto w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mb-4">
+                <div class="mx-auto w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-4">
                     @if($icon)
                         {!! $icon !!}
                     @else
                         {{-- Default Icon: Lock/Login --}}
-                        <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-accent-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     @endif
@@ -30,14 +30,14 @@
                 <h3 class="text-xl font-bold text-white mb-2">{{ $title }}</h3>
                 
                 {{-- Description --}}
-                <p class="text-gray-400 text-sm mb-6">
+                <p class="text-text-second text-sm mb-6">
                     {{ $description }}
                 </p>
                 
                 {{-- Actions --}}
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ route($loginRoute) }}" 
-                       class="flex-1 bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-3 rounded-lg transition-colors text-center">
+                       class="flex-1 bg-accent hover:bg-accent-hover text-black font-bold px-6 py-3 rounded-lg transition-colors text-center">
                         Login Sekarang
                     </a>
                     <button onclick="{{ $closeFunction ? $closeFunction . '()' : 'window.closeLoginModal(\'' . $id . '\')' }}" 

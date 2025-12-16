@@ -1,6 +1,6 @@
-<x-layout title="Login" :noNav="true" :noFooter="true" :noPadding="true">
-    <div class="min-h-screen flex items-center justify-center bg-gray-900 px-4">
-        <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md">
+<x-layout title="Login" :noFooter="true" :noPadding="true">
+    <div class="min-h-screen flex items-center justify-center bg-card px-0 md:px-4">
+        <div class="bg-card-3 p-8 rounded-2xl shadow-xl w-full max-w-md mt-10 scale-80 md:scale-100">
             <h2 class="text-3xl font-bold text-white mb-6 text-center">Login</h2>
             
             @if (session('status'))
@@ -30,7 +30,7 @@
                             required 
                             autofocus
                             placeholder="contoh@gmail.com"
-                            class="pl-10 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                            class="pl-10 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50">
                         @error('email')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -48,11 +48,11 @@
                             name="password" 
                             required
                             placeholder="••••••••"
-                            class="pl-10 pr-12 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                            class="pl-10 pr-12 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50">
                         
                         <button type="button" 
                             onclick="togglePassword('password', this)"
-                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-amber-500 transition-colors">
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-text-second hover:text-accent transition-colors">
                             <!-- Eye Icon (show) -->
                             <svg class="eye-open" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             <!-- Eye Off Icon (hide) -->
@@ -70,18 +70,18 @@
                         Remember Me
                     </label>
                     
-                    <a href="{{ route('password.request') }}" class="text-amber-400 hover:text-amber-300 text-sm">
+                    <a href="{{ route('password.request') }}" class="text-accent hover:text-accent-hover text-sm">
                         Lupa Password?
                     </a>
                 </div>
                 
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-4 rounded-lg transition-colors">
+                <button type="submit" class="w-full bg-accent hover:bg-accent-hover text-text font-bold py-3 px-4 rounded-lg transition-colors">
                     Login
                 </button>
                 
-                <p class="text-gray-400 text-center mt-6">
+                <p class="text-text-second text-center mt-6">
                     Belum punya akun? 
-                    <a href="{{ route('register') }}" class="text-amber-400 hover:text-amber-300 font-semibold">
+                    <a href="{{ route('register') }}" class="text-accent hover:text-accent-hover font-semibold">
                         Daftar Sekarang
                     </a>
                 </p>

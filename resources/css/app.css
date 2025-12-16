@@ -7,14 +7,41 @@
 
 @theme {
     --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-    /* --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji'; */
     --font-manga: "Inter", sans-serif;
-    /* --color-manga: #001810; */
     --color-manga: #070224;
     --color-second: #52625b;
-    /* --color-second: #070224 ; */
-    --color-bgbody: #042f23;
+
+    /* --color-bg: #0B1020;
+    --color-surface: #111827;
+    --color-card: #1F2937;
+    --color-border: #334155;
+    --color-text: #E5E7EB;
+    --color-text-second: #B5B2BC;
+    --color-accent: #6366F1;
+    --color-accent-hover: #435DB1;
+     */
+    --color-bg: #0B1020;           /* Background utama - very dark navy */
+    --color-surface: #111827;      /* Surface layer - dark gray */
+    --color-card: oklch(21% 0.034 264.665);         /* Card background - gray-900 */
+    --color-card-2 : oklch(13% 0.028 261.692);      /* Card background 2 - gray-950 variant */
+    --color-card-3 : oklch(25% 0.04 267.203);       /* Card background 3 - gray-800 variant */
+    --color-border: #374151;       /* Border co lor - gray-700 */
+    --color-border-2: #4B5563;     /* Border color 2 - gray-600 */
+    --color-text: #E5E7EB;         /* Text primary - light gray */
+    --color-text-second: #9CA3AF;  /* Text secondary - text-second */
+    --color-accent: #4F46E5;       /* Accent - indigo 600 (subtle) */
+    --color-accent-hover: #6366F1; /* Accent hover - indigo 500 */
+    --color-accent-light: #818CF8; /* Accent light - indigo 400 */
+    --color-accent-strong: #4f46e5; /* Accent strong - indigo 700 */
+    --color-success: #10B981;      /* Success - emerald 500 */
+    --color-warning: #F59E0B;      /* Warning - amber 500 */
+    --color-error: #EF4444;        /* Error - red 500 */
+    --color-info: #3B82F6;         /* Info - blue 500 */
+    --color-genre-text: oklch(87.9% 0.169 91.605);  /* Genre text - amber 500 */
+    --color-rating: oklch(82.8% 0.189 84.429); /* Rating text - yellow 500 */
+    --color-badge-1: oklch(57.7% 0.245 27.325); /* Badge background - red 600 */
+    --color-badge-2: oklch(59.2% 0.249 0.584); /* Badge text - pink 600*/
+    --color-overlay: #000000; /* Overlay - black */
 }
 
 .swiper-button-next,

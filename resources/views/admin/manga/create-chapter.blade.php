@@ -4,14 +4,14 @@
             {{-- Header --}}
             <div class="mb-8">
                 <a href="{{ route('admin.manga.chapters', $manga) }}" 
-                   class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
+                   class="text-text-second hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Kembali ke Chapters
                 </a>
                 <h1 class="text-3xl font-bold text-white">Tambah Chapter Baru</h1>
-                <p class="text-gray-400 mt-2">Manga: {{ $manga->title }}</p>
+                <p class="text-text-second mt-2">Manga: {{ $manga->title }}</p>
             </div>
 
             {{-- Form --}}
@@ -24,11 +24,11 @@
                     <label class="block text-white font-medium mb-2">Chapter Number <span class="text-red-500">*</span></label>
                     <input type="number" name="number" value="{{ old('number') }}" required
                            step="0.1" placeholder="1, 1.5, 2, etc"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('number')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                    <p class="text-gray-400 text-sm mt-2">Support decimal: 1, 1.5, 2, etc</p>
+                    <p class="text-text-second text-sm mt-2">Support decimal: 1, 1.5, 2, etc</p>
                 </div>
 
                 {{-- Chapter Title --}}
@@ -36,7 +36,7 @@
                     <label class="block text-white font-medium mb-2">Chapter Title (Optional)</label>
                     <input type="text" name="title" value="{{ old('title') }}"
                            placeholder="e.g., The Beginning"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('title')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -46,7 +46,7 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Published Date</label>
                     <input type="date" name="published_at" value="{{ old('published_at', date('Y-m-d')) }}"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('published_at')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -72,7 +72,7 @@
                 {{-- Submit Button --}}
                 <div class="flex gap-4">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
+                            class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-3 rounded-lg transition-colors">
                         Simpan Chapter
                     </button>
                     <a href="{{ route('admin.manga.chapters', $manga) }}"

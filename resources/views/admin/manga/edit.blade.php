@@ -4,7 +4,7 @@
             {{-- Header --}}
             <div class="mb-8">
                 <a href="{{ route('admin.manga.index') }}" 
-                   class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
+                   class="text-text-second hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -33,7 +33,7 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Title <span class="text-red-500">*</span></label>
                     <input type="text" name="title" value="{{ old('title', $manga->title) }}" required
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('title')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -43,7 +43,7 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Alternative Title</label>
                     <input type="text" name="alternative_title" value="{{ old('alternative_title', $manga->alternative_title) }}"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('alternative_title')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -53,7 +53,7 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Description</label>
                     <textarea name="description" rows="6"
-                              class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">{{ old('description', $manga->description) }}</textarea>
+                              class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">{{ old('description', $manga->description) }}</textarea>
                     @error('description')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -63,8 +63,8 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Change Cover Image</label>
                     <input type="file" name="cover_image" accept="image/*"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-amber-500 file:text-white file:cursor-pointer hover:file:bg-amber-600">
-                    <p class="text-gray-400 text-sm mt-2">Leave empty to keep current cover. Max 5MB</p>
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-accent file:text-white file:cursor-pointer hover:file:bg-accent-hover">
+                    <p class="text-text-second text-sm mt-2">Leave empty to keep current cover. Max 5MB</p>
                     @error('cover_image')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -75,7 +75,7 @@
                     <div>
                         <label class="block text-white font-medium mb-2">Author</label>
                         <input type="text" name="author" value="{{ old('author', $manga->author) }}"
-                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                         @error('author')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -84,7 +84,7 @@
                     <div>
                         <label class="block text-white font-medium mb-2">Artist</label>
                         <input type="text" name="artist" value="{{ old('artist', $manga->artist) }}"
-                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                         @error('artist')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -96,7 +96,7 @@
                     <div>
                         <label class="block text-white font-medium mb-2">Status <span class="text-red-500">*</span></label>
                         <select name="status" required
-                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                             <option value="Ongoing" {{ old('status', $manga->status) === 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
                             <option value="Completed" {{ old('status', $manga->status) === 'Completed' ? 'selected' : '' }}>Completed</option>
                         </select>
@@ -108,7 +108,7 @@
                     <div>
                         <label class="block text-white font-medium mb-2">Type <span class="text-red-500">*</span></label>
                         <select name="type" required
-                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                             <option value="Manga" {{ old('type', $manga->type) === 'Manga' ? 'selected' : '' }}>Manga</option>
                             <option value="Manhwa" {{ old('type', $manga->type) === 'Manhwa' ? 'selected' : '' }}>Manhwa</option>
                             <option value="Manhua" {{ old('type', $manga->type) === 'Manhua' ? 'selected' : '' }}>Manhua</option>
@@ -125,7 +125,7 @@
                         <label class="block text-white font-medium mb-2">Rating (0-10)</label>
                         <input type="number" name="rating" value="{{ old('rating', $manga->rating) }}" 
                                min="0" max="10" step="0.1"
-                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                         @error('rating')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -135,7 +135,7 @@
                         <label class="block text-white font-medium mb-2">Released Year</label>
                         <input type="number" name="released_at" value="{{ old('released_at', $manga->released_at) }}" 
                                min="1900" max="{{ date('Y') }}"
-                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                               class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                         @error('released_at')
                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -146,7 +146,7 @@
                 <div>
                     <label class="block text-white font-medium mb-2">Serialization</label>
                     <input type="text" name="serialization" value="{{ old('serialization', $manga->serialization) }}"
-                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                           class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent">
                     @error('serialization')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -160,7 +160,7 @@
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="genres[]" value="{{ $genre->id }}"
                                        {{ in_array($genre->id, old('genres', $manga->genres->pluck('id')->toArray())) ? 'checked' : '' }}
-                                       class="w-4 h-4 text-amber-500 bg-gray-800 border-gray-700 rounded focus:ring-amber-500">
+                                       class="w-4 h-4 text-accent bg-gray-800 border-gray-700 rounded focus:ring-accent">
                                 <span class="text-gray-300">{{ $genre->name }}</span>
                             </label>
                         @endforeach
@@ -173,7 +173,7 @@
                 {{-- Submit Button --}}
                 <div class="flex gap-4">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
+                            class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-3 rounded-lg transition-colors">
                         Update Manga
                     </button>
                     <a href="{{ route('admin.manga.index') }}"

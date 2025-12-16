@@ -7,7 +7,7 @@
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 class="text-4xl font-bold text-white mb-2">Reading History</h1>
-                        <p class="text-gray-400">Total {{ $histories->total() }} manga</p>
+                        <p class="text-text-second">Total {{ $histories->total() }} manga</p>
                     </div>
 
                     <div class="flex gap-3">
@@ -51,7 +51,7 @@
             @if($histories->count() > 0)
                 <div class="space-y-4">
                     @foreach($histories as $history)
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:border-amber-500/50 transition-colors">
+                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:border-accent/50 transition-colors">
                             <div class="flex gap-4">
                                 {{-- Thumbnail --}}
                                 <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
@@ -65,7 +65,7 @@
                                 <div class="flex-1 min-w-0">
                                     <a href="{{ route('manga.detail', $history->manga->slug) }}" 
                                        class="block">
-                                        <h3 class="text-white font-bold text-lg mb-2 hover:text-amber-400 transition-colors line-clamp-1">
+                                        <h3 class="text-white font-bold text-lg mb-2 hover:text-accent-hover transition-colors line-clamp-1">
                                             {{ $history->manga->title }}
                                         </h3>
                                     </a>
@@ -73,7 +73,7 @@
                                     {{-- Genres --}}
                                     <div class="flex flex-wrap gap-2 mb-3">
                                         @foreach($history->manga->genres->take(3) as $genre)
-                                            <span class="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-xs">
+                                            <span class="px-2 py-1 bg-accent/20 text-accent-hover rounded text-xs">
                                                 {{ $genre->name }}
                                             </span>
                                         @endforeach
@@ -82,17 +82,17 @@
                                     {{-- Chapter Info --}}
                                     <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
                                         <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
-                                           class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300">
+                                           class="inline-flex items-center gap-2 text-accent-hover hover:text-amber-300">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                             </svg>
                                             <span class="font-semibold">Chapter {{ $history->chapter_number }}</span>
                                             @if($history->last_page > 1)
-                                                <span class="text-gray-400">(Halaman {{ $history->last_page }})</span>
+                                                <span class="text-text-second">(Halaman {{ $history->last_page }})</span>
                                             @endif
                                         </a>
                                         
-                                        <span class="text-gray-400">
+                                        <span class="text-text-second">
                                             {{ $history->last_read_at->diffForHumans() }}
                                         </span>
                                     </div>
@@ -101,7 +101,7 @@
                                 {{-- Actions --}}
                                 <div class="flex flex-col gap-2">
                                     <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
-                                       class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors text-center text-sm whitespace-nowrap">
+                                       class="px-4 py-2 bg-accent hover:bg-accent-hover text-black font-bold rounded-lg transition-colors text-center text-sm whitespace-nowrap">
                                         Lanjut Baca
                                     </a>
                                     
@@ -135,9 +135,9 @@
                         </svg>
                     </div>
                     <h2 class="text-2xl font-bold text-white mb-3">Belum Ada History</h2>
-                    <p class="text-gray-400 mb-6">Mulai baca manga untuk menyimpan history bacaanmu</p>
+                    <p class="text-text-second mb-6">Mulai baca manga untuk menyimpan history bacaanmu</p>
                     <a href="{{ route('manga.list') }}" 
-                       class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-lg transition-colors">
+                       class="inline-block bg-accent hover:bg-accent-hover text-black font-bold px-8 py-3 rounded-lg transition-colors">
                         Jelajahi Manga
                     </a>
                 </div>

@@ -4,14 +4,14 @@
     :noNav="true"
     :noPadding="true    "
 >
-    <div id="reader-area" class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+    <div id="reader-area" class="min-h-screen bg-linear-to-b from-card to-transparant">
         {{-- Header Navigation --}}
         <div id="reader-topbar" class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
             <div class="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2">
                 {{-- Mobile: Single Row Layout --}}
                 <div class="flex items-center justify-between gap-2 sm:hidden">
                     <a href="{{ route('manga.detail', $manga->slug) }}" 
-                       class="p-1.5 text-gray-300 hover:text-amber-400 transition-colors">
+                       class="p-1.5 text-gray-300 hover:text-accent-hover transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
@@ -35,7 +35,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </button>
-                        <select id="autoscroll-speed-mobile" class="bg-gray-900 border border-gray-700 text-white text-[10px] rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer">
+                        <select id="autoscroll-speed-mobile" class="bg-gray-900 border border-gray-700 text-white text-[10px] rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-accent cursor-pointer">
                             <option value="slow">L</option>
                             <option value="normal" selected>N</option>
                             <option value="fast">C</option>
@@ -78,7 +78,7 @@
                     <div class="flex items-center justify-between gap-3 mb-2">
                         {{-- Left: Back Button --}}
                         <a href="{{ route('manga.detail', $manga->slug) }}" 
-                           class="flex items-center gap-2 text-gray-300 hover:text-amber-400 transition-colors">
+                           class="flex items-center gap-2 text-gray-300 hover:text-accent-hover transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
@@ -87,12 +87,12 @@
 
                         {{-- Center: Server Selector & Auto Scroll --}}
                         <div class="flex items-center justify-center gap-2">
-                            <button class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors">
+                            {{-- <button class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
                                 </svg>
                                 <span class="hidden md:inline">Server</span>
-                            </button>
+                            </button> --}}
                             
                             {{-- Auto Scroll Controls (Smaller) --}}
                             <div id="autoscroll-container-desktop" class="flex items-center gap-1.5 bg-gray-800 border border-gray-700 rounded-lg px-2 py-1">
@@ -107,7 +107,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </button>
-                                <select id="autoscroll-speed" class="bg-gray-900 border border-gray-700 text-white text-[11px] rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer">
+                                <select id="autoscroll-speed" class="bg-gray-900 border border-gray-700 text-white text-[11px] rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-accent cursor-pointer">
                                     <option value="slow">Lambat</option>
                                     <option value="normal" selected>Normal</option>
                                     <option value="fast">Cepat</option>
@@ -165,19 +165,19 @@
 
                 {{-- Info Chapter --}}
                 <div class="mt-2 sm:mt-3 text-center px-2">
-                    <p class="text-gray-400 text-xs sm:text-sm">
-                        Halaman <span id="current-page">1</span> dari {{ $chapter->pages->count() }} - Server: Server Gambar 1 - Dibaca Selama: <span id="reading-time">0m 0s</span>
-                    </p>
+                    <p class="text-text-second text-xs sm:text-sm">
+                        Halaman <span id="current-page">1</span> dari {{ $chapter->pages->count() }} - Dibaca Selama: <span id="reading-time">0m 0s</span>
+                    </p> 
                 </div>
             </div>
         </div>
-
+{{-- Server: Server Gambar 1 -  --}}
         {{-- Auto Scroll Login Modal (for Guest) --}}
         <x-login-modal 
             id="autoscroll-login-modal"
             title="Login untuk Memakai Fitur Auto Scroll"
             description="Fitur Auto Scroll memungkinkan Anda membaca manga secara otomatis dengan berbagai kecepatan. Login untuk mengakses fitur ini."
-            :icon="'<svg class=\'w-8 h-8 text-amber-400\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z\'/><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M21 12a9 9 0 11-18 0 9 9 0 0118 0z\'/></svg>'"
+            :icon="'<svg class=\'w-8 h-8 text-accent-hover\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z\'/><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M21 12a9 9 0 11-18 0 9 9 0 0118 0z\'/></svg>'"
             loginRoute="login"
             closeFunction="closeAutoscrollLoginModal"
         />
@@ -187,10 +187,10 @@
             <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
                 {{ $manga->title }}
             </h1>
-            <h2 class="text-lg md:text-xl font-semibold text-amber-400">
+            <h2 class="text-lg md:text-xl font-semibold text-accent-hover">
                 Chapter {{ $chapter->number }}
             </h2>
-            <div class="mt-2 text-gray-400 text-sm">
+            <div class="mt-2 text-text-second text-sm">
                 <span>{{ $chapter->published_at ? $chapter->published_at->format('d M Y') : $chapter->created_at->format('d M Y') }}</span>
                 <span class="mx-2">•</span>
                 <span>{{ number_format($chapter->views ?? 0) }} views</span>
@@ -200,7 +200,7 @@
         {{-- Checkbox untuk mode Webtoon --}}
         <div class="flex justify-center mb-4">
             <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" id="webtoon-mode" class="w-4 h-4 text-amber-500 bg-gray-800 border-gray-700 rounded focus:ring-amber-500" checked>
+                <input type="checkbox" id="webtoon-mode" class="w-4 h-4 text-accent bg-gray-800 border-gray-700 rounded focus:ring-accent" checked>
                 <span class="text-gray-300 sm:text-sm text-xs">Hilangkan jarak antar gambar (mode Webtoon)</span>
             </label>
         </div>
@@ -215,7 +215,7 @@
                 Manga Info
             </a>
             <button onclick="window.toggleChapterList && window.toggleChapterList()" 
-                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors">
+                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
@@ -230,7 +230,7 @@
                     <div class="bg-gray-900 rounded-xl border border-gray-800 p-6">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-bold text-white">Daftar Chapter</h3>
-                            <button onclick="window.toggleChapterList && window.toggleChapterList()" class="text-gray-400 hover:text-white">
+                            <button onclick="window.toggleChapterList && window.toggleChapterList()" class="text-text-second hover:text-white">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -240,8 +240,8 @@
                         <div class="space-y-2 max-h-[600px] overflow-y-auto">
                             @foreach($allChapters as $chap)
                                 <a href="{{ route('manga.read', [$manga->slug, $chap->number]) }}" 
-                                   class="block bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-amber-500 rounded-lg p-4 transition-all
-                                          {{ $chap->id === $chapter->id ? 'ring-2 ring-amber-500 bg-amber-500/10' : '' }}">
+                                   class="block bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-accent rounded-lg p-4 transition-all
+                                          {{ $chap->id === $chapter->id ? 'ring-2 ring-accent bg-accent/10' : '' }}">
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <h4 class="text-white font-medium">
@@ -250,12 +250,12 @@
                                                     - {{ $chap->title }}
                                                 @endif
                                             </h4>
-                                            <p class="text-gray-400 text-sm mt-1">
+                                            <p class="text-text-second text-sm mt-1">
                                                 {{ $chap->published_at ? $chap->published_at->diffForHumans() : $chap->created_at->diffForHumans() }}
                                             </p>
                                         </div>
                                         @if($chap->id === $chapter->id)
-                                            <span class="bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-full">
+                                            <span class="bg-accent text-black text-xs font-bold px-3 py-1 rounded-full">
                                                 Sedang Dibaca
                                             </span>
                                         @endif
@@ -285,6 +285,24 @@
             </div>
         </div>
 
+        {{-- Navigation Buttons --}}
+        <div class="flex justify-center gap-4 mb-6 px-4">
+            <a href="{{ route('manga.detail', $manga->slug) }}" 
+               class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Manga Info
+            </a>
+            <button onclick="window.toggleChapterList && window.toggleChapterList()" 
+                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                Daftar Chapter
+            </button>
+        </div>
+
         {{-- Bottom Navigation --}}
         <div id="reader-bottombar">
             {{-- Bottom Navigation - Desktop Version --}}
@@ -308,7 +326,7 @@
 
                         {{-- Back to Manga Info --}}
                         <a href="{{ route('manga.detail', $manga->slug) }}" 
-                           class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                           class="bg-accent hover:bg-accent-hover text-white px-6 py-3 rounded-lg font-medium transition-colors">
                             Manga Info
                         </a>
 
@@ -351,7 +369,7 @@
 
                         {{-- Back to Manga Info --}}
                         <a href="{{ route('manga.detail', $manga->slug) }}" 
-                           class="bg-amber-500 active:bg-amber-600 text-white px-4 py-2.5 rounded-lg font-medium transition-colors text-sm touch-manipulation">
+                           class="bg-accent active:bg-accent-hover text-white px-4 py-2.5 rounded-lg font-medium transition-colors text-sm touch-manipulation">
                             Info
                         </a>
 
@@ -375,7 +393,7 @@
 
             {{-- Scroll to Top Button --}}
             <button id="scroll-to-top" 
-                    class="reader-aux hidden fixed bottom-16 sm:bottom-24 right-4 sm:right-6 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all z-30 touch-manipulation"
+                    class="reader-aux hidden fixed bottom-16 sm:bottom-24 right-4 sm:right-6 bg-accent hover:bg-accent-hover active:bg-amber-700 text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all z-30 touch-manipulation"
                     onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
@@ -388,12 +406,12 @@
             <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
                 <div class="sm:flex items-center justify-between mb-2 sm:mb-6">
                     <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-                        <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-accent-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                         </svg>
                         Diskusi Chapter {{ $chapter->number }}
                     </h2>
-                    <span class="text-xs sm:text-sm font-normal text-gray-400">({{ $chapter->comments()->topLevel()->count() }} komentar)</span>
+                    <span class="text-xs sm:text-sm font-normal text-text-second">({{ $chapter->comments()->topLevel()->count() }} komentar)</span>
                 </div>
 
                 {{-- Success/Error Messages --}}
@@ -421,11 +439,11 @@
                                         rows="3" 
                                         required
                                         placeholder="Bagaimana pendapat kamu tentang chapter ini?"
-                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent resize-none"></textarea>
                                 
                                 <div class="flex items-center justify-between mt-1 sm:mt-3">
-                                    <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer mb-2 sm:mb-0">
-                                        <input type="checkbox" name="is_spoiler" value="1" class="rounded border-gray-600 text-amber-500 focus:ring-amber-500">
+                                    <label class="flex items-center gap-2 text-sm text-text-second cursor-pointer mb-2 sm:mb-0">
+                                        <input type="checkbox" name="is_spoiler" value="1" class="rounded border-gray-600 text-accent focus:ring-accent">
                                         <span class="flex items-center gap-1">
                                             <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -435,7 +453,7 @@
                                     </label>
                                     
                                     <button type="submit" 
-                                            class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
+                                            class="px-4 py-2 bg-accent hover:bg-accent-hover text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
                                         <span class="hidden sm:block">Kirim Komentar</span>
                                         <svg class="sm:hidden w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
                                             <path d="M11.5003 12H5.41872M5.24634 12.7972L4.24158 15.7986C3.69128 17.4424 3.41613 18.2643 3.61359 18.7704C3.78506 19.21 4.15335 19.5432 4.6078 19.6701C5.13111 19.8161 5.92151 19.4604 7.50231 18.7491L17.6367 14.1886C19.1797 13.4942 19.9512 13.1471 20.1896 12.6648C20.3968 12.2458 20.3968 11.7541 20.1896 11.3351C19.9512 10.8529 19.1797 10.5057 17.6367 9.81135L7.48483 5.24303C5.90879 4.53382 5.12078 4.17921 4.59799 4.32468C4.14397 4.45101 3.77572 4.78336 3.60365 5.22209C3.40551 5.72728 3.67772 6.54741 4.22215 8.18767L5.24829 11.2793C5.34179 11.561 5.38855 11.7019 5.407 11.8459C5.42338 11.9738 5.42321 12.1032 5.40651 12.231C5.38768 12.375 5.34057 12.5157 5.24634 12.7972Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
@@ -450,9 +468,9 @@
                         <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
-                        <p class="text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
+                        <p class="text-text-second mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
                         <a href="{{ route('login') }}" 
-                        class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                        class="inline-block bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                             Login Sekarang
                         </a>
                     </div>
@@ -474,7 +492,7 @@
                             Semua Komentar ({{ $comments->count() }})
                         </h3>
                         
-                        <select class="bg-gray-800 border border-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                        <select class="bg-gray-800 border border-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                                 onchange="window.sortComments && window.sortComments(this.value)">
                             <option value="newest">Terbaru</option>
                             <option value="oldest">Terlama</option>
@@ -492,7 +510,7 @@
                         <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
-                        <p class="text-gray-400 text-lg mb-2">Belum ada komentar</p>
+                        <p class="text-text-second text-lg mb-2">Belum ada komentar</p>
                         <p class="text-gray-500 text-sm">Jadilah yang pertama berkomentar tentang chapter ini!</p>
                     </div>
                 @endif
@@ -501,10 +519,10 @@
             {{-- Info Tips --}}
             <div class="mt-6 bg-gray-900/30 border border-gray-800 rounded-lg p-4">
                 <div class="flex items-start gap-3">
-                    <svg class="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-accent-hover flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    <div class="text-sm text-gray-400">
+                    <div class="text-sm text-text-second">
                         <p class="font-semibold text-gray-300 mb-1">Tips Berkomentar:</p>
                         <ul class="space-y-1 list-disc list-inside">
                             <li>Gunakan tag spoiler jika membahas plot penting</li>

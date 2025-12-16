@@ -4,7 +4,7 @@
         <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
             <div class="flex items-center justify-between mb-4">
                 <h3 id="share-modal-title" class="text-lg font-bold text-white">Share Manga</h3>
-                <button onclick="closeShareModal()" class="text-gray-400 hover:text-white transition-colors" aria-label="Close share modal">
+                <button onclick="closeShareModal()" class="text-text-second hover:text-white transition-colors" aria-label="Close share modal">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
