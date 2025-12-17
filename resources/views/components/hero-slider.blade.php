@@ -4,7 +4,7 @@
 
             @foreach ($featuredMangas as $manga)
                 <div class="swiper-slide">
-                    <div class="relative overflow-hidden rounded-3xl bg-[#111827]/90 p-5 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 mx-2 md:mx-8">
+                    <div class="relative overflow-hidden rounded-3xl bg-surface/90 p-5 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 mx-2 md:mx-8">
 
                         {{-- background blur besar (opsional) --}}
                         <div class="pointer-events-none absolute inset-0 opacity-50">
@@ -69,7 +69,7 @@
                         </div>
 
                         {{-- KONTEN KANAN: COVER --}}
-                        <div class="relative w-full max-w-[220px] self-center lg:self-stretch">
+                        <div class="relative aspect-3/4 self-center lg:self-stretch">
                             <div class="overflow-hidden rounded-3xl shadow-xl shadow-black/40">
                                 <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
                                      class="h-88 w-full object-cover">

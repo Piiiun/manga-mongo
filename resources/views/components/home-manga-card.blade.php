@@ -1,6 +1,6 @@
 @props(['manga'])
 
-<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-card to-card-2 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent-hover/20">
+<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-card to-card-2 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent-hover/20 border border-white/5 ">
     {{-- COVER + BADGE --}}
     <div class="relative overflow-hidden">
         <img src="{{ asset('storage/manga/' . $manga->cover_image) }}"
@@ -42,7 +42,7 @@
 
         {{-- Rating dengan styling lebih baik --}}
         <div class="absolute bottom-3 right-1 md:right-3 flex items-center gap-1.5 rounded-md md:rounded-lg bg-linear-to-r from-accent to-accent-hover px-1 md:px-3 py-0.5 md:py-1.5 text-xs font-bold text-white shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-rating" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
             {{ number_format($manga->rating ?? 7.0, 1) }}
@@ -74,10 +74,10 @@
 
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
-                <div class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
+                <div class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-accent/10">
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"
-                           class="flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover">
+                           class="flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-hover">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                             </svg>

@@ -1,6 +1,6 @@
 @props(['manga'])
 
-<article class="group relative bg-linear-to-b from-card/80 to-card-2/80 rounded-xl overflow-hidden border border-gray-800 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20">
+<article class="group relative bg-linear-to-b from-card to-card-2/80 rounded-xl overflow-hidden border border-gray-800 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
     
     {{-- Hot Badge --}}
     @if($manga->rating >= 8.0)
@@ -60,7 +60,7 @@
 
             {{-- Rating --}}
             <div class="flex items-center gap-1">
-                <span class="text-genre-text text-sm">★</span>
+                <span class="text-rating text-sm">★</span>
                 <span class="text-text font-bold text-sm">{{ number_format($manga->rating ?? 7.5, 1) }}</span>
             </div>
         </div>

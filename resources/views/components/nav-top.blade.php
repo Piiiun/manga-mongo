@@ -1,5 +1,5 @@
 <nav class="bg-gradient-to-r from-bg via-surface/95 to-bg px-4 md:px-10 py-3 top-0 z-50 fixed w-full shadow-lg backdrop-blur-sm border-b border-accent/10">
-    <div class="flex items-center md:justify-between max-w-8xl mx-auto">
+    <div class="flex items-center md:justify-between max-w-[1540px] mx-auto">
         <div class="shrink-0 mr-3 md:mr-0">
             <a href="{{ route('home') }}" class="group">
                 <img src="{{ asset('manga.png') }}" alt="Manga" class="h-10 w-auto hidden md:block transition-transform group-hover:scale-105">
