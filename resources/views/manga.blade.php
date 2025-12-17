@@ -165,16 +165,26 @@
             @endif
 
             {{-- Grid Manga --}}
-            <div class="grid md:gap-5 gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                @forelse($mangas as $manga)
-                    <a href="{{ route('manga.detail', $manga->slug) }}" class="block group">
-                        <x-manga-card-list :manga="$manga" />
-                    </a>
-                @empty
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-text-second text-lg">Tidak ada manga ditemukan</p>
-                    </div>
-                @endforelse
+            <div id="manga-grid" class="grid md:gap-5 gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {{-- Skeleton Loader --}}
+                <div id="skeleton-loader" class="hidden contents">
+                    @for($i = 0; $i < 10; $i++)
+                        <x-manga-card-skeleton />
+                    @endfor
+                </div>
+
+                {{-- Actual Manga Content --}}
+                <div id="manga-content" class="contents">
+                    @forelse($mangas as $manga)
+                        <a href="{{ route('manga.detail', $manga->slug) }}" class="block group">
+                            <x-manga-card-list :manga="$manga" />
+                        </a>
+                    @empty
+                        <div class="col-span-full text-center py-12">
+                            <p class="text-text-second text-lg">Tidak ada manga ditemukan</p>
+                        </div>
+                    @endforelse
+                </div>
             </div>
 
             {{-- Pagination dengan menjaga query parameters --}}
@@ -221,7 +231,7 @@
         </div>
     </div>
 
-    {{-- JavaScript untuk filter modal --}}
+    {{-- JavaScript untuk filter modal dan skeleton loader --}}
     <script>
         function openFilterModal() {
             const extraFilters = document.getElementById('extraFilters');
@@ -231,5 +241,32 @@
                 extraFilters.style.display = 'none';
             }
         }
+
+        // Skeleton loader untuk form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[method="GET"]');
+            const skeletonLoader = document.getElementById('skeleton-loader');
+            const mangaContent = document.getElementById('manga-content');
+
+            // Pastikan skeleton tersembunyi saat halaman dimuat
+            if (skeletonLoader) {
+                skeletonLoader.classList.add('hidden');
+            }
+            if (mangaContent) {
+                mangaContent.style.display = '';
+            }
+
+            if (form) {
+                form.addEventListener('submit', function() {
+                    // Tampilkan skeleton, sembunyikan content saat form di-submit
+                    if (skeletonLoader) {
+                        skeletonLoader.classList.remove('hidden');
+                    }
+                    if (mangaContent) {
+                        mangaContent.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </x-layout>
