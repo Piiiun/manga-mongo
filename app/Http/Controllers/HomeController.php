@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Manga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -22,11 +24,20 @@ class HomeController extends Controller
             ->get();
 
         $popularMangas = Manga::with(['genres', 'chapters'])
-        ->withCount('chapters')
-        ->orderBy('views', 'desc')
-        ->take(6)
-        ->get();
+            ->withCount('chapters')
+            ->orderBy('views', 'desc')
+            ->take(6)
+            ->get();
 
-        return view('home', compact('featuredMangas', 'latestMangas', 'popularMangas'));
+        $lastHistory = null;
+        if (Auth::check()) {
+            $lastHistory = Auth::user()
+                ->readingHistories()
+                ->with(['manga', 'manga.genres'])
+                ->latest('last_read_at')
+                ->first();
+        }
+
+        return view('home', compact('featuredMangas', 'latestMangas', 'popularMangas', 'lastHistory'));
     }
 }
