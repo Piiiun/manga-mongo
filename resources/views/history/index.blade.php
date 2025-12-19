@@ -1,5 +1,5 @@
 <x-layout title="Reading History - MangaMongo">
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-6 sm:py-8 px-3 sm:px-4">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-6 sm:py-8 px-3 sm:px-4">
         <div class="max-w-7xl mx-auto">
             
             {{-- Header --}}

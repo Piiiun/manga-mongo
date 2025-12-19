@@ -222,12 +222,12 @@
     </div>
 
     {{-- Scroll to Top Button --}}
-    @if(!request()->routeIs('manga.read'))
+    {{-- @if(!request()->routeIs('manga.read'))
         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
                 class="fixed bottom-18 md:bottom-8 right-5 md:right-8 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-amber-500 to-red-500 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-amber-500/50">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
         </button>
-    @endif
+    @endif --}}
 </footer>

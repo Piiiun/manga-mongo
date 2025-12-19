@@ -215,7 +215,7 @@
                 Manga Info
             </a>
             <button onclick="window.toggleChapterList && window.toggleChapterList()" 
-                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors">
+                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>

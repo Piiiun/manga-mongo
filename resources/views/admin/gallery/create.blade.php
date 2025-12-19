@@ -1,5 +1,5 @@
 <x-layout title="Upload Gallery - {{ $manga->title }}">
-    <div class="min-h-screen bg-gradient-to-b from-gray-950 to-black py-8 px-4">
+    <div class="min-h-screen bg-gradient-to-b from-slate-950 to-transparent py-8 px-4">
         <div class="max-w-4xl mx-auto">
             
             {{-- Back Button --}}
@@ -129,7 +129,7 @@
                     <div class="flex gap-3">
                         <button type="submit" 
                                 id="submit-btn"
-                                class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-8 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                             Upload Gallery
                         </button>
                         

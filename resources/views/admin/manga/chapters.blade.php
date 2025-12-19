@@ -1,8 +1,8 @@
 <x-layout>
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-10">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-10">
         <div class="max-w-6xl mx-auto px-4">
             {{-- Header --}}
-            <div class="mb-8">
+            <div class="mb-6">
                 <a href="{{ route('admin.manga.index') }}" 
                    class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,36 +10,52 @@
                     </svg>
                     Kembali ke Manga List
                 </a>
-                <div class="sm:flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
+                    {{-- Header Info --}}
                     <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Chapters: {{ $manga->title }}</h1>
-                        <p class="text-gray-400">Total: {{ $chapters->total() }} chapters</p>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Chapters: {{ $manga->title }}</h1>
+                        <p class="text-sm sm:text-base text-gray-400">Total: <span class="font-semibold text-amber-400">{{ $chapters->total() }}</span> chapters</p>
                     </div>
-                    <div class="flex gap-3 mt-5 sm:mt-0">
-                        <form action="{{ route('admin.manga.chapters.sync-all', $manga) }}" method="POST" class="inline">
+
+                    {{-- Action Buttons --}}
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                        {{-- Sync All Chapters Button --}}
+                        <form action="{{ route('admin.manga.chapters.sync-all', $manga) }}" method="POST" class="flex-1 sm:flex-initial">
                             @csrf
                             <button type="submit" 
                                     onclick="return confirm('Sync semua chapters? Ini akan scan folder dan update pages di database.')"
-                                    class="text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    class="group relative w-full sm:w-auto text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-2 overflow-hidden">
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-transform duration-500 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                 </svg>
-                                Sync All Chapters
+                                <span class="relative z-10 hidden sm:inline">Sync All Chapters</span>
+                                <span class="relative z-10 sm:hidden">Sync All</span>
                             </button>
                         </form>
+
+                        {{-- Bulk Create Button --}}
                         <a href="{{ route('admin.manga.chapters.bulk-create', $manga) }}" 
-                           class="text-sm bg-green-600 hover:bg-green-700 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="group relative flex-1 sm:flex-initial text-xs sm:text-sm bg-green-600 hover:bg-green-500 text-white font-bold px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/40 flex items-center justify-center gap-2 overflow-hidden">
+                            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Bulk Create
+                            <span class="relative z-10">Bulk Create</span>
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
                         </a>
+
+                        {{-- Add Chapter Button --}}
                         <a href="{{ route('admin.manga.chapters.create', $manga) }}" 
-                           class="text-sm bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 sm:px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="group relative flex-1 sm:flex-initial text-xs sm:text-sm bg-amber-500 hover:bg-amber-400 text-black font-bold px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/40 flex items-center justify-center gap-2 overflow-hidden">
+                            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-400 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-all duration-300 group-hover:scale-125 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Tambah Chapter
+                            <span class="relative z-10 hidden sm:inline">Tambah Chapter</span>
+                            <span class="relative z-10 sm:hidden">Tambah</span>
                         </a>
                     </div>
                 </div>
@@ -164,4 +180,65 @@
             </div>
         </div>
     </div>
+
+    <style>
+        /* Smooth animations */
+        button, a {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* Shine effect on hover */
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .group:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 0.6s;
+            z-index: 20;
+        }
+
+        /* Pulse animation for primary action */
+        @keyframes pulse-border {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 4px rgba(251, 191, 36, 0);
+            }
+        }
+
+        /* Add subtle bounce on mobile tap */
+        @media (max-width: 640px) {
+            button:active, a:active {
+                transform: scale(0.97);
+            }
+        }
+
+        /* Loading state animation for sync button */
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        button[type="submit"]:active svg {
+            animation: spin-slow 1s linear infinite;
+        }
+    </style>
 </x-layout>

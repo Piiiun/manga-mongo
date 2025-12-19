@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="min-h-screen bg-gradient-to-b from-gray-950 to-black py-10">
+    <div class="min-h-screen bg-gradient-to-b from-slate-950 to-transparent py-10">
         <div class="max-w-4xl mx-auto px-4">
             {{-- Header --}}
             <div class="mb-8">
@@ -94,7 +94,7 @@
                             Cancel
                         </a>
                         <button type="submit" 
-                                class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg transition-colors flex items-center gap-2">
+                                class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-lg transition-colors flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                             </svg>

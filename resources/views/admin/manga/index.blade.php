@@ -1,18 +1,19 @@
 <x-layout>
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-10">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-10">
         <div class="max-w-7xl mx-auto px-4">
             {{-- Header --}}
-            <div class="sm:flex items-center justify-between mb-8">
+            <div class="sm:flex items-center justify-between mb-4 sm:mb-8">
                 <div>
                     <h1 class="text-3xl font-bold text-white mb-2">Manga Management</h1>
                     <p class="text-gray-400">Kelola semua manga di website</p>
                 </div>
                 <a href="{{ route('admin.manga.create') }}" 
-                   class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors flex items-center gap-2 mt-5 w-70">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                class="group relative inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/30 overflow-hidden mt-3">
+                    <span class="absolute inset-0 w-full h-full bg-linear-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <svg class="w-6 h-6 relative z-10 transition-transform duration-300 group-hover:rotate-360" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12H18M12 6V18" />
                     </svg>
-                    Tambah Manga Baru
+                    <span class="relative z-10">Tambah Manga Baru</span>
                 </a>
             </div>
 
@@ -92,9 +93,9 @@
                                                 </svg>
                                             </a>
                                             <a href="{{ route('admin.gallery.create', $manga) }}" 
-                                               class="p-2 text-gray-400 hover:text-amber-400 transition-colors" 
+                                               class="p-2 text-gray-400 hover:text-fuchsia-600 transition-colors" 
                                                title="Gallery">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12.5001L3.75159 10.9675C4.66286 10.1702 6.03628 10.2159 6.89249 11.0721L11.1822 15.3618C11.8694 16.0491 12.9512 16.1428 13.7464 15.5839L14.0446 15.3744C15.1888 14.5702 16.7369 14.6634 17.7765 15.599L21 18.5001" ></path> 
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.562 2.9354L18.9791 2.5183C19.6702 1.82723 20.7906 1.82723 21.4817 2.5183C22.1728 3.20937 22.1728 4.32981 21.4817 5.02087L21.0646 5.43797M18.562 2.9354C18.562 2.9354 18.6142 3.82172 19.3962 4.60378C20.1783 5.38583 21.0646 5.43797 21.0646 5.43797M18.562 2.9354L14.7275 6.76995C14.4677 7.02968 14.3379 7.15954 14.2262 7.30273C14.0945 7.47163 13.9815 7.65439 13.8894 7.84776C13.8112 8.01169 13.7532 8.18591 13.637 8.53437L13.2651 9.65M21.0646 5.43797L17.23 9.27253C16.9703 9.53225 16.8405 9.66211 16.6973 9.7738C16.5284 9.90554 16.3456 10.0185 16.1522 10.1106C15.9883 10.1888 15.8141 10.2468 15.4656 10.363L14.35 10.7349M14.35 10.7349L13.6281 10.9755C13.4567 11.0327 13.2676 10.988 13.1398 10.8602C13.012 10.7324 12.9673 10.5433 13.0245 10.3719L13.2651 9.65M14.35 10.7349L13.2651 9.65" ></path> 
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 10.8717 2 9.87835 2.02008 9M12 2C7.28595 2 4.92893 2 3.46447 3.46447C3.03965 3.88929 2.73806 4.38921 2.52396 5" ></path>

@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-10">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-10">
         <div class="max-w-2xl mx-auto px-4">
             {{-- Header --}}
             <div class="mb-8">
@@ -72,7 +72,7 @@
                 {{-- Submit Button --}}
                 <div class="flex gap-4">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
+                            class="bg-amber-500 hover:bg-amber-400 text-white font-bold px-6 py-3 rounded-lg transition-colors">
                         Simpan Chapter
                     </button>
                     <a href="{{ route('admin.manga.chapters', $manga) }}"

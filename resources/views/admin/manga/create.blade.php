@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-10">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-10">
         <div class="max-w-4xl mx-auto px-4">
             {{-- Header --}}
             <div class="mb-8">
