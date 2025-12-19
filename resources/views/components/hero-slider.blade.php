@@ -37,7 +37,7 @@
                             </p>
 
                             {{-- genre pill --}}
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex gap-2 overflow-x-scroll sm:flex-wrap no-scrollbar">
                                 @foreach ($manga->genres->take(4) as $genre)
                                     <span class="rounded-md bg-white/5 px-3 py-1 text-xs font-medium text-gray-200">
                                         {{ $genre->name }}
@@ -91,15 +91,15 @@
         </div>
 
         {{-- pagination dot di bawah tengah card --}}
-        <div class="swiper-pagination static! mt-3 flex justify-center"></div>
+        <div class="swiper-pagination static! mt-3 flex justify-center [--swiper-pagination-color:theme(colors.amber.500)]"></div>
     </div>
 
     {{-- tombol panah kiri/kanan --}}
-    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 sm:pl-7">
+    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 pt-75 md:pt-0 sm:pl-7">
         <div class="swiper-button-prev static! pointer-events-auto flex h-10 w-10 items-center justify-center hover:scale-110 transition">
         </div>
     </div>
-    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-7">
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 pt-75 md:pt-0 sm:pr-7">
         <div class="swiper-button-next static! pointer-events-auto flex h-10 w-10 items-center justify-center hover:scale-110 transition">
         </div>
     </div>
