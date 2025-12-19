@@ -75,7 +75,8 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-accent-hover">{{ number_format($manga->rating, 1) }} ★</span>
+                                        <span class="text-text">{{ number_format($manga->rating, 1) }} </span>
+                                        <span class="text-rating">★</span>
                                     </td>
                                     <td class="px-6 py-4">
                                         <span class="text-gray-300">{{ number_format($manga->views) }}</span>

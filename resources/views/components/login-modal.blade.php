@@ -37,7 +37,7 @@
                 {{-- Actions --}}
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ route($loginRoute) }}" 
-                       class="flex-1 bg-accent hover:bg-accent-hover text-black font-bold px-6 py-3 rounded-lg transition-colors text-center">
+                       class="flex-1 bg-accent hover:bg-accent-hover text-text font-bold px-6 py-3 rounded-lg transition-colors text-center">
                         Login Sekarang
                     </a>
                     <button onclick="{{ $closeFunction ? $closeFunction . '()' : 'window.closeLoginModal(\'' . $id . '\')' }}" 

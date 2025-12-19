@@ -111,7 +111,7 @@
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($manga->genres as $genre)
                                 <a class="mb-2 sm:mb-0" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
-                                    <span class="bg-card-3 hover:bg-accent text-genre-text hover:text-text text-sm px-3 py-1.5 rounded-lg border border-border hover:border-accent transition-colors cursor-pointer">
+                                    <span class="bg-linear-to-r from-accent/20 to-accent-hover/20 hover:bg-accent text-amber-400 hover:text-text text-sm px-3 py-1.5 rounded-lg border border-border hover:border-accent transition-colors cursor-pointer">
                                         {{ $genre->name }}
                                     </span>
                                 </a>

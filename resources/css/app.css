@@ -5,6 +5,38 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
     --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
     --font-manga: "Inter", sans-serif;
@@ -43,7 +75,109 @@
     --color-badge-1: oklch(57.7% 0.245 27.325 / 90); /* Badge background - red 600 */
     --color-badge-2: oklch(59.2% 0.249 0.584 / 90); /* Badge text - pink 600*/
     --color-overlay: #000000; /* Overlay - black */
+
 }
+
+@layer base {
+  :root {
+    --color-bg: oklch(98% 0.005 270);         
+    /* Background utama - off white (bukan putih murni) */
+
+    --color-surface: oklch(96% 0.006 270);    
+    /* Surface layer - light gray */
+
+    --color-card: oklch(94% 0.008 270);       
+    /* Card background - light gray */
+
+    --color-card-2: oklch(92% 0.01 268);      
+    /* Card background 2 - sedikit lebih gelap */
+
+    --color-card-3: oklch(96% 0.004 267);     
+    /* Card background 3 - card ringan */
+
+    --color-card-detail: oklch(90% 0.01 260 / 0.6);  
+    /* Card soft background (detail/stat) */
+
+    --color-border: oklch(85% 0.015 270);     
+    /* Border utama */
+
+    --color-border-2: oklch(80% 0.02 270);    
+    /* Border sekunder */
+
+    --color-text: oklch(22% 0.02 270);        
+    /* Text primary - hampir hitam */
+
+    --color-text-second: oklch(45% 0.02 270); 
+    /* Text secondary */
+
+    --color-accent: oklch(52% 0.22 265);      
+    /* Accent - indigo (sedikit lebih gelap agar kontras di light) */
+
+    --color-accent-hover: oklch(58% 0.24 265);
+    /* Accent hover */
+
+    --color-accent-light: oklch(68% 0.20 265);
+    /* Accent light */
+
+    --color-accent-strong: oklch(48% 0.25 265);
+    /* Accent strong */
+
+    --color-success: oklch(60% 0.18 160);     
+    /* Success - emerald */
+
+    --color-warning: oklch(72% 0.20 85);      
+    /* Warning - amber */
+
+    --color-error: oklch(60% 0.22 25);        
+    /* Error - red */
+
+    --color-info: oklch(60% 0.20 250);        
+    /* Info - blue */
+
+    --color-genre-text: oklch(55% 0.18 85);   
+    /* Genre text - amber (lebih gelap agar terbaca di light) */
+
+    --color-rating: oklch(60% 0.22 85);       
+    /* Rating text - amber */
+
+    --color-badge-1: oklch(60% 0.24 27 / 0.9); 
+    /* Badge background - red */
+
+    --color-badge-2: oklch(65% 0.24 350 / 0.9);
+    /* Badge text / accent - pink */
+
+    --color-overlay: oklch(0% 0 0 / 0.6);
+    /* Overlay - hitam transparan */
+
+  }
+
+  .dark {
+    --color-bg: #0B1020;           /* Background utama - very dark navy */
+    --color-surface: #111827;      /* Surface layer - dark gray */
+    --color-card: oklch(23% 0.045 270);         /* Card background - gray-900 */
+    --color-card-2 : oklch(17% 0.040 268);      /* Card background 2 - gray-950 variant */
+    --color-card-3 : oklch(25% 0.04 267.203);       /* Card background 3 - gray-800 variant */
+    --color-card-detail: oklch(13% 0.028 261.692 / 0.3);    /* Card soft background -  */
+    --color-border: #374151;       /* Border co lor - gray-700 */
+    --color-border-2: #4B5563;     /* Border color 2 - gray-600 */
+    --color-text: #E5E7EB;         /* Text primary - light gray */
+    --color-text-second: #9CA3AF;  /* Text secondary - text-second */
+    --color-accent: #4F46E5;       /* Accent - indigo 600 (subtle) */
+    --color-accent-hover: #6366F1; /* Accent hover - indigo 500 */
+    --color-accent-light: #818CF8; /* Accent light - indigo 400 */
+    --color-accent-strong: #4f46e5; /* Accent strong - indigo 700 */
+    --color-success: #10B981;      /* Success - emerald 500 */
+    --color-warning: #F59E0B;      /* Warning - amber 500 */
+    --color-error: #EF4444;        /* Error - red 500 */
+    --color-info: #3B82F6;         /* Info - blue 500 */
+    --color-genre-text: oklch(87.9% 0.169 91.605);  /* Genre text - amber 500 */
+    --color-rating: oklch(82.8% 0.189 84.429); /* Rating text - amber 400 */
+    --color-badge-1: oklch(57.7% 0.245 27.325 / 90); /* Badge background - red 600 */
+    --color-badge-2: oklch(59.2% 0.249 0.584 / 90); /* Badge text - pink 600*/
+    --color-overlay: #000000; /* Overlay - black */
+  }
+}
+
 
 .swiper-button-next,
 .swiper-button-prev {
@@ -71,3 +205,5 @@
     transform: translateY(8px);
     pointer-events: none;
 }
+
+

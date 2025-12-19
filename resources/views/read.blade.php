@@ -4,9 +4,9 @@
     :noNav="true"
     :noPadding="true    "
 >
-    <div id="reader-area" class="min-h-screen bg-linear-to-b from-card to-transparant">
+    <div id="reader-area" class="min-h-screen bg-linear-to-b from-card-2 to-transparent">
         {{-- Header Navigation --}}
-        <div id="reader-topbar" class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+        <div id="reader-topbar" class="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-gray-800">
             <div class="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2">
                 {{-- Mobile: Single Row Layout --}}
                 <div class="flex items-center justify-between gap-2 sm:hidden">
@@ -66,7 +66,7 @@
                             @endif
                         </button>
                         <button class="p-1.5 hover:bg-gray-800 rounded text-gray-300 hover:text-white transition-colors" title="Fullscreen">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
                             </svg>
                         </button>
@@ -470,7 +470,7 @@
                         </svg>
                         <p class="text-text-second mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
                         <a href="{{ route('login') }}" 
-                        class="inline-block bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                        class="inline-block bg-accent hover:bg-accent-hover text-text font-bold px-6 py-2.5 rounded-lg transition-colors">
                             Login Sekarang
                         </a>
                     </div>

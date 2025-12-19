@@ -182,14 +182,16 @@ function initScrollToTop() {
     });
 }
 
-// Fullscreen Toggle
 function initFullscreen() {
     const fullscreenButton = document.querySelector('[title="Fullscreen"]');
     if (!fullscreenButton) return;
-    
-    fullscreenButton.addEventListener('click', function() {
+
+    fullscreenButton.addEventListener('click', () => {
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
+            document.body.requestFullscreen()
+                .catch(err => {
+                    console.error('Fullscreen error:', err);
+                });
         } else {
             document.exitFullscreen();
         }

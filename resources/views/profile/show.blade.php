@@ -39,56 +39,69 @@
                         {{-- Stats --}}
                         <div class="flex flex-wrap gap-6 justify-center md:justify-start mb-6">
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-accent-hover">{{ $readingHistories->total() }}</div>
+                                <div class="text-2xl font-bold text-text">{{ $readingHistories->total() }}</div>
                                 <div class="text-sm text-text-second">Manga Dibaca</div>
                             </div>
                             <div class="text-center">   
-                                <div class="text-2xl font-bold text-accent-hover" id="bookmark-count">0</div>
+                                <div class="text-2xl font-bold text-text" id="bookmark-count">0</div>
                                 <div class="text-sm text-text-second">Bookmark</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-accent-hover">{{ (int) $user->created_at->diffInDays(now()) }}</div>
+                                <div class="text-2xl font-bold text-text">{{ (int) $user->created_at->diffInDays(now()) }}</div>
                                 <div class="text-sm text-text-second">Hari Bergabung</div>
                             </div>
                         </div>
 
                         {{-- Action Buttons --}}
                         <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            {{-- Edit Profile Button --}}
                             <a href="{{ route('profile.edit') }}" 
-                               class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="group btn-shine relative inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/30 overflow-hidden">
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
-                                Edit Profile
+                                <span class="relative z-10">Edit Profile</span>
                             </a>
                             
+                            {{-- History Button --}}
                             <a href="{{ route('history.index') }}" 
-                               class="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="group btn-shine relative inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-gray-700/50 overflow-hidden">
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-700 to-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:rotate-[360deg]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                Lihat History
+                                <span class="relative z-10">Lihat History</span>
                             </a>
 
+                            {{-- Logout Button --}}
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
                                 <button type="submit" 
-                                        class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-2.5 rounded-lg transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        class="group btn-shine relative inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/40 overflow-hidden">
+                                    <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-red-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                    <svg class="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    Logout
+                                    <span class="relative z-10">Logout</span>
                                 </button>
                             </form>
 
+                            {{-- Admin Panel Button --}}
                             @if(Auth::user()->role === 'admin')
                             <a href="{{ route('admin.manga.index') }}" 
-                                class="inline-flex items-center gap-2 bg-green-700 hover:bg-gray-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors">
-                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench">
-                                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>
-                                    </svg>
+                                class="group btn-shine relative inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/40 overflow-hidden">
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>
+                                </svg>
+                                <span class="relative z-10 flex items-center gap-1.5">
                                     Admin Panel
-                                </a>
+                                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </a>
                             @endif
                         </div>
                     </div>
@@ -101,8 +114,11 @@
                     <h2 class="text-2xl font-bold text-white">Terakhir Dibaca</h2>
                     @if($readingHistories->count() > 0)
                         <a href="{{ route('history.index') }}" 
-                           class="text-accent-hover hover:text-amber-300 text-sm font-semibold">
-                            See All →
+                           class="text-accent hover:text-accent-hover flex gap-2 items-center justify-center text-sm font-semibold">
+                            <span class="text-xs sm:text-base">See All</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
                         </a>
                     @endif
                 </div>
@@ -165,4 +181,58 @@
             }
         });
     </script>
+    <style>
+        /* Smooth animations */
+        button, a {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* Ripple effect on click */
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Add shine effect */
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .btn-shine:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 0.6s;
+        }
+
+        /* Pulse animation for admin button */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+            }
+        }
+
+        .group:has(span:contains("Admin Panel")):hover {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
 </x-layout>
