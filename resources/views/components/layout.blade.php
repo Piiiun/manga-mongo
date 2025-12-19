@@ -40,7 +40,7 @@
 
     @stack('head')
 </head>
-<body class="bg-linear-to-b from-gray-900 to-black text-white {{ $bodyClass }}">
+<body class="bg-slate-950 text-white {{ $bodyClass }}">
     @unless($noNav)
     <x-nav-top />
     <x-nav-bottom />

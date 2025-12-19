@@ -1,5 +1,7 @@
 <x-layout>
-    <x-hero-slider :featuredMangas="$featuredMangas" />
-    <x-section-home :latestMangas="$latestMangas"/>
-    <x-popular-home :popularMangas="$popularMangas" />
+    <div class="min-h-screen max-w-[1540px] mx-auto bg-linear-to-b from-gray-950 to-transparent">
+        <x-hero-slider :featuredMangas="$featuredMangas" />
+        <x-section-home :latestMangas="$latestMangas"/>
+        <x-popular-home :popularMangas="$popularMangas" />
+    </div>
 </x-layout>
