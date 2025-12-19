@@ -1,17 +1,20 @@
 @props(['popularMangas'])
 
 <section class="relative mt-12 px-4 sm:px-8">
+    {{-- Background decoration --}}
+    <div class="absolute -top-20 left-0 h-40 w-40 rounded-full bg-accent/10 blur-3xl"></div>
+    <div class="absolute -top-10 right-0 h-60 w-60 rounded-full bg-accent-strong/10 blur-3xl"></div>
+
     {{-- Header dengan Tabs --}}
     <div class="mb-6">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex gap-4 items-center justify-between">
             {{-- Title --}}
             <h2 class="bg-linear-to-r from-amber-400 via-yellow-400 to-amber-500 bg-clip-text text-2xl font-extrabold text-transparent">
                 POPULER
             </h2>
             
             {{-- Lihat Semua - Desktop --}}
-            <a href="{{ route('manga.list', ['sort' => 'popular']) }}" 
-               class="hidden sm:flex group items-center gap-2 rounded-full bg-linear-to-r from-amber-500/10 to-red-500/10 px-5 py-2.5 font-semibold text-amber-400 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
+            <a href="{{ route('manga.list', ['sort' => 'popular']) }}" class="scale-90 sm:scale-100 flex group items-center gap-2 rounded-full bg-linear-to-r from-amber-500/10 to-red-500/10 px-5 py-2.5 font-semibold text-amber-400 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
                 <span>See All</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -33,13 +36,13 @@
         </div> --}}
 
         {{-- Lihat Semua - Mobile --}}
-        <a href="{{ route('manga.list', ['sort' => 'popular']) }}" 
+        {{-- <a href="{{ route('manga.list', ['sort' => 'popular']) }}" 
            class="mt-3 flex items-center justify-center gap-2 rounded-lg bg-gray-800/50 py-2.5 text-sm font-semibold text-amber-500 transition-colors hover:bg-gray-800 sm:hidden">
             <span>Lihat Semua</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
-        </a>
+        </a> --}}
     </div>
 
     {{-- List Populer Manga --}}

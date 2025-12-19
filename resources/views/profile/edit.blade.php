@@ -1,5 +1,5 @@
 <x-layout title="Edit Profile - MangaMongo">
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black py-8 px-4">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-8 px-4">
         <div class="max-w-3xl mx-auto">
             
             <div class="mb-6">
@@ -49,7 +49,7 @@
                                 <div class="flex gap-3">
                                     <button type="button" 
                                             onclick="document.getElementById('profile_picture').click()"
-                                            class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                                            class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                                         Upload Foto Baru
                                     </button>
                                     
@@ -103,7 +103,7 @@
                     {{-- Submit Button --}}
                     <div class="flex gap-3">
                         <button type="submit" 
-                                class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-lg transition-colors">
+                                class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-8 py-3 rounded-lg transition-colors cursor-pointer">
                             Simpan Perubahan
                         </button>
                         

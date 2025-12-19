@@ -4,7 +4,7 @@
 
             @foreach ($featuredMangas as $manga)
                 <div class="swiper-slide">
-                    <div class="relative overflow-hidden rounded-3xl bg-[#111827]/90 p-5 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 mx-2 md:mx-8">
+                    <div class="relative overflow-hidden rounded-3xl bg-slate-900/90 p-5 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 mx-2 md:mx-8">
 
                         {{-- background blur besar (opsional) --}}
                         <div class="pointer-events-none absolute inset-0 opacity-50">
@@ -48,8 +48,11 @@
                             {{-- tombol --}}
                             <div class="flex flex-wrap gap-3 pt-2">
                                 <a href="{{ route('manga.detail', $manga->slug) }}"
-                                   class="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-white hover:bg-amber-400 transition">
-                                    📖 Read
+                                   class="inline-flex gap-2 items-center justify-center rounded-full bg-amber-500 px-6 py-2 text-sm font-semibold text-white hover:bg-amber-400 transition">
+                                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+                                </svg>
+                                <span class="text-sm font-semibold">Read</span>
                                 </a>
 
                                 {{-- Tombol Bookmark --}}
@@ -69,7 +72,7 @@
                         </div>
 
                         {{-- KONTEN KANAN: COVER --}}
-                        <div class="relative w-full max-w-[220px] self-center lg:self-stretch">
+                        <div class="relative aspect-3/4 self-center lg:self-stretch">
                             <div class="overflow-hidden rounded-3xl shadow-xl shadow-black/40">
                                 <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
                                      class="h-88 w-full object-cover">

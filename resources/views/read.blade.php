@@ -4,7 +4,7 @@
     :noNav="true"
     :noPadding="true    "
 >
-    <div id="reader-area" class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+    <div id="reader-area" class="min-h-screen bg-linear-to-b from-slate-950 to-transparent">
         {{-- Header Navigation --}}
         <div id="reader-topbar" class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
             <div class="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2">
@@ -87,12 +87,12 @@
 
                         {{-- Center: Server Selector & Auto Scroll --}}
                         <div class="flex items-center justify-center gap-2">
-                            <button class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors">
+                            {{-- <button class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
                                 </svg>
                                 <span class="hidden md:inline">Server</span>
-                            </button>
+                            </button> --}}
                             
                             {{-- Auto Scroll Controls (Smaller) --}}
                             <div id="autoscroll-container-desktop" class="flex items-center gap-1.5 bg-gray-800 border border-gray-700 rounded-lg px-2 py-1">
@@ -166,12 +166,12 @@
                 {{-- Info Chapter --}}
                 <div class="mt-2 sm:mt-3 text-center px-2">
                     <p class="text-gray-400 text-xs sm:text-sm">
-                        Halaman <span id="current-page">1</span> dari {{ $chapter->pages->count() }} - Server: Server Gambar 1 - Dibaca Selama: <span id="reading-time">0m 0s</span>
+                        Halaman <span id="current-page">1</span> dari {{ $chapter->pages->count() }} - Dibaca Selama: <span id="reading-time">0m 0s</span>
                     </p>
                 </div>
             </div>
         </div>
-
+{{-- - Server: Server Gambar 1  --}}
         {{-- Auto Scroll Login Modal (for Guest) --}}
         <x-login-modal 
             id="autoscroll-login-modal"
@@ -283,6 +283,24 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+
+        {{-- Navigation Buttons --}}
+        <div class="flex justify-center gap-4 mb-6 px-4">
+            <a href="{{ route('manga.detail', $manga->slug) }}" 
+               class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Manga Info
+            </a>
+            <button onclick="window.toggleChapterList && window.toggleChapterList()" 
+                    class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white text-sm sm:text-base px-2 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                Daftar Chapter
+            </button>
         </div>
 
         {{-- Bottom Navigation --}}

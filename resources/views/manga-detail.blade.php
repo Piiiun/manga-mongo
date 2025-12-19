@@ -2,7 +2,7 @@
     :title="$manga->title . ' - Baca di MangaMongo'"
     :description="Str::limit($manga->description, 150)"
 >
-    <div class="min-h-screen bg-linear-to-b from-gray-950 to-black">
+    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent">
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
             <nav class="flex items-center gap-2 text-sm text-gray-400">
@@ -84,12 +84,18 @@
 
                         @if($manga->chapters->count() > 0)
                             <a href="{{ route('manga.read', [$manga->slug, $manga->chapters->first()->number]) }}" 
-                               class="block w-full bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl px-4 py-3 text-center transition-colors">
-                                📖 Baca Dari Awal
+                               class="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl px-4 py-3 text-center transition-colors">
+                                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+                                </svg>
+                                <span class="text-sm font-semibold">Baca Dari Awal</span>
                             </a>
                         @else
-                            <div class="block w-full bg-gray-800 text-gray-500 font-bold rounded-xl px-4 py-3 text-center cursor-not-allowed">
-                                📖 Belum Ada Chapter
+                            <div class="flex items-center justify-center gap-2 w-full bg-gray-800 text-gray-500 font-bold rounded-xl px-4 py-3 text-center cursor-not-allowed">
+                                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+                                </svg>
+                                <span class="text-sm font-semibold">Belum Ada Chapter</span>
                             </div>
                         @endif
                     </div>
@@ -143,7 +149,7 @@
                         {{-- Stats --}}
                         <div class="grid grid-cols-3 gap-4 mt-4">
                             <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-amber-400">{{ $manga->formatted_views }}</p>
+                                <p class="text-2xl font-bold text-white">{{ $manga->formatted_views }}</p>
                                 <p class="text-gray-400 text-sm mt-1">Views</p>
                             </div>
                             <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
@@ -451,9 +457,11 @@
                                     <h3 class="text-xl font-bold text-amber-400 mb-3">Genres:</h3>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($manga->genres as $genre)
-                                            <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
-                                                {{ $genre->name }}
-                                            </span>
+                                            <a class="" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
+                                                <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
+                                                    {{ $genre->name }}
+                                                </span>
+                                            </a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -483,7 +491,7 @@
                                 {{-- Gallery Grid with Lightbox --}}
                                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                     @foreach($manga->galleries as $index => $gallery)
-                                        <div class="group relative aspect-[3/4] rounded-lg overflow-hidden bg-gray-800 cursor-pointer"
+                                        <div class="group relative aspect-3/4 rounded-lg overflow-hidden bg-gray-800 cursor-pointer"
                                             onclick="openLightbox({{ $index }})">
                                             <img src="{{ $gallery->image_url }}" 
                                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
