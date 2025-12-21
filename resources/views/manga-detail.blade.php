@@ -2,7 +2,7 @@
     :title="$manga->title . ' - Baca di MangaMongo'"
     :description="Str::limit($manga->description, 150)"
 >
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent">
+    <div class="min-h-screen">
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
             <nav class="flex items-center gap-2 text-sm text-gray-400">
@@ -10,7 +10,7 @@
                 <span>/</span>
                 <a href="{{ route('manga.list') }}" class="hover:text-amber-400 transition-colors">Manga</a>
                 <span>/</span>
-                <span class="text-white">{{ $manga->title }}</span>
+                <span class="text-black dark:text-white">{{ $manga->title }}</span>
             </nav>
         </div>
 
@@ -40,7 +40,7 @@
                         <div class="grid grid-cols-2 gap-3 mb-4">
                             <button type="button"
                                     data-manga-id="{{ $manga->id }}"
-                                    class="bookmark-toggle bg-gray-900 hover:bg-amber-500 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
+                                    class="bookmark-toggle bg-slate-100 dark:bg-gray-900 hover:bg-amber-500 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors shadow-md shadow-black/20">
                                 <svg class="bookmark-icon-filled hidden w-5 h-5" fill="#f59e0b" viewBox="0 0 20 20">
                                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                                 </svg>
@@ -51,17 +51,17 @@
                             </button>
                             @auth
                                <button onclick="openRatingModal()" 
-                                        class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors {{ $manga->isRatedBy(Auth::user()) ? 'border-amber-500' : '' }}">
+                                        class="bg-slate-100 dark:bg-gray-900 hover:bg-slate-200 hover:dark:bg-gray-800 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors shadow-md shadow-black/20 {{ $manga->isRatedBy(Auth::user()) ? 'border-amber-500' : '' }}">
                                     <svg class="w-5 h-5 {{ $manga->isRatedBy(Auth::user()) ? 'text-amber-400 fill-current' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                                     </svg>
                                     <span class="text-sm font-medium">
-                                        {{ $manga->isRatedBy(Auth::user()) ? 'Update Rating' : 'Rate' }}
+                                        Rate
                                     </span>
                                 </button>
                             @else
                                 <button onclick="showRatingLoginModal()" 
-                                        class="bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors">
+                                        class="bg-slate-100 dark:bg-gray-900 hover:bg-slate-200 dark:hover:bg-gray-800 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors shadow-md shadow-black/20">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                                     </svg>
@@ -73,7 +73,7 @@
                         <button
                             type="button"
                             id="share-button"
-                            class="share-button w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors mb-4 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-950 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="share-button w-full bg-slate-100 dark:bg-gray-900 hover:bg-slate-200 hover:bg-gray-800 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 flex items-center justify-center gap-2 transition-colors mb-4 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-950 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-black/20"
                             aria-label="Share {{ $manga->title }}"
                             data-manga-title="{{ $manga->title }}"
                             data-manga-url="{{ route('manga.detail', $manga->slug) }}"
@@ -84,14 +84,14 @@
 
                         @if($manga->chapters->count() > 0)
                             <a href="{{ route('manga.read', [$manga->slug, $manga->chapters->first()->number]) }}" 
-                               class="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl px-4 py-3 text-center transition-colors">
+                               class="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl px-4 py-3 text-center transition-colors border border-amber-500 shadow-md shadow-amber-500/20">
                                 <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
                                 </svg>
                                 <span class="text-sm font-semibold">Baca Dari Awal</span>
                             </a>
                         @else
-                            <div class="flex items-center justify-center gap-2 w-full bg-gray-800 text-gray-500 font-bold rounded-xl px-4 py-3 text-center cursor-not-allowed">
+                            <div class="flex items-center justify-center gap-2 w-full bg-gray-800 text-gray-500 font-bold rounded-xl px-4 py-3 text-center cursor-not-allowed border border-gray-700 shadow-md shadow-black/20">
                                 <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
                                 </svg>
@@ -105,7 +105,7 @@
                 <div class="lg:col-span-9">
                     {{-- Title & Rating --}}
                     <div class="mb-6">
-                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">{{ $manga->title }}</h1>
+                        <h1 class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-3">{{ $manga->title }}</h1>
                         
                         {{-- Genres --}}
                         <div class="flex flex-wrap gap-2 mb-4">
@@ -119,17 +119,17 @@
                         </div>
 
                         {{-- Meta Info --}}
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 shadow-md shadow-black/20">
                             <div>
-                                <p class="text-gray-400 text-sm mb-1">Author:</p>
-                                <p class="text-white font-medium">{{ $manga->author ?? 'Unknown' }}</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Author:</p>
+                                <p class="text-black dark:text-white font-medium">{{ $manga->author ?? 'Unknown' }}</p>
                             </div>
                             <div>
-                                <p class="text-gray-400 text-sm mb-1">Artist:</p>
-                                <p class="text-white font-medium">{{ $manga->artist ?? 'Unknown' }}</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Artist:</p>
+                                <p class="text-black dark:text-white font-medium">{{ $manga->artist ?? 'Unknown' }}</p>
                             </div>
                             <div>
-                                <p class="text-gray-400 text-sm mb-1">Status:</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Status:</p>
                                 <p class="font-medium
                                     @if($manga->status == 'Ongoing')
                                         text-green-400
@@ -141,30 +141,30 @@
                                 </p>
                             </div>
                             <div>
-                                <p class="text-gray-400 text-sm mb-1">Type:</p>
-                                <p class="text-white font-medium">{{ $manga->type ?? 'Manga' }}</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Type:</p>
+                                <p class="text-black dark:text-white font-medium">{{ $manga->type ?? 'Manga' }}</p>
                             </div>
                         </div>
 
                         {{-- Stats --}}
                         <div class="grid grid-cols-3 gap-4 mt-4">
-                            <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-white">{{ $manga->formatted_views }}</p>
-                                <p class="text-gray-400 text-sm mt-1">Views</p>
+                            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center shadow-md shadow-black/20">
+                                <p class="text-2xl font-bold text-black dark:text-white">{{ $manga->formatted_views }}</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Views</p>
                             </div>
-                            <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
-                                <p class="text-2xl font-bold text-white">{{ $manga->bookmarks->count() }}</p>
-                                <p class="text-gray-400 text-sm mt-1">Bookmark</p>
+                            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center shadow-md shadow-black/20">
+                                <p class="text-2xl font-bold text-black dark:text-white">{{ $manga->bookmarks->count() }}</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Bookmark</p>
                             </div>
-                            <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors"
+                            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors shadow-md shadow-black/20"
                                 onclick="showRatings()">
                                 <div class="flex items-center justify-center gap-1">
-                                    <p class="text-2xl font-bold text-white">{{ $manga->average_rating ?? 0 }}</p>
+                                    <p class="text-2xl font-bold text-black dark:text-white">{{ $manga->average_rating ?? 0 }}</p>
                                     <svg class="w-6 h-6 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
                                 </div>
-                                <p class="text-gray-400 text-sm mt-1">{{ $manga->total_ratings }} rating by users</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ $manga->total_ratings }} rating by users</p>
                             </div>
                         </div>
                     </div>
@@ -176,13 +176,13 @@
                                 <button onclick="showTab('chapters')" id="tab-chapters" class="tab-button text-amber-400 border-b-2 border-amber-400 px-1 py-3 font-bold">
                                     Chapters
                                 </button>
-                                <button onclick="showTab('comments')" id="tab-comments" class="tab-button text-gray-400 hover:text-white border-b-2 border-transparent px-1 py-3 transition-colors">
-                                    Comments
-                                </button>
-                                <button onclick="showTab('details')" id="tab-details" class="tab-button text-gray-400 hover:text-white border-b-2 border-transparent px-1 py-3 transition-colors">
+                                <button onclick="showTab('details')" id="tab-details" class="tab-button text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white border-b-2 border-transparent px-1 py-3">
                                     Details
                                 </button>
-                                <button onclick="showTab('gallery')" id="tab-gallery" class="tab-button text-gray-400 hover:text-white border-b-2 border-transparent px-1 py-3 transition-colors">
+                                <button onclick="showTab('comments')" id="tab-comments" class="tab-button text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white border-b-2 border-transparent px-1 py-3">
+                                    Comments
+                                </button>
+                                <button onclick="showTab('gallery')" id="tab-gallery" class="tab-button text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white border-b-2 border-transparent px-1 py-3">
                                     Gallery
                                 </button>
                             </nav>
@@ -192,18 +192,18 @@
                     {{-- Tab Contents --}}
                     <div id="content-chapters" class="tab-content">
                         {{-- Sinopsis --}}
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-6">
-                            <h2 class="text-xl font-bold text-white mb-3">Sinopsis</h2>
-                            <p class="text-gray-300 leading-relaxed line-clamp-3">
+                        <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-6">
+                            <h2 class="text-xl font-bold text-black dark:text-white mb-3">Sinopsis</h2>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
                                 {{ $manga->description ?? 'Deskripsi belum tersedia untuk manga ini.' }}
                             </p>
                         </div>
 
                         {{-- Chapter List --}}
-                        <div id="chapters" class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                        <div id="chapters" class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <h2 class="text-xl font-bold text-white">Daftar Chapter</h2>
-                                <select id="chapterSort" class="bg-gray-800 border border-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50">
+                                <h2 class="text-xl font-bold text-black dark:text-white">Daftar Chapter</h2>
+                                <select id="chapterSort" class="bg-slate-100 dark:bg-gray-800 border border-gray-700 text-black dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50">
                                     <option value="desc">Terbaru</option>
                                     <option value="asc">Terlama</option>
                                 </select>
@@ -216,16 +216,16 @@
                                     id="chapterSearch"
                                     placeholder="Cari chapter..." 
                                     autocomplete="off"    
-                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                                    class="w-full bg-slate-100 dark:bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
                                 >
                             </div>
 
                             {{-- No Results Message --}}
                             <div id="noChaptersMessage" class="hidden text-center py-12">
-                                <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-16 h-16 text-gray-700 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
-                                <p class="text-gray-400">Chapter tidak ditemukan</p>
+                                <p class="text-gray-600 dark:text-gray-400">Chapter tidak ditemukan</p>
                             </div>
 
                             {{-- Chapter Items --}}
@@ -236,22 +236,22 @@
                                          data-title="{{ $chapter->title ?? '' }}"
                                          data-date="{{ $chapter->published_at ? $chapter->published_at->timestamp : $chapter->created_at->timestamp }}">
                                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}" 
-                                           class="block bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-amber-500 rounded-lg p-4 transition-all group">
+                                           class="block bg-slate-100/50 dark:bg-gray-800/50 hover:bg-slate-100/50 dark:hover:bg-gray-800 border border-gray-700 hover:border-amber-500 rounded-lg p-4 transition-all group shadow-md shadow-black/10">
                                             <div class="flex items-center justify-between">
                                                 <div class="flex-1">
-                                                    <h3 class="text-white font-medium group-hover:text-amber-400 transition-colors">
+                                                    <h3 class="text-black dark:text-white font-medium group-hover:text-amber-600 group-hover:dark:text-amber-400 transition-colors">
                                                         Chapter {{ $chapter->number }}
                                                         @if($chapter->title)
                                                             - {{ $chapter->title }}
                                                         @endif
                                                     </h3>
-                                                    <p class="text-gray-400 text-sm mt-1">
+                                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">
                                                         {{ $chapter->published_at ? $chapter->published_at->diffForHumans() : $chapter->created_at->diffForHumans() }}
                                                     </p>
                                                 </div>
                                                 <div class="flex items-center gap-3">
-                                                    <span class="text-gray-400 text-sm">{{ $chapter->views ?? 0 }} views</span>
-                                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <span class="text-gray-600 dark:text-gray-400 text-sm">{{ $chapter->views ?? 0 }} views</span>
+                                                    <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                                     </svg>
                                                 </div>
@@ -274,12 +274,12 @@
                     </div>
 
                     <div id="content-comments" class="tab-content hidden">
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                        <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6">
                            <div class="sm:flex items-center justify-between mb-2 sm:mb-6">
-                                <h2 class="text-xl font-bold text-white">
+                                <h2 class="text-xl font-bold text-black dark:text-white">
                                     Comment
                                 </h2>
-                                <span class="text-xs sm:text-sm font-normal text-gray-400">({{ $manga->comments()->topLevel()->count() }} komentar)</span>
+                                <span class="text-xs sm:text-sm font-normal text-gray-600 dark:text-gray-400">({{ $manga->comments()->topLevel()->count() }} komentar)</span>
                             </div>
                             {{-- Success/Error Messages --}}
                             @if (session('success'))
@@ -303,11 +303,11 @@
                                             rows="4" 
                                             required
                                             placeholder="Tulis komentar kamu tentang manga ini..."
-                                            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                                            class="w-full px-4 py-3 bg-gray-300 dark:bg-gray-800 border border-gray-700 rounded-lg text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
                                     
                                     <div class="flex items-center justify-between mt-3">
-                                        <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
-                                            <input type="checkbox" name="is_spoiler" value="1" class="rounded border-gray-600 text-amber-500 focus:ring-amber-500">
+                                        <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
+                                            <input type="checkbox" name="is_spoiler" value="1" class="rounded-2xl border-gray-600 text-amber-500 focus:ring-amber-500 accent-amber-500">
                                             Tandai sebagai spoiler
                                         </label>
                                         
@@ -348,18 +348,19 @@
                                 </div>
                             @else
                                 <div class="text-center py-12">
-                                    <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-16 h-16 text-gray-700 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                     </svg>
-                                    <p class="text-gray-400">Belum ada komentar. Jadilah yang pertama!</p>
+                                    <p class="text-gray-600 dark:text-gray-400">Belum ada komentar. Jadilah yang pertama!</p>
                                 </div>
                             @endif
                         </div>
                     </div>
 
+                    {{--Detail Manga --}}
                     <div id="content-details" class="tab-content hidden">
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-                            <h2 class="text-2xl font-bold text-white mb-6">Detail Manga</h2>
+                        <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                            <h2 class="text-2xl font-bold text-black dark:text-white mb-6">Detail Manga</h2>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {{-- Informasi --}}
@@ -367,32 +368,32 @@
                                     <h3 class="text-xl font-bold text-amber-400 mb-4">Informasi</h3>
                                     <div class="space-y-3">
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Judul Alternatif:</p>
-                                            <p class="text-white">{{ $manga->alternative_title ?? $manga->title }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Judul Alternatif:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->alternative_title ?? $manga->title }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Type:</p>
-                                            <p class="text-white">{{ $manga->type ?? 'Manga' }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Type:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->type ?? 'Manga' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Pengarang:</p>
-                                            <p class="text-white">{{ $manga->author ?? 'Unknown' }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Pengarang:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->author ?? 'Unknown' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Artis:</p>
-                                            <p class="text-white">{{ $manga->artist ?? 'Unknown' }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Artis:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->artist ?? 'Unknown' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Status:</p>
-                                            <p class="text-white">{{ strtoupper($manga->status) }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Status:</p>
+                                            <p class="text-black dark:text-white">{{ strtoupper($manga->status) }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Tahun Terbit:</p>
-                                            <p class="text-white">{{ $manga->released_at ?? 'Unknown' }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Tahun Terbit:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->released_at ?? 'Unknown' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Di Serialisasi Oleh:</p>
-                                            <p class="text-white">{{ $manga->serialization ?? 'Unknown' }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Di Serialisasi Oleh:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->serialization ?? 'Unknown' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -402,32 +403,32 @@
                                     <h3 class="text-xl font-bold text-amber-400 mb-4">Statistik</h3>
                                     <div class="space-y-3">
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Rating:</p>
-                                            <p class="text-white">
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Rating:</p>
+                                            <p class="text-black dark:text-white">
                                                 {{ number_format($manga->rating ?? 0, 1) }} ★ 
                                             </p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Dilihat:</p>
-                                            <p class="text-white">{{ number_format($manga->views) }} kali</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Dilihat:</p>
+                                            <p class="text-black dark:text-white">{{ number_format($manga->views) }} kali</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Bookmark:</p>
-                                            <p class="text-white">{{ $manga->bookmarks->count() }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Bookmark:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->bookmarks->count() }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Jumlah Chapter:</p>
-                                            <p class="text-white">{{ $manga->chapters->count() }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Jumlah Chapter:</p>
+                                            <p class="text-black dark:text-white">{{ $manga->chapters->count() }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Di Publish Pada:</p>
-                                            <p class="text-white">
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Di Publish Pada:</p>
+                                            <p class="text-black dark:text-white">
                                                 {{ $manga->created_at ? $manga->created_at->diffForHumans() : 'Unknown' }}
                                             </p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-400 text-sm mb-1">Update Terakhir:</p>
-                                            <p class="text-white">
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">Update Terakhir:</p>
+                                            <p class="text-black dark:text-white">
                                                 {{ $manga->last_update ? $manga->last_update->diffForHumans() : ($manga->updated_at ? $manga->updated_at->diffForHumans() : 'Unknown') }}
                                             </p>
                                         </div>
@@ -438,7 +439,7 @@
                             {{-- Sinopsis Lengkap --}}
                             <div class="mt-8">
                                 <h3 class="text-xl font-bold text-amber-400 mb-4">Sinopsis Lengkap</h3>
-                                <div class="text-gray-300 leading-relaxed space-y-3">
+                                <div class="text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
                                     @if($manga->description)
                                         @foreach(explode("\n", $manga->description) as $paragraph)
                                             @if(trim($paragraph))
@@ -446,7 +447,7 @@
                                             @endif
                                         @endforeach
                                     @else
-                                        <p class="text-gray-400 italic">Sinopsis belum tersedia untuk manga ini.</p>
+                                        <p class="text-gray-700 text-gray-400 italic">Sinopsis belum tersedia untuk manga ini.</p>
                                     @endif
                                 </div>
                             </div>
@@ -470,9 +471,9 @@
                     </div>
 
                     <div id="content-gallery" class="tab-content hidden">
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                        <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-6">
-                                <h2 class="text-2xl font-bold text-white">Gallery</h2>
+                                <h2 class="text-2xl font-bold text-black dark:text-white">Gallery</h2>
                                 
                                 @auth
                                     @if(Auth::user()->isAdmin())
@@ -539,7 +540,7 @@
                                 </div>
 
                                 {{-- Lightbox Modal --}}
-                                <div id="lightbox" class="hidden fixed inset-0 bg-black/80
+                                <div id="lightbox" class="fixed inset-0 bg-black/80
                                  z-50 flex items-center justify-center p-4">
                                     <button onclick="closeLightbox()" 
                                             class="absolute top-4 right-4 text-white hover:text-amber-400 transition-colors z-10">
@@ -578,10 +579,10 @@
 
                             @else
                                 <div class="text-center py-12">
-                                    <svg class="w-20 h-20 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-20 h-20 text-gray-700 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
-                                    <p class="text-gray-400 text-lg mb-4">Belum ada gambar di gallery</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-lg mb-4">Belum ada gambar di gallery</p>
                                     
                                     @auth
                                         @if(Auth::user()->isAdmin())
@@ -608,8 +609,8 @@
             
             // Remove active state from all tabs
             document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('text-amber-400', 'border-amber-400', 'font-bold', 'hover:text-amber-400');
-                button.classList.add('text-gray-400', 'border-transparent', 'font-normal', 'hover:text-white');
+                button.classList.remove('text-amber-400', 'border-amber-400', 'font-bold', 'hover:dark:text-amber-400');
+                button.classList.add('dark:text-gray-400','text-gray-600', 'border-transparent', 'font-normal', 'hover:dark:text-white', 'hover:text-black');
             });
             
             // Show selected tab content
@@ -617,8 +618,8 @@
             
             // Add active state to selected tab
             const activeTab = document.getElementById('tab-' + tabName);
-            activeTab.classList.remove('text-gray-400', 'border-transparent', 'font-normal', 'hover:text-white');
-            activeTab.classList.add('text-amber-400', 'border-amber-400', 'font-bold', 'hover:text-amber-400');
+            activeTab.classList.remove('hover:dark:text-white', 'hover:text-black', 'dark:text-gray-400', 'text-gray-600', 'border-transparent', 'font-normal');
+            activeTab.classList.add('text-amber-400', 'border-amber-400', 'font-bold');
         }
 
         // Chapter Search and Sort Functionality

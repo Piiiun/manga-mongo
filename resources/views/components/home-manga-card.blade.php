@@ -1,6 +1,6 @@
 @props(['manga'])
 
-<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-card to-card-2 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/20 border border-white/5">
+<article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-card-light to-card-2-light dark:from-card dark:to-card-2 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-800/80 hover:dark:shadow-amber-500/20 border border-black/10 dark:border-white/5">
     {{-- COVER + BADGE --}}
     <div class="relative overflow-hidden">
         <img src="{{ asset('storage/manga/' . $manga->cover_image) }}"
@@ -8,7 +8,7 @@
              class="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-110">
         
         {{-- Gradient Overlay --}}
-        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-white/70 via-white/15 dark:from-black/80 dark:via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
 
         {{-- Badge Baru --}}
         <div class="absolute left-2 top-2 flex items-center gap-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 px-2 py-1 text-[10px] font-bold text-white shadow-md backdrop-blur-sm md:left-3 md:top-3 md:px-3 md:py-1.5 md:text-xs md:rounded-lg md:shadow-lg">
@@ -53,7 +53,7 @@
     <div class="flex flex-1 flex-col gap-1 md:gap-3 p-2 md:p-5">
         {{-- Title dengan hover effect --}}
         <a href="{{ route('manga.detail', $manga->slug) }}" class="group/title">
-            <h3 class="line-clamp-2 text-base font-bold text-white transition-colors group-hover/title:text-amber-400">
+            <h3 class="line-clamp-2 text-base font-bold text-black dark:text-white transition-colors group-hover/title:text-amber-400">
                 {{ $manga->title }}
             </h3>
         </a>
@@ -61,7 +61,7 @@
         {{-- Genres dengan styling lebih menarik --}}
         <div class="flex flex-wrap gap-2">
             @foreach ($manga->genres->take(3) as $genre)
-                <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-500/20 to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-300 ring-1 ring-amber-500/30 transition-all hover:ring-amber-500/60">
+                <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-100 to-yellow-100 dark:from-amber-500/20 dark:to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-700 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-500/30 transition-all hover:ring-amber-300 hover:dark:ring-amber-500/60">
                     <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                         {{ $genre->name }}
                     </a>
@@ -70,21 +70,21 @@
         </div>
 
         {{-- Divider --}}
-        <div class="h-px bg-linear-to-r from-transparent via-gray-700 to-transparent"></div>
+        <div class="h-px bg-linear-to-r from-transparent dark:via-gray-700 to-transparent"></div>
 
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
-                <div class="group/chapter rounded-lg bg-white/10 sm:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-white/10">
+                <div class="group/chapter rounded-lg bg-black/10 dark:bg-white/10 sm:bg-black/10 sm:dark:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-black/15 hover:dark:bg-white/10">
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"
-                           class="flex items-center gap-2 text-sm font-semibold text-amber-400 transition-colors hover:text-amber-300">
+                           class="flex items-center gap-2 text-sm font-semibold text-amber-500 dark:text-amber-400 transition-colors hover:text-amber-400 hover:dark:text-amber-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                             </svg>
                             <span>Chapter {{ $chapter->number }}</span>
                         </a>
 
-                        <span class="text-xs text-gray-400">
+                        <span class="text-xs text-gray-600 dark:text-gray-400">
                             {{ optional($chapter->created_at)->diffForHumans() }}
                         </span>
                     </div>

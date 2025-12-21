@@ -1,4 +1,4 @@
-<nav class="bg-linear-to-r from-slate-950 via-gray-900/95 to-slate-950 px-4 md:px-10 py-3 top-0 z-50 fixed w-full shadow-lg backdrop-blur-sm border-b border-white/10">
+<nav class="bg-linear-to-r from-slate-50 via-white/95 to-slate-100 dark:from-slate-950 dark:via-gray-900/95 dark:to-slate-950 px-4 md:px-10 py-3 top-0 z-50 fixed w-full shadow-lg backdrop-blur-sm border-b border-black/10 dark: border-white/10">
     <div class="flex items-center md:justify-between max-w-[1540px] mx-auto">
         <div class="shrink-0 mr-3 md:mr-0">
             <a href="{{ route('home') }}" class="group">
@@ -15,11 +15,11 @@
                     placeholder="Cari Manga.." 
                     value="{{ request('search') }}" 
                     autocomplete="off"
-                    class="w-full md:min-w-[300px] rounded-full bg-slate-950/20 backdrop-blur-sm px-4 py-2 pr-10 text-base text-white border border-white/20 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent transition-all duration-300 sm:text-sm"
+                    class="w-full md:min-w-[300px] rounded-full bg-slate-950/20 backdrop-blur-sm px-4 py-2 pr-10 text-base text-white border border-white/20 placeholder:text-gray-700 placeholder:dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent transition-all duration-300 sm:text-sm"
                 >
                 <button 
                     type="submit" 
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors duration-200"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-400 hover:text-amber-500 transition-colors duration-200"
                 >
                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -29,14 +29,38 @@
             </form>
         </div>
 
-        <div class="gap-6 justify-end text-white hidden md:flex font-medium items-center">
-            <a href="{{ route('home') }}" class="hover:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">Home</a>
-            <a href="{{ route('bookmark.index') }}" class="hover:text-gray-400 transition-all duration-200 flex items-center gap-1.5 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-20">
+        <div class="gap-6 justify-end text-black dark:text-white hidden md:flex font-medium items-center">
+            <a href="{{ route('home') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">Home</a>
+            <a href="{{ route('bookmark.index') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 flex items-center gap-1.5 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-20">
                 Bookmark
                 <span id="nav-bookmark-count" class="bg-gray-500 text-black text-xs font-bold px-2 py-0.5 rounded-full min-w-5 text-center animate-pulse">0</span>
             </a>
-            <a href="{{ route('manga.list') }}" class="hover:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">List</a>
-            
+            <a href="{{ route('manga.list') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">List</a>
+            <button
+                id="theme-toggle"
+                class="p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200 transition-colors"
+                aria-label="Toggle Dark Mode"
+                >
+                <!-- Icon Sun -->
+                <svg id="icon-sun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M7.28451 10.3333C7.10026 10.8546 7 11.4156 7 12C7 14.7614 9.23858 17 12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C11.4156 7 10.8546 7.10026 10.3333 7.28451"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 2V4"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 20V22"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M4 12L2 12"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M22 12L20 12"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M19.7778 4.22266L17.5558 6.25424"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M4.22217 4.22266L6.44418 6.25424"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M6.44434 17.5557L4.22211 19.7779"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M19.7778 19.7773L17.5558 17.5551"></path>
+                </svg>
+
+                <!-- Icon Moon -->
+                <svg id="icon-moon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                </svg>
+            </button>
+
             @auth
                 {{-- User sudah login --}}
                 <div class="relative group">
@@ -56,14 +80,14 @@
                     </button>
                     
                     {{-- Dropdown Menu --}}
-                    <div class="absolute right-0 mt-2 w-48 bg-slate-900/95 backdrop-blur-md rounded-xl shadow-xl border border-slate-700/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right scale-95 group-hover:scale-100">
+                    <div class="absolute right-0 mt-2 w-48 bg-gray-50/95 dark:bg-slate-900/95 backdrop-blur-md rounded-xl shadow-xl border border-slate-700 dark:border-slate-700/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right scale-95 group-hover:scale-100">
                         <div class="py-2">
-                            <div class="px-4 py-2 border-b border-slate-700/50">
-                                <p class="text-sm text-gray-500">Signed in as</p>
-                                <p class="text-sm font-medium truncate text-white">{{ Auth::user()->email }}</p>
+                            <div class="px-4 py-2 border-b border-black/50 dark:border-slate-700/50">
+                                <p class="text-sm text-gray-600 dark:text-gray-500">Signed in as</p>
+                                <p class="text-sm font-medium truncate text-black dark:text-white">{{ Auth::user()->email }}</p>
                             </div>
                             
-                            <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
+                            <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-black/10 hover:dark:bg-white/10 hover:text-black hover:dark:text-white transition-colors">
                                 <span class="flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -71,7 +95,7 @@
                                     Profile
                                 </span>
                             </a>
-                            <a href="{{ route('home') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
+                            <a href="{{ route('home') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-black/10 hover:dark:bg-white/10 hover:text-black hover:dark:text-white transition-colors">
                                 <span class="flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
@@ -80,16 +104,16 @@
                                 </span>
                             </a>
                             @if(Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.manga.index') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
-                                <span class="flex items-center gap-2 text-green-500 hover:text-green-400">
+                            <a href="{{ route('admin.manga.index') }}" class="block px-4 py-2 text-sm hover:bg-black/10 hover:dark:bg-white/10 transition-colors">
+                                <span class="flex items-center gap-2 text-green-700 dark:text-green-500 hover:text-green-500 hover:dark:text-green-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>
                                     Admin Panel
                                 </span>
                             </a>
                             @endif
-                            <form method="POST" action="{{ route('logout') }}" class="border-t border-white/10 mt-1">
+                            <form method="POST" action="{{ route('logout') }}" class="border-t border-black/50 dark:border-white/10 mt-1">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-white/10 hover:text-red-400 transition-colors">
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-700 dark:text-red-500 hover:bg-black/10 hover:dark:bg-white/10 hover:text-red-600 hover:dark:text-red-400 transition-colors">
                                     <span class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
@@ -110,3 +134,16 @@
         </div>
     </div>
 </nav>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+
+    if (localStorage.theme === 'dark') root.classList.add('dark');
+
+    btn.onclick = () => {
+        root.classList.toggle('dark');
+        localStorage.theme = root.classList.contains('dark') ? 'dark' : 'light';
+    };
+});
+</script>

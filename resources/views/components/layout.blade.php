@@ -40,13 +40,13 @@
 
     @stack('head')
 </head>
-<body class="bg-[#0B1020] text-white {{ $bodyClass }}">
+<body class="bg-linear-to-b from-slate-200 to-slate-50 dark:from-slate-950 dark:to-[#0B1020] text-white {{ $bodyClass }}">
     @unless($noNav)
     <x-nav-top />
     <x-nav-bottom />
     @endunless
 
-    <main class="{{ $noPadding ? '' : 'pt-17' }} min-h-screen">
+    <main class="pt-[65px] min-h-screen">
         {{ $slot }}
     </main>
 
@@ -57,3 +57,4 @@
     @stack('scripts')
 </body>
 </html>
+{{-- {{ $noPadding ? '' : 'pt-17' }} --}}

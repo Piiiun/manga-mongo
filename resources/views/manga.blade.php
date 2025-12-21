@@ -2,13 +2,13 @@
     title="Daftar Manga - MangaMongo"
     description="Baca manga dan komik terbaru dengan kualitas terbaik di MangaMongo. Update setiap hari."
 > 
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent">
+    <div class="min-h-screen">
         {{-- Breadcrumb --}}
         <div class="px-4 sm:px-6 lg:px-8 py-4">
             <nav class="flex items-center gap-2 text-sm text-gray-400">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-amber-500 hover:dark:text-amber-400 transition-colors">Home</a>
                 <span>/</span>
-                <span class="text-white">Manga</span>
+                <span class="text-black dark:text-white">Manga</span>
                 @if(request('genre'))
                     <span>/</span>
                     <span class="text-amber-400">{{ ucfirst(request('genre')) }}</span>
@@ -19,13 +19,13 @@
         {{-- Header --}}
         <div class="px-4 sm:px-6 lg:px-8 py-6 pt-2">
             <div class="mb-8">
-                <h1 class="text-4xl font-bold text-white mb-2">
+                <h1 class="text-4xl font-bold text-black dark:text-white mb-2">
                     Daftar Manga
                     @if(request('genre'))
                         <span class="text-amber-400">- {{ ucfirst(request('genre')) }}</span>
                     @endif
                 </h1>
-                <p class="text-gray-400">Temukan manga favoritmu</p>
+                <p class="text-gray-600 dark:text-gray-400">Temukan manga favoritmu</p>
             </div>
 
             {{-- FORM UNTUK SORTING DAN FILTER --}}
@@ -38,9 +38,9 @@
                             name="search" 
                             placeholder="Cari manga..." 
                             value="{{ request('search') }}"
-                            class="w-full bg-gray-900/70 border border-gray-800 rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent"
+                            class="w-full bg-slate-50/70 dark:bg-gray-900/70 border border-gray-800 rounded-xl px-5 py-3 text-black dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/70 focus:dark:ring-amber-500/50 focus:border-transparent"
                         >
-                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-400">
+                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-amber-500 hover:dark:text-amber-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
@@ -51,18 +51,18 @@
                     <div class="flex gap-3">
                         {{-- Sorting Dropdown --}}
                         <select name="sort" 
-                                class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm"
+                                class="bg-slate-50/70 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm"
                                 onchange="this.form.submit()">
-                            <option value="a-z" {{ request('sort', 'a-z') == 'a-z' ? 'selected' : '' }} class="bg-gray-900">
+                            <option value="a-z" {{ request('sort', 'a-z') == 'a-z' ? 'selected' : '' }} class="bg-slate-50/50 dark:bg-gray-900">
                                 A-Z
                             </option>
-                            <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }} class="bg-gray-900">
+                            <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }} class="bg-slate-50/50 dark:bg-gray-900">
                                 Terbaru
                             </option>
-                            <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }} class="bg-gray-900">
+                            <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }} class="bg-slate-50/50 dark:bg-gray-900">
                                 Populer
                             </option>
-                            <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }} class="bg-gray-900">
+                            <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }} class="bg-slate-50/50 dark:bg-gray-900">
                                 Rating
                             </option>
                         </select>
@@ -70,7 +70,7 @@
                         {{-- Filter Button (untuk modal/more filters) --}}
                         <button type="button" 
                                 onclick="openFilterModal()"
-                                class="hidden lg:flex bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-3 hover:bg-gray-800/70 transition-colors text-sm flex items-center gap-2">
+                                class="hidden lg:flex bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 hover:bg-slate-300/70 hover:dark:bg-gray-800/70 transition-colors text-sm items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                             </svg>
@@ -79,7 +79,7 @@
 
                         <button type="button" 
                                 onclick="openFilterModal()"
-                                class="lg:hidden px-4 py-3 bg-gray-900/70 border border-gray-800 text-white rounded-xl hover:bg-gray-800/70 transition-colors flex items-center gap-2">
+                                class="lg:hidden px-4 py-3 bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl hover:bg-slate-300/70 hover:dark:bg-gray-800/70 transition-colors flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                             </svg>
@@ -87,7 +87,7 @@
 
                         {{-- Reset Button --}}
                         <a href="{{ route('manga.list') }}" 
-                           class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-3 hover:bg-gray-800/70 transition-colors text-sm flex items-center justify-center">
+                           class="bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 hover:bg-slate-300/70 hover:dark:bg-gray-800/70 transition-colors text-sm flex items-center justify-center">
                             Reset
                         </a>
                     </div>
@@ -95,13 +95,13 @@
 
                 {{-- Additional Filters (bisa disimpan di modal) --}}
                 <div class="mt-4 flex flex-wrap gap-3" id="extraFilters" style="display: none;">
-                    <select name="status" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
+                    <select name="status" class="bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-2 text-sm">
                         <option value="">Semua Status</option>
                         <option value="Ongoing" {{ request('status') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
                         <option value="Completed" {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
                     </select>
                     
-                    <select name="type" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
+                    <select name="type" class="bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-2 text-sm">
                         <option value="">Semua Tipe</option>
                         <option value="manga" {{ request('type') == 'manga' ? 'selected' : '' }}>Manga</option>
                         <option value="manhwa" {{ request('type') == 'manhwa' ? 'selected' : '' }}>Manhwa</option>
@@ -109,7 +109,7 @@
                     </select>
 
                     {{-- Genre Filter --}}
-                    <select name="genre" class="bg-gray-900/70 border border-gray-800 text-white rounded-xl px-4 py-2 text-sm">
+                    <select name="genre" class="bg-slate-50/50 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-2 text-sm">
                         <option value="">Semua Genre</option>
                         @foreach($genres as $genreItem)
                             <option value="{{ $genreItem->slug }}" {{ request('genre') == $genreItem->slug ? 'selected' : '' }}>

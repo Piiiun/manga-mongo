@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative pt-1">
     <div class="swiper hero-swiper">
         <div class="swiper-wrapper">
 

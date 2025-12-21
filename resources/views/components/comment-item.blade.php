@@ -1,9 +1,9 @@
 @props(['comment', 'level' => 0, 'manga' => null, 'chapter' => null])
 
 <div class="comment-item {{ $level > 0 ? 'ml-1 sm:ml-2 pl-3 sm:pl-4 border-l-2 border-amber-500/30' : '' }}" data-comment-id="{{ $comment->id }}">
-    <div class="flex gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-800/30 rounded-lg {{ $comment->is_spoiler ? 'border-2 border-red-500/30' : '' }}">
+    <div class="flex gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-200/50 dark:bg-gray-800/30 rounded-lg {{ $comment->is_spoiler ? 'border-2 border-red-500/30' : '' }}">
         {{-- Avatar --}}
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
             <img src="{{ $comment->user->profile_picture_url }}" 
                  alt="{{ $comment->user->name }}"
                  class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-700">
@@ -13,8 +13,8 @@
         <div class="flex-1 min-w-0">
             {{-- Header --}}
             <div class="flex flex-wrap items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                <span class="font-semibold text-white text-sm sm:text-base">{{ $comment->user->name }}</span>
-                <span class="text-gray-500 text-[10px] sm:text-xs">{{ $comment->created_at->diffForHumans() }}</span>
+                <span class="font-semibold text-black dark:text-white text-sm sm:text-base">{{ $comment->user->name }}</span>
+                <span class="text-gray-600 dark:text-gray-500 text-[10px] sm:text-xs">{{ $comment->created_at->diffForHumans() }}</span>
                 
                 @if($comment->is_spoiler)
                     <span class="px-1.5 sm:px-2 py-0.5 bg-red-500/20 text-red-400 text-[10px] sm:text-xs font-bold rounded">
@@ -23,13 +23,13 @@
                 @endif
 
                 @if($comment->created_at != $comment->updated_at)
-                    <span class="text-gray-500 text-[10px] sm:text-xs italic">(diedit)</span>
+                    <span class="text-gray-600 dark:text-gray-500 text-[10px] sm:text-xs italic">(diedit)</span>
                 @endif
             </div>
 
             {{-- Comment Text --}}
             <div class="comment-content {{ $comment->is_spoiler ? 'spoiler-hidden' : '' }}">
-                <p class="text-gray-300 text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">{{ $comment->content }}</p>
+                <p class="text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-wrap wrap-break-word leading-relaxed">{{ $comment->content }}</p>
                 
                 @if($comment->is_spoiler)
                     <button onclick="toggleSpoiler(this)" 
@@ -67,7 +67,7 @@
                 @auth
                     @if($level < 3)
                         <button onclick="showReplyForm({{ $comment->id }})" 
-                                class="text-xs sm:text-sm text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
+                                class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
                             Balas
                         </button>
                     @endif
@@ -77,7 +77,7 @@
                 @auth
                     @if($comment->user_id === Auth::id())
                         <button onclick="showEditForm({{ $comment->id }})" 
-                                class="text-xs sm:text-sm text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
+                                class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-amber-400 transition-colors active:scale-95">
                             Edit
                         </button>
                         
@@ -88,7 +88,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" 
-                                    class="text-xs sm:text-sm text-gray-400 hover:text-red-400 transition-colors active:scale-95">
+                                    class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-red-400 transition-colors active:scale-95">
                                 Hapus
                             </button>
                         </form>
@@ -142,12 +142,12 @@
                             <textarea name="content" 
                                       rows="2" 
                                       required
-                                      class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base focus:outline-none focus:border-amber-500 resize-none">{{ $comment->content }}</textarea>
+                                      class="w-full px-3 sm:px-4 py-2 bg-slate-300 dark:bg-gray-900 border border-gray-700 rounded-lg text-black dark:text-white text-sm sm:text-base focus:outline-none focus:border-amber-500 resize-none">{{ $comment->content }}</textarea>
                             
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mt-2">
-                                <label class="flex items-center gap-2 text-xs sm:text-sm text-gray-400">
-                                    <input type="checkbox" name="is_spoiler" value="1" {{ $comment->is_spoiler ? 'checked' : '' }} class="rounded w-4 h-4">
-                                    <span>Spoiler</span>
+                                <label class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                                    <input type="checkbox" name="is_spoiler" value="1" {{ $comment->is_spoiler ? 'checked' : '' }} class="rounded w-4 h-4 accent-amber-500">
+                                    <span>Tandai sebagai spoiler</span>
                                 </label>
                                 
                                 <div class="flex gap-2">

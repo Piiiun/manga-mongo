@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="min-h-screen max-w-[1540px] mx-auto bg-linear-to-b from-slate-950 to-transparent">
+    <div class="min-h-screen max-w-[1540px] mx-auto">
         <x-hero-slider :featuredMangas="$featuredMangas" />
         @auth
             <x-continue-reading-home :lastHistory="$lastHistory" />

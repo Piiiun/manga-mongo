@@ -2,7 +2,7 @@
 
 @if(!empty($lastHistory) && $lastHistory && $lastHistory->manga)
     <section class="relative mt-6 px-4 sm:px-8">
-        <div class="bg-gray-900/80 border border-gray-800 rounded-2xl p-4 md:p-5 flex gap-4 items-center">
+        <div class="bg-gray-50 dark:bg-gray-900/80 border border-gray-400 dark:border-gray-800 rounded-2xl shadow-lg p-4 md:p-5 flex gap-4 items-center">
             {{-- Thumbnail --}}
             <a href="{{ route('manga.read', [$lastHistory->manga->slug, $lastHistory->chapter_number]) }}" class="shrink-0">
                 <img src="{{ asset('storage/manga/' . $lastHistory->manga->cover_image) }}"
@@ -12,11 +12,11 @@
 
             {{-- Info --}}
             <div class="flex-1 min-w-0">
-                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">
+                <p class="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400 mb-1">
                     Lanjutkan Membaca
                 </p>
                 <a href="{{ route('manga.detail', $lastHistory->manga->slug) }}" class="block">
-                    <h2 class="text-white font-bold text-base md:text-lg transition-colors line-clamp-1">
+                    <h2 class="text-black dark:text-white font-bold text-base md:text-lg transition-colors line-clamp-1">
                         {{ $lastHistory->manga->title }}
                     </h2>
                 </a>
@@ -31,14 +31,14 @@
                             Chapter {{ $lastHistory->chapter_number }}
                         </span>
                         @if($lastHistory->last_page > 1)
-                            <span class="text-gray-400">
+                            <span class="text-gray-600 dark:text-gray-400">
                                 (Halaman {{ $lastHistory->last_page }})
                             </span>
                         @endif
                     </a>
 
                     @if($lastHistory->last_read_at)
-                        <span class="text-gray-400">
+                        <span class="text-gray-600 dark:text-gray-400">
                             Terakhir dibaca {{ $lastHistory->last_read_at->diffForHumans() }}
                         </span>
                     @endif

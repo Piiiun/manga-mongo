@@ -5,6 +5,8 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
     --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
     /* --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -12,6 +14,8 @@
     --font-manga: "Inter", sans-serif;
     --color-card: oklch(23% 0.045 270);
     --color-card-2: oklch(17% 0.040 268);
+    --color-card-light: oklch(96% 0.012 270);
+    --color-card-2-light: oklch(93% 0.015 270);
 }
 
 .swiper-button-next,
