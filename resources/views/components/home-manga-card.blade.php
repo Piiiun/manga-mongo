@@ -61,7 +61,18 @@
         {{-- Genres dengan styling lebih menarik --}}
         <div class="flex flex-wrap gap-2">
             @foreach ($manga->genres->take(3) as $genre)
-                <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-500/20 to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-600 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-500/30 transition-all hover:ring-amber-400 hover:dark:ring-amber-500/60">
+                <span
+                    class="
+                        md:rounded-full rounded-sm
+                        bg-linear-to-r from-amber-500/20 to-yellow-500/20
+                        md:px-3 px-1 md:py-1 py-0.5
+                        md:text-xs text-[10px]
+                        font-semibold text-amber-600 dark:text-amber-300
+                        ring-1 ring-amber-200 dark:ring-amber-500/30
+                        transition-all hover:ring-amber-400 hover:dark:ring-amber-500/60
+                        {{ $loop->iteration === 3 ? 'hidden md:inline-flex' : '' }}
+                    "
+                >
                     <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                         {{ $genre->name }}
                     </a>
@@ -69,15 +80,25 @@
             @endforeach
         </div>
 
+
         {{-- Divider --}}
         <div class="h-px bg-linear-to-r from-transparent dark:via-gray-700 to-transparent"></div>
 
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
-                <div class="group/chapter rounded-lg bg-black/10 dark:bg-white/10 sm:bg-black/5 sm:dark:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all  hover:bg-black/10 hover:dark:bg-white/10">
+                <div
+                    class="
+                        group/chapter rounded-lg
+                        bg-black/10 dark:bg-white/10
+                        sm:bg-black/5 sm:dark:bg-white/5
+                        px-2 md:px-3 py-1 md:py-2
+                        transition-all hover:bg-black/10 hover:dark:bg-white/10
+                        {{ $loop->iteration === 3 ? 'hidden sm:block' : '' }}
+                    "
+                >
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"
-                           class="flex items-center gap-2 text-sm font-semibold text-amber-500 dark:text-amber-400 transition-colors hover:text-amber-400 hover:dark:text-amber-300">
+                        class="flex items-center gap-2 text-sm font-semibold text-amber-500 dark:text-amber-400 transition-colors hover:text-amber-400 hover:dark:text-amber-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                             </svg>
@@ -91,6 +112,7 @@
                 </div>
             @endforeach
         </div>
+
 
         {{-- Read button --}}
         <a href="{{ route('manga.detail', $manga->slug) }}">
