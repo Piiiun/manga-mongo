@@ -307,6 +307,7 @@
                                     <textarea name="content" 
                                             rows="4" 
                                             required
+                                            maxlength="1000"
                                             placeholder="Tulis komentar kamu tentang manga ini..."
                                             class="w-full px-4 py-3 bg-gray-300 dark:bg-gray-800 border border-gray-700 rounded-lg text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
                                     
@@ -468,7 +469,7 @@
                                     <h3 class="text-xl font-bold text-amber-400 mb-3">Genres:</h3>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($manga->genres as $genre)
-                                            <a class="" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
+                                            <a class="mb-2 sm:mb-0" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                                                 <span class="bg-slate-300 dark:bg-gray-800 hover:bg-amber-500 text-gray-600 dark:text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
                                                     {{ $genre->name }}
                                                 </span>

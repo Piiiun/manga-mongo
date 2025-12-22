@@ -443,6 +443,7 @@
                                 <textarea name="content" 
                                         rows="3" 
                                         required
+                                        maxlength="1000"
                                         placeholder="Bagaimana pendapat kamu tentang chapter ini?"
                                         class="w-full px-4 py-3 bg-gray-300 dark:bg-gray-800 border border-gray-700 rounded-lg text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
                                 

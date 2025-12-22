@@ -106,6 +106,7 @@
                         <textarea name="content" 
                                   rows="2" 
                                   required
+                                  maxlength="1000"
                                   placeholder="Tulis balasan..."
                                   class="w-full px-3 sm:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
                         
@@ -142,6 +143,7 @@
                             <textarea name="content" 
                                       rows="2" 
                                       required
+                                      maxlength="1000"
                                       class="w-full px-3 sm:px-4 py-2 bg-slate-300 dark:bg-gray-900 border border-gray-700 rounded-lg text-black dark:text-white text-sm sm:text-base focus:outline-none focus:border-amber-500 resize-none">{{ $comment->content }}</textarea>
                             
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mt-2">
