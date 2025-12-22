@@ -29,9 +29,9 @@
             </form>
         </div>
 
-        <div class="justify-end sm:hidden font-medium items-center text-black dark:text-white">
+        <div class="justify-end md:hidden font-medium items-center text-black dark:text-white pl-4">
             <button
-                class="theme-toggle-btn p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200 pl-4"
+                class="theme-toggle-btn p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200"
                 aria-label="Toggle Dark Mode"
                 >
                 <!-- Icon Sun -->
