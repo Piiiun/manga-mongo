@@ -49,7 +49,7 @@
 
                     {{-- Sort & Filter --}}
                     <div class="flex gap-3">
-                        {{-- Sorting Dropdown --}}
+                    {{-- Sorting Dropdown --}}
                         <select name="sort" 
                                 class="bg-slate-50/70 dark:bg-gray-900/70 border border-gray-800 text-black dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm"
                                 onchange="this.form.submit()">

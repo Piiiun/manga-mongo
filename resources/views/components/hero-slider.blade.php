@@ -8,7 +8,7 @@
 
                         {{-- background blur besar (opsional) --}}
                         <div class="pointer-events-none absolute inset-0 opacity-50">
-                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-50 w-full h-full object-cover blur-lg scale-110">
+                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-25 w-full h-full object-cover blur-lg scale-110">
                         </div>
 
                         {{-- KONTEN KIRI --}}

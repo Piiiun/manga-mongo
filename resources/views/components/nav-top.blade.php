@@ -15,7 +15,7 @@
                     placeholder="Cari Manga.." 
                     value="{{ request('search') }}" 
                     autocomplete="off"
-                    class="w-full md:min-w-[300px] rounded-full bg-slate-950/20 backdrop-blur-sm px-4 py-2 pr-10 text-base text-white border border-white/20 placeholder:text-gray-700 placeholder:dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent transition-all duration-300 sm:text-sm"
+                    class="w-full md:min-w-[300px] rounded-full bg-slate-950/20 backdrop-blur-sm px-4 py-2 pr-10 text-base text-black dark:text-white border border-white/20 placeholder:text-gray-700 placeholder:dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-transparent transition-all duration-300 sm:text-sm"
                 >
                 <button 
                     type="submit" 
@@ -29,20 +29,13 @@
             </form>
         </div>
 
-        <div class="gap-6 justify-end text-black dark:text-white hidden md:flex font-medium items-center">
-            <a href="{{ route('home') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">Home</a>
-            <a href="{{ route('bookmark.index') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 flex items-center gap-1.5 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-20">
-                Bookmark
-                <span id="nav-bookmark-count" class="bg-gray-500 text-black text-xs font-bold px-2 py-0.5 rounded-full min-w-5 text-center animate-pulse">0</span>
-            </a>
-            <a href="{{ route('manga.list') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">List</a>
+        <div class="justify-end sm:hidden font-medium items-center text-black dark:text-white">
             <button
-                id="theme-toggle"
-                class="p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200 transition-colors"
+                class="theme-toggle-btn p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200 pl-4"
                 aria-label="Toggle Dark Mode"
                 >
                 <!-- Icon Sun -->
-                <svg id="icon-sun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M7.28451 10.3333C7.10026 10.8546 7 11.4156 7 12C7 14.7614 9.23858 17 12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C11.4156 7 10.8546 7.10026 10.3333 7.28451"></path> 
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 2V4"></path> 
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 20V22"></path> 
@@ -55,7 +48,39 @@
                 </svg>
 
                 <!-- Icon Moon -->
-                <svg id="icon-moon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="gap-6 justify-end text-black dark:text-white hidden md:flex font-medium items-center">
+            <a href="{{ route('home') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">Home</a>
+            <a href="{{ route('bookmark.index') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 flex items-center gap-1.5 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-20">
+                Bookmark
+                <span id="nav-bookmark-count" class="bg-gray-500 text-black text-xs font-bold px-2 py-0.5 rounded-full min-w-5 text-center animate-pulse">0</span>
+            </a>
+            <a href="{{ route('manga.list') }}" class="hover:text-gray-600 hover:dark:text-gray-400 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 after:transition-all hover:after:w-full">List</a>
+            <button
+                class="theme-toggle-btn p-2 rounded-4xl bg-white/5 dark:bg-slate-950 hover:dark:bg-gray-800/70 hover:bg-gray-200 transition-colors"
+                aria-label="Toggle Dark Mode"
+                >
+                <!-- Icon Sun -->
+                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M7.28451 10.3333C7.10026 10.8546 7 11.4156 7 12C7 14.7614 9.23858 17 12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C11.4156 7 10.8546 7.10026 10.3333 7.28451"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 2V4"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 20V22"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M4 12L2 12"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M22 12L20 12"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M19.7778 4.22266L17.5558 6.25424"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M4.22217 4.22266L6.44418 6.25424"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M6.44434 17.5557L4.22211 19.7779"></path> 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M19.7778 19.7773L17.5558 17.5551"></path>
+                </svg>
+
+                <!-- Icon Moon -->
+                <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
                 </svg>
@@ -95,12 +120,12 @@
                                     Profile
                                 </span>
                             </a>
-                            <a href="{{ route('home') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-black/10 hover:dark:bg-white/10 hover:text-black hover:dark:text-white transition-colors">
+                            <a href="{{ route('history.index') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-black/10 hover:dark:bg-white/10 hover:text-black hover:dark:text-white transition-colors">
                                 <span class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                    </svg>
-                                    Dashboard
+                                    <svg class="w-4 h-4 relative z-10 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                    History
                                 </span>
                             </a>
                             @if(Auth::user()->role === 'admin')
@@ -136,14 +161,19 @@
 </nav>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('theme-toggle');
     const root = document.documentElement;
+    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
 
     if (localStorage.theme === 'dark') root.classList.add('dark');
 
-    btn.onclick = () => {
+    const toggleTheme = () => {
         root.classList.toggle('dark');
         localStorage.theme = root.classList.contains('dark') ? 'dark' : 'light';
     };
+
+    // Add event listener to all theme toggle buttons (mobile and desktop)
+    themeToggleBtns.forEach(btn => {
+        btn.addEventListener('click', toggleTheme);
+    });
 });
 </script>

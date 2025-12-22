@@ -1,10 +1,10 @@
 <x-layout title="Login" :noFooter="true" :noPadding="true">
-    <div class="min-h-screen flex items-center justify-center bg-gray-900 px-0 md:px-4">
-        <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md mt-10 scale-80 md:scale-100">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center">Login</h2>
+    <div class="min-h-screen flex items-center justify-center bg-slate-200 dark:bg-gray-900 px-0 md:px-4">
+        <div class="bg-slate-100 border border-gray-700 dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md mt-10 scale-80 md:scale-100">
+            <h2 class="text-3xl font-bold text-black dark:text-white mb-6 text-center">Login</h2>
             
             @if (session('status'))
-                <div class="bg-green-500/20 border border-green-500 text-green-400 px-4 py-3 rounded-lg mb-4">
+                <div class="bg-green-500/20 border border-green-500 text-green-600 dark:text-green-400 px-4 py-3 rounded-lg mb-4">
                     {{ session('status') }}
                 </div>
             @endif
@@ -19,7 +19,7 @@
                 @csrf
                 
                 <div class="mb-4">
-                    <label class="block text-gray-300 mb-2 font-semibold">Email</label>
+                    <label class="block text-gray-600 dark:text-gray-300 mb-2 font-semibold">Email</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -30,7 +30,7 @@
                             required 
                             autofocus
                             placeholder="contoh@gmail.com"
-                            class="pl-10 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                            class="pl-10 w-full px-4 py-3 rounded-lg bg-slate-200 dark:bg-gray-700 text-black dark:text-white shadow-lg border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
                     </div>
                     @error('email')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
@@ -38,7 +38,7 @@
                 </div>
                 
                 <div class="mb-4">
-                    <label class="block text-gray-300 mb-2 font-semibold">Password</label>
+                    <label class="block text-gray-600 dark:text-gray-300 mb-2 font-semibold">Password</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -48,7 +48,7 @@
                             name="password" 
                             required
                             placeholder="••••••••"
-                            class="pl-10 pr-12 w-full px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                            class="pl-10 pr-12 w-full px-4 py-3 rounded-lg bg-slate-200 dark:bg-gray-700 text-black dark:text-white shadow-lg border border-gray-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
                         
                         <button type="button" 
                             onclick="togglePassword('password', this)"
@@ -65,23 +65,23 @@
                     @enderror
                 </div>               
                 <div class="flex items-center justify-between mb-6">
-                    <label class="flex items-center text-gray-300">
-                        <input type="checkbox" name="remember" class="mr-2 rounded">
+                    <label class="flex items-center text-gray-600 dark:text-gray-300">
+                        <input type="checkbox" name="remember" class="mr-2 rounded accent-amber-500">
                         Remember Me
                     </label>
                     
-                    <a href="{{ route('password.request') }}" class="text-amber-400 hover:text-amber-300 text-sm">
+                    <a href="{{ route('password.request') }}" class="text-amber-500 dark:text-amber-400 hover:text-amber-400 hover:dark:text-amber-300 text-sm">
                         Lupa Password?
                     </a>
                 </div>
                 
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-3 px-4 rounded-lg transition-colors">
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black shadow shadow-amber-300 font-bold py-3 px-4 rounded-lg transition-colors">
                     Login
                 </button>
                 
-                <p class="text-gray-400 text-center mt-6">
+                <p class="text-gray-600 dark:text-gray-400 text-center mt-6">
                     Belum punya akun? 
-                    <a href="{{ route('register') }}" class="text-amber-400 hover:text-amber-300 font-semibold">
+                    <a href="{{ route('register') }}" class="text-amber-500 dark:text-amber-400 hover:text-amber-400 hover:dark:text-amber-300 font-semibold">
                         Daftar Sekarang
                     </a>
                 </p>

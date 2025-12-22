@@ -1,5 +1,5 @@
 <x-layout title="Reading History - MangaMongo">
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-6 sm:py-8 px-3 sm:px-4">
+    <div class="min-h-screenpy-6 sm:py-8 px-3 sm:px-4">
         <div class="max-w-7xl mx-auto">
             
             {{-- Header --}}
@@ -7,8 +7,8 @@
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div>
-                            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-1 sm:mb-2">Reading History</h1>
-                            <p class="text-sm sm:text-base text-gray-400">Total {{ $histories->total() }} manga</p>
+                            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-black dark:text-white mb-1 sm:mb-2">Reading History</h1>
+                            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Total {{ $histories->total() }} manga</p>
                         </div>
 
                         <div class="flex flex-wrap gap-2 sm:gap-3">
@@ -45,7 +45,7 @@
 
             {{-- Success Message --}}
             @if (session('success'))
-                <div class="bg-green-500/20 border border-green-500/50 text-green-400 px-4 sm:px-6 py-3 sm:py-4 rounded-lg mb-4 sm:mb-6 backdrop-blur-sm animate-fade-in">
+                <div class="bg-green-500/20 border border-green-500/50 text-green-600 dark:text-green-400 px-4 sm:px-6 py-3 sm:py-4 rounded-lg mb-4 sm:mb-6 backdrop-blur-sm animate-fade-in">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -59,7 +59,7 @@
             @if($histories->count() > 0)
                 <div class="space-y-3 sm:space-y-4">
                     @foreach($histories as $history)
-                        <div class="bg-gray-900/50 border border-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-amber-500/50 hover:bg-gray-900/70 transition-all duration-300 group">
+                        <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-amber-500/50 hover:bg-slate-300/70 hover:dark:bg-gray-900/70 transition-all duration-300 group shadow-sm shadow-black/10">
                             <div class="flex gap-3 sm:gap-4">
                                 {{-- Thumbnail --}}
                                 <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
@@ -80,7 +80,7 @@
                                     <div>
                                         <a href="{{ route('manga.detail', $history->manga->slug) }}" 
                                            class="block group/title">
-                                            <h3 class="text-white font-bold text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 group-hover/title:text-amber-400 transition-colors line-clamp-2 sm:line-clamp-1">
+                                            <h3 class="text-black dark:text-white font-bold text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 group-hover/title:text-amber-400 transition-colors line-clamp-2 sm:line-clamp-1">
                                                 {{ $history->manga->title }}
                                             </h3>
                                         </a>
@@ -88,7 +88,7 @@
                                         {{-- Genres - Hide on very small screens --}}
                                         <div class="hidden xs:flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                                             @foreach($history->manga->genres->take(3) as $genre)
-                                                <span class="px-2 py-0.5 sm:py-1 bg-amber-500/20 text-amber-400 rounded text-xs font-medium">
+                                                <span class="px-2 py-0.5 sm:py-1 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded text-xs font-medium">
                                                     {{ $genre->name }}
                                                 </span>
                                             @endforeach
@@ -104,7 +104,7 @@
                                             </svg>
                                             <span class="font-semibold">Ch {{ $history->chapter_number }}</span>
                                             @if($history->last_page > 1)
-                                                <span class="text-gray-500 hidden sm:inline">(Hal {{ $history->last_page }})</span>
+                                                <span class="text-gray-600 dark:text-gray-500 hidden sm:inline">(Hal {{ $history->last_page }})</span>
                                             @endif
                                         </a>
                                         
@@ -173,8 +173,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Belum Ada History</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Mulai baca manga untuk menyimpan history bacaanmu</p>
+                    <h2 class="text-xl sm:text-2xl font-bold text-black dark:text-white mb-2 sm:mb-3">Belum Ada History</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Mulai baca manga untuk menyimpan history bacaanmu</p>
                     <a href="{{ route('manga.list') }}" 
                        class="inline-block bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg transition-all hover:scale-105 text-sm sm:text-base shadow-lg shadow-amber-500/20">
                         Jelajahi Manga

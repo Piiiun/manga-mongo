@@ -1,5 +1,5 @@
 <x-layout title="Profile - MangaMongo">
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-8 px-4">
+    <div class="min-h-screen py-8 px-4">
         <div class="max-w-6xl mx-auto">
             
             {{-- Success Message --}}
@@ -10,7 +10,7 @@
             @endif
 
             {{-- Profile Card --}}
-            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-8">
+            <div class="bg-slate-10s0/50 dark:bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-8 shadow-lg shadow-black/10">
                 <div class="flex flex-col md:flex-row gap-8 items-center md:items-start scale-90 sm:scale-100">
                     
                     {{-- Profile Picture --}}
@@ -27,28 +27,28 @@
 
                     {{-- Profile Info --}}
                     <div class="flex-1 text-center md:text-left">
-                        <h1 class="text-3xl font-bold text-white mb-2">{{ $user->name }}</h1>
-                        <p class="text-gray-400 mb-4">{{ $user->email }}</p>
+                        <h1 class="text-3xl font-bold text-black dark:text-white mb-2">{{ $user->name }}</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ $user->email }}</p>
                         
                         @if($user->bio)
-                            <p class="text-gray-300 mb-6 max-w-2xl">{{ $user->bio }}</p>
+                            <p class="text-gray-500 dark:text-gray-300 mb-6 max-w-2xl">{{ $user->bio }}</p>
                         @else
-                            <p class="text-gray-500 italic mb-6">Belum ada bio</p>
+                            <p class="text-gray-700 dark:text-gray-500 italic mb-6">Belum ada bio</p>
                         @endif
 
                         {{-- Stats --}}
                         <div class="flex flex-wrap gap-6 justify-center md:justify-start mb-6">
                             <div class="text-center">
                                 <div class="text-2xl font-bold text-amber-400">{{ $readingHistories->total() }}</div>
-                                <div class="text-sm text-gray-400">Manga Dibaca</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Manga Dibaca</div>
                             </div>
                             <div class="text-center">   
                                 <div class="text-2xl font-bold text-amber-400" id="bookmark-count">0</div>
-                                <div class="text-sm text-gray-400">Bookmark</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Bookmark</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-2xl font-bold text-amber-400">{{ (int) $user->created_at->diffInDays(now()) }}</div>
-                                <div class="text-sm text-gray-400">Hari Bergabung</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Hari Bergabung</div>
                             </div>
                         </div>
 
@@ -109,9 +109,9 @@
             </div>
 
             {{-- Recent Reading History --}}
-            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6">
+            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-2xl p-6 shadow-lg shadow-black/10">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-white">Terakhir Dibaca</h2>
+                    <h2 class="text-2xl font-bold text-black dark:text-white">Terakhir Dibaca</h2>
                     @if($readingHistories->count() > 0)
                         <a href="{{ route('history.index') }}" 
                            class="text-amber-400 hover:text-amber-300 flex gap-2 items-center justify-center text-sm font-semibold">
@@ -139,10 +139,10 @@
                                             Ch. {{ $history->chapter_number }}
                                         </div>
                                     </div>
-                                    <h3 class="text-white text-sm font-semibold line-clamp-2 mb-1">
+                                    <h3 class="text-black dark:text-white text-sm font-semibold line-clamp-2 mb-1">
                                         {{ $history->manga->title }}
                                     </h3>
-                                    <p class="text-gray-400 text-xs">
+                                    <p class="text-gray-600 dark:text-gray-400 text-xs">
                                         {{ $history->last_read_at->diffForHumans() }}
                                     </p>
                                 </a>
@@ -182,8 +182,8 @@
         });
     </script>
     <style>
-        /* Smooth animations */
-        button, a {
+        /* Smooth animations - Scoped to profile page only */
+        .max-w-6xl button, .max-w-6xl a {
             position: relative;
             transform-style: preserve-3d;
         }

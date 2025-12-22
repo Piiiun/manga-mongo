@@ -1,10 +1,10 @@
 <x-layout>
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-10">
+    <div class="min-h-screen py-10">
         <div class="max-w-6xl mx-auto px-4">
             {{-- Header --}}
             <div class="mb-6">
                 <a href="{{ route('admin.manga.index') }}" 
-                   class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
+                   class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors inline-flex items-center gap-2 mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -13,8 +13,8 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
                     {{-- Header Info --}}
                     <div>
-                        <h1 class="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Chapters: {{ $manga->title }}</h1>
-                        <p class="text-sm sm:text-base text-gray-400">Total: <span class="font-semibold text-amber-400">{{ $chapters->total() }}</span> chapters</p>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-black dark:text-white mb-1 sm:mb-2">Chapters: {{ $manga->title }}</h1>
+                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Total: <span class="font-semibold text-amber-400">{{ $chapters->total() }}</span> chapters</p>
                     </div>
 
                     {{-- Action Buttons --}}
@@ -76,39 +76,39 @@
             @endif
 
             {{-- Chapters Table --}}
-            <div class="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
+            <div class="bg-slate-100/70 dark:bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-gray-800/50">
+                        <thead class="bg-slate-200 dark:bg-gray-800/50">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Chapter #</th>
-                                <th class="px-12 py-4 text-left text-xs font-medium text-gray-400 uppercase">Title</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Pages</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Published</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase">Views</th>
-                                <th class="px-6 py-4 text-right text-xs font-medium text-gray-400 uppercase">Actions</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Chapter #</th>
+                                <th class="px-12 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Title</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Pages</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Published</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Views</th>
+                                <th class="px-6 py-4 text-right text-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-800">
                             @forelse($chapters as $chapter)
-                                <tr class="hover:bg-gray-800/30 transition-colors">
+                                <tr class="hover:bg-gray-300 hover:dark:bg-gray-800/30 transition-colors">
                                     <td class="px-6 py-4">
-                                        <span class="text-white font-bold text-lg">{{ $chapter->number }}</span>
+                                        <span class="text-black dark:text-white font-bold text-lg">{{ $chapter->number }}</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-white">
+                                        <div class="text-black dark:text-white">
                                             {{ $chapter->title ?? '-' }}
                                         </div>
-                                        <div class="text-gray-400 text-sm">{{ $chapter->slug }}</div>
+                                        <div class="text-gray-600 dark:text-gray-400 text-sm">{{ $chapter->slug }}</div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-gray-300">{{ $chapter->pages_count }} pages</span>
+                                        <span class="text-gray-500 dark:text-gray-300">{{ $chapter->pages_count }} pages</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-gray-300">{{ $chapter->published_at->format('d M Y') }}</span>
+                                        <span class="text-gray-500 dark:text-gray-300">{{ $chapter->published_at->format('d M Y') }}</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-gray-300">{{ number_format($chapter->views ?? 0) }}</span>
+                                        <span class="text-gray-500 dark:text-gray-300">{{ number_format($chapter->views ?? 0) }}</span>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-end gap-2">
@@ -120,7 +120,7 @@
                                                 @csrf
                                                 <button type="submit" 
                                                         onclick="return confirm('Sync Chapter {{ $chapter->number }}? Folder: manga/pages/{{ $manga->slug }}/chapter-{{ $chapter->number }}')"
-                                                        class="p-2 text-gray-400 hover:text-green-400 transition-colors">
+                                                        class="p-2 text-gray-600 dark:text-gray-400 hover:text-green-400 transition-colors">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                                     </svg>
@@ -129,7 +129,7 @@
                                             
                                             <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}" 
                                                target="_blank"
-                                               class="p-2 text-gray-400 hover:text-blue-400 transition-colors" 
+                                               class="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-400 transition-colors" 
                                                title="View">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -137,7 +137,7 @@
                                                 </svg>
                                             </a>
                                             <a href="{{ route('admin.manga.chapters.edit', [$manga, $chapter]) }}" 
-                                               class="p-2 text-gray-400 hover:text-amber-400 transition-colors" 
+                                               class="p-2 text-gray-600 dark:text-gray-400 hover:text-amber-400 transition-colors" 
                                                title="Edit">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -150,7 +150,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" 
-                                                        class="p-2 text-gray-400 hover:text-red-400 transition-colors" 
+                                                        class="p-2 text-gray-600 dark:text-gray-400 hover:text-red-400 transition-colors" 
                                                         title="Delete">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -183,7 +183,7 @@
 
     <style>
         /* Smooth animations */
-        button, a {
+        .max-w-6xl button, .max-w-6xl a {
             position: relative;
             transform-style: preserve-3d;
         }

@@ -46,7 +46,7 @@
     <x-nav-bottom />
     @endunless
 
-    <main class="pt-[65px] min-h-screen">
+    <main class="{{ $noPadding ? '' : 'pt-[65px]' }} min-h-screen">
         {{ $slot }}
     </main>
 

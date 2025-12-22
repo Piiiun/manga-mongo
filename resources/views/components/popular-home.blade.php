@@ -49,13 +49,13 @@
     {{-- List Populer Manga --}}
     <div class="space-y-3 sm:space-y-4">
         @foreach ($popularMangas as $index => $manga)
-            <article class="group relative flex items-center gap-3 sm:gap-4 overflow-hidden rounded-xl bg-white/90 dark:bg-gray-800/80 backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md shadow-black/50 hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/10 border border-gray-200 dark:border-transparent">
+            <article class="group relative flex items-center gap-3 sm:gap-4 overflow-hidden rounded-xl bg-white/90 dark:bg-gray-800/80 backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md shadow-black/50 hover:shadow-md hover:shadow-amber-500/20 dark:hover:shadow-amber-500/10 border border-gray-200 dark:border-transparent">
                 
                 {{-- Background Image Overlay --}}
-                <div class="absolute inset-0 dark:opacity-50 transition-opacity group-hover:opacity-30 dark:group-hover:opacity-40">
+                <div class="absolute inset-0 dark:opacity-50 transition-opacity group-hover:opacity-70 dark:group-hover:opacity-40">
                     <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
-                         class="h-full w-full object-cover blur-sm">
+                         class="h-full w-full object-cover blur-xs">
                     <div class="absolute inset-0 bg-linear-to-r from-white via-white/95 to-white/30 dark:from-gray-900 dark:via-gray-900/90 dark:to-gray-900/20"></div>
                 </div>
 

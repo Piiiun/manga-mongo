@@ -1,8 +1,8 @@
 <x-layout title="Edit Profile - MangaMongo">
-    <div class="min-h-screen bg-linear-to-b from-slate-950 to-transparent py-8 px-4">
+    <div class="min-h-screen py-6 px-4">
         <div class="max-w-3xl mx-auto">
             
-            <div class="mb-6">
+            <div class="mb-3">
                 <a href="{{ route('profile.show') }}" 
                    class="inline-flex items-center text-amber-400 hover:text-amber-300 transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -12,8 +12,8 @@
                 </a>
             </div>
 
-            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
-                <h1 class="text-3xl font-bold text-white mb-8">Edit Profile</h1>
+            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+                <h1 class="text-3xl font-bold text-black dark:text-white mb-8">Edit Profile</h1>
 
                 @if ($errors->any())
                     <div class="bg-red-500/20 border border-red-500 text-red-400 px-6 py-4 rounded-lg mb-6">
@@ -31,7 +31,7 @@
 
                     {{-- Profile Picture Section --}}
                     <div class="mb-8">
-                        <label class="block text-gray-300 font-semibold mb-4">Foto Profile</label>
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-4">Foto Profile</label>
                         
                         <div class="flex items-center gap-6">
                             <img id="preview-image" 
@@ -62,7 +62,7 @@
                                     @endif
                                 </div>
                                 
-                                <p class="text-gray-400 text-sm mt-2">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
                                     JPG, PNG. Max 2MB
                                 </p>
                             </div>
@@ -71,33 +71,33 @@
 
                     {{-- Name --}}
                     <div class="mb-6">
-                        <label class="block text-gray-300 font-semibold mb-2">Nama</label>
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-2">Nama</label>
                         <input type="text" 
                                name="name" 
                                value="{{ old('name', $user->name) }}" 
                                required
-                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                               class="w-full px-4 py-3 rounded-lg bg-slate-300 dark:bg-gray-800 text-black dark:text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
                     </div>
 
                     {{-- Email --}}
                     <div class="mb-6">
-                        <label class="block text-gray-300 font-semibold mb-2">Email</label>
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-2">Email</label>
                         <input type="email" 
                                name="email" 
                                value="{{ old('email', $user->email) }}" 
                                required
-                               class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
+                               class="w-full px-4 py-3 rounded-lg bg-slate-300 dark:bg-gray-800 text-black dark:text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">
                     </div>
 
                     {{-- Bio --}}
                     <div class="mb-8">
-                        <label class="block text-gray-300 font-semibold mb-2">Bio</label>
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-2">Bio</label>
                         <textarea name="bio" 
                                   rows="4"
                                   maxlength="500"
                                   placeholder="Ceritakan tentang dirimu..."
-                                  class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">{{ old('bio', $user->bio) }}</textarea>
-                        <p class="text-gray-400 text-sm mt-1">Max 500 karakter</p>
+                                  class="w-full px-4 py-3 rounded-lg bg-slate-300 dark:bg-gray-800 text-black dark:text-white border border-gray-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50">{{ old('bio', $user->bio) }}</textarea>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Max 500 karakter</p>
                     </div>
 
                     {{-- Submit Button --}}

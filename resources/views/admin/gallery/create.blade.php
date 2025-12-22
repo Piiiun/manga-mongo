@@ -1,11 +1,11 @@
 <x-layout title="Upload Gallery - {{ $manga->title }}">
-    <div class="min-h-screen bg-gradient-to-b from-slate-950 to-transparent py-8 px-4">
+    <div class="min-h-screen py-8 px-4">
         <div class="max-w-4xl mx-auto">
             
             {{-- Back Button --}}
             <div class="mb-6">
                 <a href="{{ route('manga.detail', $manga->slug) }}#gallery" 
-                   class="inline-flex items-center text-amber-400 hover:text-amber-300 transition-colors">
+                   class="inline-flex items-center text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -13,10 +13,10 @@
                 </a>
             </div>
 
-            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
                 <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-white mb-2">Upload Gallery</h1>
-                    <p class="text-gray-400">{{ $manga->title }}</p>
+                    <h1 class="text-3xl font-bold text-black dark:text-white mb-2">Upload Gallery</h1>
+                    <p class="text-gray-600 dark:text-gray-400">{{ $manga->title }}</p>
                 </div>
 
                 @if (session('success'))
@@ -40,55 +40,55 @@
 
                     {{-- Type Selection --}}
                     <div class="mb-6">
-                        <label class="block text-gray-300 font-semibold mb-3">Tipe Gambar</label>
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-3">Tipe Gambar</label>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
                             <label class="relative cursor-pointer">
                                 <input type="radio" name="type" value="cover" required class="peer sr-only">
-                                <div class="p-4 bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-400 peer-checked:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-4 bg-gray-300 dark:bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
+                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-600 dark:text-gray-400 peer-checked:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-300">Cover</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Cover</span>
                                 </div>
                             </label>
 
                             <label class="relative cursor-pointer">
                                 <input type="radio" name="type" value="artwork" class="peer sr-only">
-                                <div class="p-4 bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-4 bg-gray-300 dark:bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
+                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-300">Artwork</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Artwork</span>
                                 </div>
                             </label>
 
                             <label class="relative cursor-pointer">
                                 <input type="radio" name="type" value="promotional" class="peer sr-only">
-                                <div class="p-4 bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-4 bg-gray-300 dark:bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
+                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-300">Promo</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Promo</span>
                                 </div>
                             </label>
 
                             <label class="relative cursor-pointer">
                                 <input type="radio" name="type" value="fanart" class="peer sr-only">
-                                <div class="p-4 bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-4 bg-gray-300 dark:bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
+                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-300">Fanart</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Fanart</span>
                                 </div>
                             </label>
 
                             <label class="relative cursor-pointer">
                                 <input type="radio" name="type" value="other" class="peer sr-only">
-                                <div class="p-4 bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-4 bg-gray-300 dark:bg-gray-800 border-2 border-gray-700 rounded-lg text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all">
+                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-300">Lainnya</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Lainnya</span>
                                 </div>
                             </label>
                         </div>
@@ -96,7 +96,7 @@
 
                     {{-- File Upload --}}
                     <div class="mb-6">
-                        <label class="block text-gray-300 font-semibold mb-3">
+                        <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-3">
                             Pilih Gambar (Max 10 gambar)
                         </label>
                         <div class="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center hover:border-amber-500 transition-colors">

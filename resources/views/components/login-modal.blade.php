@@ -10,9 +10,9 @@
 {{-- Login Required Modal --}}
 <div id="{{ $id }}"
     onclick="{{ $closeFunction ? $closeFunction . '()' : 'window.closeLoginModal(\'' . $id . '\')' }}"
-    class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
+    class="hidden fixed inset-0 bg-white/50 dark:bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
     <div class="min-h-screen px-4 py-8 flex items-center justify-center">
-        <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 max-w-md w-full">
+        <div class="bg-slate-100 dark:bg-gray-900 rounded-xl border border-gray-800 p-6 max-w-md w-full">
             <div class="text-center">
                 {{-- Icon --}}
                 <div class="mx-auto w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mb-4">
@@ -27,21 +27,21 @@
                 </div>
                 
                 {{-- Title --}}
-                <h3 class="text-xl font-bold text-white mb-2">{{ $title }}</h3>
+                <h3 class="text-xl font-bold text-black dark:text-white mb-2">{{ $title }}</h3>
                 
                 {{-- Description --}}
-                <p class="text-gray-400 text-sm mb-6">
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">
                     {{ $description }}
                 </p>
                 
                 {{-- Actions --}}
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ route($loginRoute) }}" 
-                       class="flex-1 bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-3 rounded-lg transition-colors text-center">
+                       class="flex-1 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-3 rounded-lg transition-colors text-center">
                         Login Sekarang
                     </a>
                     <button onclick="{{ $closeFunction ? $closeFunction . '()' : 'window.closeLoginModal(\'' . $id . '\')' }}" 
-                            class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-6 py-3 rounded-lg transition-colors">
+                            class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700text-white px-6 py-3 rounded-lg transition-colors">
                         Tutup
                     </button>
                 </div>

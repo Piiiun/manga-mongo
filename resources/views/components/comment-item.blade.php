@@ -147,7 +147,12 @@
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mt-2">
                                 <label class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                     <input type="checkbox" name="is_spoiler" value="1" {{ $comment->is_spoiler ? 'checked' : '' }} class="rounded w-4 h-4 accent-amber-500">
-                                    <span>Tandai sebagai spoiler</span>
+                                    <span class="flex items-center gap-1">
+                                        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Tandai sebagai spoiler
+                                    </span>
                                 </label>
                                 
                                 <div class="flex gap-2">

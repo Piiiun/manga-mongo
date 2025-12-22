@@ -61,7 +61,7 @@
         {{-- Genres dengan styling lebih menarik --}}
         <div class="flex flex-wrap gap-2">
             @foreach ($manga->genres->take(3) as $genre)
-                <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-100 to-yellow-100 dark:from-amber-500/20 dark:to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-700 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-500/30 transition-all hover:ring-amber-300 hover:dark:ring-amber-500/60">
+                <span class="md:rounded-full rounded-sm bg-linear-to-r from-amber-500/20 to-yellow-500/20 md:px-3 px-1 md:py-1 py-0.5 md:text-xs text-[10px] font-semibold text-amber-600 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-500/30 transition-all hover:ring-amber-400 hover:dark:ring-amber-500/60">
                     <a href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
                         {{ $genre->name }}
                     </a>
@@ -74,7 +74,7 @@
 
         <div class="space-y-2.5">
             @foreach ($manga->chapters->take(3) as $chapter)
-                <div class="group/chapter rounded-lg bg-black/10 dark:bg-white/10 sm:bg-black/10 sm:dark:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all hover:bg-black/15 hover:dark:bg-white/10">
+                <div class="group/chapter rounded-lg bg-black/10 dark:bg-white/10 sm:bg-black/5 sm:dark:bg-white/5 px-2 md:px-3 py-1 md:py-2 transition-all  hover:bg-black/10 hover:dark:bg-white/10">
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <a href="{{ route('manga.read', [$manga->slug, $chapter->number]) }}"
                            class="flex items-center gap-2 text-sm font-semibold text-amber-500 dark:text-amber-400 transition-colors hover:text-amber-400 hover:dark:text-amber-300">

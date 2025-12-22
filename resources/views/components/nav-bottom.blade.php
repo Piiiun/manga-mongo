@@ -1,8 +1,8 @@
-<nav class="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-r from-[#0B1020] via-[#111827]/95 to-[#0B1020] backdrop-blur-lg text-white border-t border-white/10 md:hidden safe-area-bottom">
-    <div class="grid grid-cols-5 text-center py-2 px-2 max-w-lg mx-auto">
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-r from-slate-50 via-white/95 to-slate-100 dark:from-[#0B1020] dark:via-[#111827]/95 dark:to-[#0B1020] backdrop-blur-lg text-black dark:text-white border-t border-white/10 md:hidden safe-area-bottom">
+    <div class="grid grid-cols-5 text-center py-1.5 px-2 max-w-lg mx-auto">
 
         {{-- Home --}}
-        <a href="{{ route('home') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('home') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+        <a href="{{ route('home') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('home') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -12,7 +12,7 @@
         </a>
 
         {{-- Bookmark --}}
-        <a href="{{ route('bookmark.index') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 relative {{ request()->routeIs('bookmark.*') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+        <a href="{{ route('bookmark.index') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 relative {{ request()->routeIs('bookmark.*') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -23,7 +23,7 @@
         </a>
 
         {{-- List --}}
-        <a href="{{ route('manga.list') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('manga.list') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+        <a href="{{ route('manga.list') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('manga.list') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -34,7 +34,7 @@
 
         {{-- History (hanya untuk user login) --}}
         @auth
-        <a href="{{ route('history.index') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('history.*') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+        <a href="{{ route('history.index') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('history.*') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -46,14 +46,14 @@
 
         {{-- Account / Login --}}
         @auth
-            <a href="{{ route('profile.show') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+            <a href="{{ route('profile.show') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
                 <div class="w-6 h-6 rounded-full bg-linear-to-br from-gray-400 to-yellow-400 flex items-center justify-center text-black font-bold text-[10px] uppercase">
                     {{ substr(Auth::user()->name, 0, 1) }}
                 </div>
                 <span class="text-[10px] font-medium">Profile</span>
             </a>
         @else
-            <a href="{{ route('login') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('login', 'register') ? 'text-gray-400 bg-gray-400/10' : 'text-gray-400 hover:text-white active:scale-95' }}">
+            <a href="{{ route('login') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('login', 'register') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"

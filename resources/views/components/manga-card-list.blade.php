@@ -34,7 +34,7 @@
         {{-- Genres --}}
         <div class="flex flex-wrap gap-1.5 mb-2">
             @foreach($manga->genres->take(2) as $genre)
-                <span class="bg-gray-800/70 text-gray-300 text-xs md:px-2 px-1 md:py-1 py-0.5 rounded-md border border-gray-700">
+                <span class="bg-slate-300 dark:bg-gray-800/70 text-gray-600 dark:text-gray-300 text-xs md:px-2 px-1 md:py-1 py-0.5 rounded-md border border-gray-700">
                     {{ $genre->name }}
                 </span>
             @endforeach

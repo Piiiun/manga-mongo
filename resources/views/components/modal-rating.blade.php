@@ -1,12 +1,12 @@
 @props(['manga'])
 {{-- Rating Modal --}}
 @auth
-<div id="rating-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
+<div id="rating-modal" class="hidden fixed inset-0 bg-white/50 dark:bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
     <div class="min-h-screen px-4 py-8 flex items-center justify-center">
-        <div class="bg-gray-900 rounded-2xl border border-gray-800 p-8 max-w-2xl w-full">
+        <div class="bg-slate-300 dark:bg-gray-900 rounded-2xl border border-gray-800 p-8 max-w-2xl w-full">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">Rate {{ $manga->title }}</h3>
-                <button onclick="closeRatingModal()" class="text-gray-400 hover:text-white transition-colors">
+                <h3 class="text-2xl font-bold text-black dark:text-white">Rate {{ $manga->title }}</h3>
+                <button onclick="closeRatingModal()" class="text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -22,7 +22,7 @@
                 
                 {{-- Star Rating --}}
                 <div class="mb-6">
-                    <label class="block text-gray-300 font-semibold mb-3">Your Rating</label>
+                    <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-3">Your Rating</label>
                     <div class="flex items-center gap-2">
                         <div class="flex gap-1" id="star-rating">
                             @for($i = 1; $i <= 10; $i++)
@@ -37,30 +37,30 @@
                                 </button>
                             @endfor
                         </div>
-                        <span id="rating-value" class="text-3xl font-bold text-white ml-2">
+                        <span id="rating-value" class="text-3xl font-bold text-black dark:text-white ml-2">
                             {{ $userRating ? $userRating->rating : 0 }}/10
                         </span>
                     </div>
                     <input type="hidden" name="rating" id="rating-input" value="{{ $userRating ? $userRating->rating : 0 }}" required>
-                    <p class="text-gray-400 text-sm mt-2">1 = Terrible, 10 = Masterpiece</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">1 = Terrible, 10 = Masterpiece</p>
                 </div>
 
                 {{-- Review (Optional) --}}
                 <div class="mb-6">
-                    <label class="block text-gray-300 font-semibold mb-2">
+                    <label class="block text-gray-600 dark:text-gray-300 font-semibold mb-2">
                         Review (Optional)
                     </label>
                     <textarea name="review" 
                               rows="4"
                               placeholder="Bagikan pendapat kamu tentang manga ini..."
-                              class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none">{{ $userRating ? $userRating->review : '' }}</textarea>
+                              class="w-full px-4 py-3 bg-slate-400 dark:bg-gray-800 border ring-gray-700 rounded-lg text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none">{{ $userRating ? $userRating->review : '' }}</textarea>
                     <p class="text-gray-400 text-sm mt-1">Max 1000 karakter</p>
                 </div>
 
                 {{-- Actions --}}
                 <div class="flex gap-3">
                     <button type="submit" 
-                            class="flex-1 bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-3 rounded-lg transition-colors">
+                            class="flex-1 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-3 rounded-lg transition-colors">
                         {{ $userRating ? 'Update Rating' : 'Submit Rating' }}
                     </button>
                     

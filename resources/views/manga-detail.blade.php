@@ -111,7 +111,7 @@
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($manga->genres as $genre)
                                 <a class="mb-2 sm:mb-0" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
-                                    <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
+                                    <span class="bg-slate-300 dark:bg-gray-800 hover:bg-amber-500 text-gray-600 dark:text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
                                         {{ $genre->name }}
                                     </span>
                                 </a>
@@ -156,7 +156,7 @@
                                 <p class="text-2xl font-bold text-black dark:text-white">{{ $manga->bookmarks->count() }}</p>
                                 <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Bookmark</p>
                             </div>
-                            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors shadow-md shadow-black/20"
+                            <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center cursor-pointer hover:ring-1 hover:ring-amber-500 transition-colors shadow-md shadow-black/20"
                                 onclick="showRatings()">
                                 <div class="flex items-center justify-center gap-1">
                                     <p class="text-2xl font-bold text-black dark:text-white">{{ $manga->average_rating ?? 0 }}</p>
@@ -229,7 +229,12 @@
                             </div>
 
                             {{-- Chapter Items --}}
-                            <div id="chapterList" class="space-y-2 max-h-[600px] overflow-y-auto pr-2">
+                            <div id="chapterList" class="space-y-2 max-h-[600px] overflow-y-auto pr-2 
+                                [&::-webkit-scrollbar]:w-2
+                                [&::-webkit-scrollbar-track]:bg-gray-100
+                                [&::-webkit-scrollbar-thumb]:bg-gray-300
+                                dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                                dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                                 @foreach($manga->chapters->sortByDesc('number') as $chapter)
                                     <div class="chapter-item" 
                                          data-number="{{ $chapter->number }}" 
@@ -308,12 +313,17 @@
                                     <div class="flex items-center justify-between mt-3">
                                         <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
                                             <input type="checkbox" name="is_spoiler" value="1" class="rounded-2xl border-gray-600 text-amber-500 focus:ring-amber-500 accent-amber-500">
-                                            Tandai sebagai spoiler
+                                            <span class="flex items-center gap-1">
+                                                <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                Tandai sebagai spoiler
+                                            </span>
                                         </label>
                                         
                                         <button type="submit"
                                             class="px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base
-                                                bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
+                                                bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
                                             <span class="hidden sm:block">Kirim Komentar</span>
                                             <svg class="sm:hidden w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
                                                 <path d="M11.5003 12H5.41872M5.24634 12.7972L4.24158 15.7986C3.69128 17.4424 3.41613 18.2643 3.61359 18.7704C3.78506 19.21 4.15335 19.5432 4.6078 19.6701C5.13111 19.8161 5.92151 19.4604 7.50231 18.7491L17.6367 14.1886C19.1797 13.4942 19.9512 13.1471 20.1896 12.6648C20.3968 12.2458 20.3968 11.7541 20.1896 11.3351C19.9512 10.8529 19.1797 10.5057 17.6367 9.81135L7.48483 5.24303C5.90879 4.53382 5.12078 4.17921 4.59799 4.32468C4.14397 4.45101 3.77572 4.78336 3.60365 5.22209C3.40551 5.72728 3.67772 6.54741 4.22215 8.18767L5.24829 11.2793C5.34179 11.561 5.38855 11.7019 5.407 11.8459C5.42338 11.9738 5.42321 12.1032 5.40651 12.231C5.38768 12.375 5.34057 12.5157 5.24634 12.7972Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
@@ -322,8 +332,8 @@
                                     </div>
                                 </form>
                             @else
-                                <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
-                                    <p class="text-gray-400 mb-4">Login untuk berkomentar</p>
+                                <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
+                                    <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar</p>
                                     <a href="{{ route('login') }}" 
                                     class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
                                         Login
@@ -459,7 +469,7 @@
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($manga->genres as $genre)
                                             <a class="" href="{{ route('manga.list', ['genre' => $genre->slug]) }}">
-                                                <span class="bg-gray-800 hover:bg-amber-500 text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
+                                                <span class="bg-slate-300 dark:bg-gray-800 hover:bg-amber-500 text-gray-600 dark:text-gray-300 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-gray-700 hover:border-amber-500 transition-colors cursor-pointer">
                                                     {{ $genre->name }}
                                                 </span>
                                             </a>
@@ -540,7 +550,7 @@
                                 </div>
 
                                 {{-- Lightbox Modal --}}
-                                <div id="lightbox" class="fixed inset-0 bg-black/80
+                                <div id="lightbox" class="hidden fixed inset-0 bg-black/80
                                  z-50 flex items-center justify-center p-4">
                                     <button onclick="closeLightbox()" 
                                             class="absolute top-4 right-4 text-white hover:text-amber-400 transition-colors z-10">
