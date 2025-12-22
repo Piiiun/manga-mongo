@@ -47,8 +47,10 @@
         {{-- Account / Login --}}
         @auth
             <a href="{{ route('profile.show') }}" class="flex flex-col items-center gap-1 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-gray-700 dark:text-gray-400 bg-gray-400/10' : 'text-gray-600 dark:text-gray-400 hover:text-black hover:dark:text-white active:scale-95' }}">
-                <div class="w-6 h-6 rounded-full bg-linear-to-br from-gray-400 to-yellow-400 flex items-center justify-center text-black font-bold text-[10px] uppercase">
-                    {{ substr(Auth::user()->name, 0, 1) }}
+                <div class="w-6 h-6 rounded-full ring-2 ring-black/20 dark:ring-white/20 overflow-hidden">
+                        <img src="{{ Auth::user()->profile_picture_url }}" 
+                            class="w-full h-full object-cover" 
+                            alt="{{ Auth::user()->name }}">
                 </div>
                 <span class="text-[10px] font-medium">Profile</span>
             </a>
