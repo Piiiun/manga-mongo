@@ -1,0 +1,5 @@
+1. pastikan env ada kalau belum "copy .env.example .env"
+2. npm run build
+3. php artisan serve
+4. pastikan config cloudflared tunnel mengarah ke http://127.0.0.1:8000/
+5. jalankan di terminal "cloudflared run manga-tunnel"
