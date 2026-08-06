@@ -283,6 +283,7 @@
                             alt="Page {{ $page->page_number }}"
                             class="w-full h-auto"
                             loading="lazy"
+                            draggable="false"
                             onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
                         >
                     </div>
