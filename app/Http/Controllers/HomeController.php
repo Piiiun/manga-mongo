@@ -2,32 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Manga;
+use App\Services\MangaApiService;
+use App\Support\ApiManga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function __construct(
+        protected MangaApiService $api,
+    ) {}
+
     public function index()
     {
-        $featuredMangas = Manga::with('genres')
-            ->orderBy('created_at', 'desc')
-            ->take(8)
-            ->get();
+        // --- Featured: manga rekomendasi untuk hero-slider ---
+        $recommendedResponse = $this->api->getRecommended(1) ?? [];
+        $recommendedList = $recommendedResponse['data'] ?? [];
 
-        $latestMangas = Manga::with([
-                'genres',
-                'chapters' => fn ($q) => $q->orderByDesc('number')->take(3),
-            ])
-            ->orderByDesc('updated_at')   // atau 'created_at'
-            ->take(8)
-            ->get();
+        $featuredMangas = collect($recommendedList)
+            ->take(5)
+            ->map(fn ($item) => ApiManga::fromList($item))
+            ->values();
 
-        $popularMangas = Manga::with(['genres', 'chapters'])
-            ->withCount('chapters')
-            ->orderBy('views', 'desc')
+        // --- Latest: manga terbaru ---
+        $latestResponse = $this->api->getLatest(1) ?? [];
+        $latestList = $latestResponse['data'] ?? [];
+
+        $latestMangas = collect($latestList)
+            ->take(8)
+            ->map(fn ($item) => ApiManga::fromList($item))
+            ->values();
+
+        // --- Popular: manga populer ---
+        $popularResponse = $this->api->getPopular(1) ?? [];
+        $popularList = $popularResponse['data'] ?? [];
+
+        $popularMangas = collect($popularList)
             ->take(6)
-            ->get();
+            ->map(fn ($item) => ApiManga::fromList($item))
+            ->values();
+
+        // --- Data dari database lokal (user-specific) ---
 
         $lastHistory = null;
         if (Auth::check()) {

@@ -3,7 +3,7 @@
 <article class="group relative flex flex-col overflow-hidden rounded-md md:rounded-2xl bg-linear-to-br from-card-light to-card-2-light dark:from-card dark:to-card-2 shadow-xl shadow-black/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-800/80 hover:dark:shadow-amber-500/20 border border-black/10 dark:border-white/5">
     {{-- COVER + BADGE --}}
     <div class="relative overflow-hidden">
-        <img src="{{ asset('storage/manga/' . $manga->cover_image) }}"
+        <img src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}"
              alt="{{ $manga->title }}"
              class="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-110">
         
@@ -85,7 +85,7 @@
         <div class="h-px bg-linear-to-r from-transparent dark:via-gray-700 to-transparent"></div>
 
         <div class="space-y-2.5">
-            @foreach ($manga->chapters->take(3) as $chapter)
+            @foreach ($manga->chapters->take(1) as $chapter)
                 <div
                     class="
                         group/chapter rounded-lg
@@ -93,7 +93,6 @@
                         sm:bg-black/5 sm:dark:bg-white/5
                         px-2 md:px-3 py-1 md:py-2
                         transition-all hover:bg-black/10 hover:dark:bg-white/10
-                        {{ $loop->iteration === 3 ? 'hidden sm:block' : '' }}
                     "
                 >
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
