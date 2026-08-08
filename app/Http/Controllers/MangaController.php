@@ -2,73 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
 use App\Models\Manga;
+use App\Services\MangaApiService;
+use App\Support\ApiManga;
+use App\Support\ApiPaginator;
 use Illuminate\Http\Request;
 
 class MangaController extends Controller
 {
+    public function __construct(
+        protected MangaApiService $api,
+    ) {}
+
     public function index(Request $request)
     {
-        // Default sorting: A-Z
-        $sort = $request->get('sort', 'a-z');
+        $page = (int) $request->get('page', 1);
         $search = $request->get('search');
+        $sort = $request->get('sort', 'latest');
         $status = $request->get('status');
         $type = $request->get('type');
-        $genres = Genre::orderBy('name')->get();
-        $query = Manga::with('genres');
+        $genre = $request->get('genre');
 
-        // Search
+        // Map sort Blade → API
+        $sortMap = [
+            'a-z' => 'title',
+            'latest' => 'latest',
+            'popular' => 'popular',
+            'rating' => 'rating',
+        ];
+        $apiSort = $sortMap[$sort] ?? 'latest';
+
+        // Ambil daftar genre untuk dropdown filter
+        $genresResponse = $this->api->getGenres() ?? [];
+        $genres = collect($genresResponse['data'] ?? [])
+            ->map(fn ($g) => (object) $g);
+
+        // --- Search: endpoint terpisah ---
         if ($search) {
-            $query->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('description', 'LIKE', "%{$search}%");
+            $response = $this->api->search($search, $page) ?? [];
+            $mangas = ApiPaginator::fromResponse($response, fn ($item) => ApiManga::fromList($item));
+        }
+        // --- Advanced filter: ada genre/status/type ---
+        elseif ($genre || $status || $type || in_array($apiSort, ['popular', 'rating', 'title'])) {
+            $params = [
+                'sort' => $apiSort,
+                'page' => $page,
+            ];
+            if ($genre) {
+                $params['genre_include'] = $genre;
+            }
+            if ($status) {
+                $params['status'] = $status;
+            }
+            if ($type) {
+                $params['format'] = ucfirst($type);
+            }
+
+            $response = $this->api->advancedSearch($params) ?? [];
+            $mangas = ApiPaginator::fromResponse($response, fn ($item) => ApiManga::fromList($item));
+        }
+        // --- Default: latest manga ---
+        else {
+            $response = $this->api->getLatest($page) ?? [];
+            $mangas = ApiPaginator::fromResponse($response, fn ($item) => ApiManga::fromList($item));
         }
 
-        // Filter by status
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        // Filter by type
-        if ($type) {
-            $query->where('type', $type);
-        }
-
-        // Filter berdasarkan genre
-        if ($request->filled('genre')) {
-            $query->whereHas('genres', function ($q) use ($request) {
-                $q->where('slug', $request->genre);
-            });
-        }
-
-        // Sorting
-        switch ($sort) {
-            case 'latest':
-                $query->latest();
-                break;
-            case 'popular':
-                $query->orderBy('views', 'desc');
-                break;
-            case 'rating':
-                $query->orderBy('rating', 'desc');
-                break;
-            case 'a-z':
-            default:
-                $query->orderBy('title', 'asc');
-                break;
-        }
-
-        // Pagination dengan 12 item per halaman
-        $mangas = $query->paginate(15);
-
+        // Preserve query params on pagination links
         $mangas->appends($request->except('page'));
-        $queryParams = array_filter($request->except('page'), function($value) {
-            return !is_null($value) && $value !== '';
-        });
-        $queryString = $queryParams ? '&' . http_build_query($queryParams) : '';
 
-        // Untuk view
-        return view('manga', compact('mangas', 'genres', 'queryString'));
+        return view('manga', compact('mangas', 'genres'));
     }
 
     public function show($slug)

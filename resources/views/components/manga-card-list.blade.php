@@ -3,13 +3,13 @@
 <article class="group relative bg-linear-to-b from-card-light to-card-2-light dark:from-gray-900/80 dark:to-gray-950/80 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-500 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/20 shadow-md shadow-black/50">
     
     {{-- Hot Badge --}}
-    @if($manga->rating >= 8.0)
+    @if(($manga->rating ?? 0) >= 8.0)
         <div class="absolute top-3 left-3 z-10">
             <span class="bg-linear-to-r from-red-600 to-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
                 Hot
             </span>
         </div>
-    @elseif($manga->created_at->diffInDays(now()) <= 3)
+    @elseif($manga->created_at && $manga->created_at->diffInDays(now()) <= 3)
         <div class="absolute top-3 left-3 z-10">
             <span class="bg-linear-to-r from-blue-600 to-blue-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
                 New
@@ -20,7 +20,7 @@
     {{-- COVER IMAGE --}}
     <div class="relative aspect-3/4 overflow-hidden">
         <img 
-            src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
+            src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}" 
             alt="{{ $manga->title }}"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         >

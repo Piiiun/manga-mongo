@@ -45,6 +45,28 @@ class MangaApiService
     }
 
     /**
+     * Search mangas by query.
+     */
+    public function search(string $query, int $page = 1)
+    {
+        $url = "{$this->baseUrl}/search/" . urlencode($query) . "?page={$page}";
+        return $this->request($url);
+    }
+
+    /**
+     * Advanced search with filter parameters.
+     *
+     * Supported params: genre_include, genre_exclude, genre_include_mode,
+     * genre_exclude_mode, format, type, status, author, artist, sort, page
+     */
+    public function advancedSearch(array $params)
+    {
+        $query = http_build_query(array_filter($params, fn ($v) => !is_null($v) && $v !== ''));
+        $url = "{$this->baseUrl}/advanced-search?{$query}";
+        return $this->request($url);
+    }
+
+    /**
      * Get manga detail by manga_id.
      */
     public function getDetail(string $mangaId)
@@ -68,6 +90,15 @@ class MangaApiService
     public function getRead(string $mangaId)
     {
         $url = "{$this->baseUrl}/read/{$mangaId}";
+        return $this->request($url);
+    }
+
+    /**
+     * Get list of all genres.
+     */
+    public function getGenres()
+    {
+        $url = "{$this->baseUrl}/genres";
         return $this->request($url);
     }
 
