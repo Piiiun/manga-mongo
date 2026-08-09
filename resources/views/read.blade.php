@@ -5,6 +5,55 @@
     :noPadding="true    "
 >
     <div id="reader-area" class="min-h-screen">
+        @php
+            // Ensure safe variables when $chapter comes from external API (stdClass)
+            if (!isset($chapterCommentsCount)) {
+                $chapterCommentsCount = (is_object($chapter) && method_exists($chapter, 'comments'))
+                    ? $chapter->comments()->topLevel()->count()
+                    : 0;
+            }
+
+            if (!isset($comments)) {
+                if (is_object($chapter) && method_exists($chapter, 'comments')) {
+                    $comments = $chapter->comments()
+                        ->topLevel()
+                        ->with(['user', 'replies.user', 'replies.replies.user'])
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                } else {
+                    $comments = collect();
+                }
+            }
+
+            if (!isset($chapterPagesCount)) {
+                if (isset($chapterPages)) {
+                    $chapterPagesCount = is_countable($chapterPages) ? count($chapterPages) : (method_exists($chapterPages, 'count') ? $chapterPages->count() : 0);
+                } else {
+                    $chapterPagesCount = (is_object($chapter) && method_exists($chapter, 'pages'))
+                        ? $chapter->pages->count()
+                        : (isset($chapter->pages) && is_countable($chapter->pages) ? count($chapter->pages) : 0);
+                }
+            }
+
+            // Determine a safe published date string using API field names if necessary
+            if (!isset($chapterPublishedAt)) {
+                $chapterPublishedAt = '';
+                try {
+                    if (isset($chapter->published_at) && $chapter->published_at) {
+                        $chapterPublishedAt = \Carbon\Carbon::parse($chapter->published_at)->format('d M Y');
+                    } elseif (isset($chapter->release_date) && $chapter->release_date) {
+                        $chapterPublishedAt = \Carbon\Carbon::parse($chapter->release_date)->format('d M Y');
+                    } elseif (isset($chapter->created_at) && $chapter->created_at) {
+                        $chapterPublishedAt = \Carbon\Carbon::parse($chapter->created_at)->format('d M Y');
+                    }
+                } catch (\Exception $e) {
+                    // fallback to raw values if parsing fails
+                    if (isset($chapter->published_at)) $chapterPublishedAt = $chapter->published_at;
+                    elseif (isset($chapter->release_date)) $chapterPublishedAt = $chapter->release_date;
+                    elseif (isset($chapter->created_at)) $chapterPublishedAt = $chapter->created_at;
+                }
+            }
+        @endphp
         {{-- Header Navigation --}}
         <div id="reader-topbar" class="sticky top-0 z-50 bg-slate-100/90 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
             <div class="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2">
@@ -59,10 +108,10 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                             </svg>
-                            @if($chapter->comments()->topLevel()->count() > 0)
-                            <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] rounded-full w-3 h-3 flex items-center justify-center">
-                                {{ $chapter->comments()->topLevel()->count() }}
-                            </span>
+                            @if($chapterCommentsCount > 0)
+                                <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] rounded-full w-3 h-3 flex items-center justify-center">
+                                    {{ $chapterCommentsCount }}
+                                </span>
                             @endif
                         </button>
                         <button class="p-1.5 hover:bg-gray-800 rounded text-gray-600 dark:text-gray-300 hover:text-black hover:dark:text-white transition-colors" title="Fullscreen">
@@ -122,9 +171,9 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                                 </svg>
-                                @if($chapter->comments()->topLevel()->count() > 0)
+                                @if($chapterCommentsCount > 0)
                                 <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[10px] rounded-full w-3.5 h-3.5 flex items-center justify-center">
-                                    {{ $chapter->comments()->topLevel()->count() }}
+                                    {{ $chapterCommentsCount }}
                                 </span>
                                 @endif
                             </button>
@@ -166,7 +215,7 @@
                 {{-- Info Chapter --}}
                 <div class="mt-2 sm:mt-3 text-center px-2">
                     <p class="text-gray-700 dark:text-gray-400 text-xs sm:text-sm">
-                        Halaman <span id="current-page">1</span> dari {{ $chapter->pages->count() }} - Dibaca Selama: <span id="reading-time">0m 0s</span>
+                        Halaman <span id="current-page">1</span> dari {{ $chapterPagesCount }} - Dibaca Selama: <span id="reading-time">0m 0s</span>
                     </p>
                 </div>
             </div>
@@ -190,8 +239,8 @@
             <h2 class="text-lg md:text-xl font-semibold text-amber-400">
                 Chapter {{ $chapter->number }}
             </h2>
-            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                <span>{{ $chapter->published_at ? $chapter->published_at->format('d M Y') : $chapter->created_at->format('d M Y') }}</span>
+                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                <span>{{ $chapterPublishedAt }}</span>
                 <span class="mx-2">•</span>
                 <span>{{ number_format($chapter->views ?? 0) }} views</span>
             </div>
@@ -255,8 +304,22 @@
                                                     - {{ $chap->title }}
                                                 @endif
                                             </h4>
+                                            @php
+                                                $chapDateText = '';
+                                                try {
+                                                    if (isset($chap->published_at) && $chap->published_at) {
+                                                        $chapDateText = \Carbon\Carbon::parse($chap->published_at)->diffForHumans();
+                                                    } elseif (isset($chap->release_date) && $chap->release_date) {
+                                                        $chapDateText = \Carbon\Carbon::parse($chap->release_date)->diffForHumans();
+                                                    } elseif (isset($chap->created_at) && $chap->created_at) {
+                                                        $chapDateText = \Carbon\Carbon::parse($chap->created_at)->diffForHumans();
+                                                    }
+                                                } catch (\Exception $e) {
+                                                    $chapDateText = isset($chap->published_at) ? $chap->published_at : (isset($chap->created_at) ? $chap->created_at : '');
+                                                }
+                                            @endphp
                                             <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">
-                                                {{ $chap->published_at ? $chap->published_at->diffForHumans() : $chap->created_at->diffForHumans() }}
+                                                {{ $chapDateText }}
                                             </p>
                                         </div>
                                         @if($chap->id === $chapter->id)
@@ -276,16 +339,33 @@
         {{-- Manga Pages - Vertical Scroll --}}
         <div class="max-w-4xl mx-auto px-2 pb-16 sm:pb-24">
             <div id="manga-pages" class="space-y-0">
-                @foreach($chapter->pages->sortBy('page_number') as $page)
+                @foreach( isset($chapterPages) ? $chapterPages : (is_object($chapter) && method_exists($chapter, 'pages') ? $chapter->pages->sortBy('page_number') : (isset($chapter->pages) ? collect($chapter->pages) : collect())) as $page)
+                    @php
+                        $pageSrc = (isset($page->image_path) && str_starts_with($page->image_path, 'http'))
+                            ? $page->image_path
+                            : (isset($page->image_path) ? asset('storage/' . $page->image_path) : '');
+                    @endphp
                     <div class="manga-page w-full" data-page="{{ $page->page_number }}">
                         <img 
-                            src="{{ asset('storage/' . $page->image_path) }}" 
+                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                            data-src="{{ $pageSrc }}"
                             alt="Page {{ $page->page_number }}"
-                            class="w-full h-auto"
+                            class="lazyload w-full h-auto"
                             loading="lazy"
+                            decoding="async"
                             draggable="false"
                             onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
                         >
+                        <noscript>
+                            <img
+                                src="{{ $pageSrc }}"
+                                alt="Page {{ $page->page_number }}"
+                                class="w-full h-auto"
+                                decoding="async"
+                                draggable="false"
+                                onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
+                            >
+                        </noscript>
                     </div>
                 @endforeach
             </div>
@@ -417,7 +497,7 @@
                         </svg>
                         Diskusi Chapter {{ $chapter->number }}
                     </h2>
-                    <span class="text-xs sm:text-sm font-normal text-gray-600 dark:text-gray-400">({{ $chapter->comments()->topLevel()->count() }} komentar)</span>
+                    <span class="text-xs sm:text-sm font-normal text-gray-600 dark:text-gray-400">({{ $chapterCommentsCount }} komentar)</span>
                 </div>
 
                 {{-- Success/Error Messages --}}
@@ -435,12 +515,12 @@
 
                 {{-- Comment Form --}}
                 @auth
-                    <form method="POST" action="{{ route('comments.store.chapter', [$manga, $chapter]) }}" class="mb-8">
-                        @csrf
-                        
-                        <div class="flex gap-3">
-                            {{-- Form --}}
-                            <div class="flex-1">
+                    @if(isset($chapterIsLocal) && $chapterIsLocal)
+                        <form method="POST" action="{{ route('comments.store.chapter', [$manga, $chapter]) }}" class="mb-8">
+                            @csrf
+                            <div class="flex gap-3">
+                                {{-- Form --}}
+                                <div class="flex-1">
                                 <textarea name="content" 
                                         rows="3" 
                                         required
@@ -470,27 +550,21 @@
                             </div>
                         </div>
                     </form>
-                @else
-                    <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
-                        <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
-                        <a href="{{ route('login') }}" 
-                        class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
-                            Login Sekarang
-                        </a>
-                    </div>
+                    @else
+                        <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
+                            <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
+                            <a href="{{ route('login') }}" 
+                            class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                                Login Sekarang
+                            </a>
+                        </div>
+                    @endif
                 @endauth
 
-                {{-- Comments List --}}
-                @php
-                    $comments = $chapter->comments()
-                        ->topLevel()
-                        ->with(['user', 'replies.user', 'replies.replies.user'])
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-                @endphp
+                {{-- Comments List (prepared earlier) --}}
 
                 {{-- Sort Options --}}
                 @if($comments->count() > 0)
@@ -543,4 +617,46 @@
     </div>
 
     <x-share-modal :manga="$manga"/>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const lazyImages = [].slice.call(document.querySelectorAll('img.lazyload'));
+
+            if ('IntersectionObserver' in window) {
+                const lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            const dataSrc = img.getAttribute('data-src');
+                            if (dataSrc) {
+                                img.src = dataSrc;
+                                img.removeAttribute('data-src');
+                            }
+                            img.classList.remove('lazyload');
+                            lazyImageObserver.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '200px 0px',
+                    threshold: 0.01
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                lazyImages.forEach(function(lazyImage) {
+                    const dataSrc = lazyImage.getAttribute('data-src');
+                    if (dataSrc) {
+                        lazyImage.src = dataSrc;
+                        lazyImage.removeAttribute('data-src');
+                    }
+                    lazyImage.classList.remove('lazyload');
+                });
+            }
+        });
+    </script>
+    @endpush
 </x-layout>
