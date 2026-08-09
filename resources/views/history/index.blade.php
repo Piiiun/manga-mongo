@@ -59,13 +59,23 @@
             @if($histories->count() > 0)
                 <div class="space-y-3 sm:space-y-4">
                     @foreach($histories as $history)
+                        @php
+                            $historyTitle = $history->title ?? $history->manga?->title ?? 'Unknown';
+                            $historySlug = $history->api_manga_id ?? $history->manga?->slug;
+                            $historyCover = $history->cover_image ?? $history->manga?->cover_image;
+                            if ($historyCover && !\Illuminate\Support\Str::startsWith($historyCover, ['http://', 'https://'])) {
+                                $historyCover = asset('storage/manga/' . $historyCover);
+                            }
+                            $historyCover = $historyCover ?: asset('images/no-cover.jpg');
+                            $historyGenres = $history->manga?->genres ?? collect();
+                        @endphp
                         <div class="bg-slate-100/50 dark:bg-gray-900/50 border border-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-amber-500/50 hover:bg-slate-300/70 hover:dark:bg-gray-900/70 transition-all duration-300 group shadow-sm shadow-black/10">
                             <div class="flex gap-3 sm:gap-4">
                                 {{-- Thumbnail --}}
-                                <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
+                                <a href="{{ route('manga.read', [$historySlug, $history->chapter_number]) }}" 
                                    class="shrink-0 relative overflow-hidden rounded-lg group/thumb">
-                                    <img src="{{ asset('storage/manga/' . $history->manga->cover_image) }}" 
-                                         alt="{{ $history->manga->title }}"
+                                    <img src="{{ $historyCover }}" 
+                                         alt="{{ $historyTitle }}"
                                          class="w-16 h-24 sm:w-20 sm:h-28 object-cover transition-transform duration-300 group-hover/thumb:scale-110">
                                     <div class="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/30 transition-colors flex items-center justify-center">
                                         <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white opacity-0 group-hover/thumb:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,16 +88,16 @@
                                 {{-- Info --}}
                                 <div class="flex-1 min-w-0 flex flex-col justify-between">
                                     <div>
-                                        <a href="{{ route('manga.detail', $history->manga->slug) }}" 
+                                        <a href="{{ route('manga.detail', $historySlug) }}" 
                                            class="block group/title">
                                             <h3 class="text-black dark:text-white font-bold text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 group-hover/title:text-amber-400 transition-colors line-clamp-2 sm:line-clamp-1">
-                                                {{ $history->manga->title }}
+                                                {{ $historyTitle }}
                                             </h3>
                                         </a>
 
                                         {{-- Genres - Hide on very small screens --}}
                                         <div class="hidden xs:flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                                            @foreach($history->manga->genres->take(3) as $genre)
+                                            @foreach($historyGenres->take(3) as $genre)
                                                 <span class="px-2 py-0.5 sm:py-1 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded text-xs font-medium">
                                                     {{ $genre->name }}
                                                 </span>
@@ -97,7 +107,7 @@
 
                                     {{-- Chapter Info --}}
                                     <div class="flex flex-col gap-1.5 sm:gap-2">
-                                        <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
+                                        <a href="{{ route('manga.read', [$historySlug, $history->chapter_number]) }}" 
                                            class="inline-flex items-center gap-1.5 sm:gap-2 text-amber-400 hover:text-amber-300 transition-colors text-xs sm:text-sm">
                                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -119,7 +129,7 @@
 
                                 {{-- Actions - Desktop --}}
                                 <div class="hidden sm:flex flex-col gap-2 ml-2">
-                                    <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
+                                    <a href="{{ route('manga.read', [$historySlug, $history->chapter_number]) }}" 
                                        class="px-4 lg:px-5 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg transition-all hover:scale-105 text-center text-sm whitespace-nowrap shadow-lg shadow-amber-500/20">
                                         Lanjut Baca
                                     </a>
@@ -138,7 +148,7 @@
 
                             {{-- Actions - Mobile --}}
                             <div class="sm:hidden flex gap-2 mt-3 pt-3 border-t border-gray-800">
-                                <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
+                                <a href="{{ route('manga.read', [$historySlug, $history->chapter_number]) }}" 
                                    class="flex-1 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg transition-all text-center text-sm shadow-lg shadow-amber-500/20">
                                     Lanjut Baca
                                 </a>

@@ -215,7 +215,6 @@ class BookmarkController extends Controller
             'user_id' => $userId,
             'manga_id' => $manga->id,
             'api_manga_id' => $manga->slug,
-            'slug' => $manga->slug,
             'title' => $manga->title,
             'cover_image' => $manga->cover_image,
             'author' => $manga->author,
@@ -239,7 +238,7 @@ class BookmarkController extends Controller
 
         return [
             'id' => (string) ($bookmark->api_manga_id ?? $bookmark->manga_id),
-            'slug' => $bookmark->slug ?? $bookmark->manga?->slug,
+            'slug' => $bookmark->api_manga_id ?? $bookmark->manga?->slug,
             'title' => $bookmark->title ?? $bookmark->manga?->title,
             'cover_image' => $coverImage ?: asset('images/no-cover.jpg'),
             'author' => $bookmark->author ?? $bookmark->manga?->author,

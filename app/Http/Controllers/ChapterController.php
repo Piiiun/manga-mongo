@@ -56,7 +56,15 @@ class ChapterController extends Controller
             $chapter->increment('views');
 
             if (Auth::check()) {
-                Auth::user()->trackReading($manga->id, $chapter->number);
+                Auth::user()->trackReading($manga->id, $chapter->number, 1, [
+                    'api_manga_id' => $manga->slug,
+                    'title' => $manga->title,
+                    'cover_image' => $manga->cover_image,
+                    'author' => $manga->author,
+                    'status' => $manga->status,
+                    'type' => $manga->type,
+                    'rating' => $manga->rating,
+                ]);
             }
 
             $chapterIsLocal = true;
@@ -135,6 +143,22 @@ class ChapterController extends Controller
         $chapterCommentsCount = 0;
         $comments = collect([]);
         $chapterIsLocal = false;
+
+        // Track reading history for API-backed manga
+        if (Auth::check()) {
+            $mangaId = isset($manga->id) && is_numeric($manga->id) ? (int) $manga->id : null;
+            $meta = [
+                'api_manga_id' => $manga->slug,
+                'title' => $manga->title,
+                'cover_image' => $manga->cover_image ?? ($mangaData['cover_portrait'] ?? $mangaData['cover'] ?? null),
+                'author' => $manga->author ?? null,
+                'status' => $manga->status ?? ($mangaData['status'] ?? null),
+                'type' => $manga->type ?? null,
+                'rating' => $manga->rating ?? (isset($mangaData['rating']) ? (float) $mangaData['rating'] : null),
+            ];
+
+            Auth::user()->trackReading($mangaId, $apiChapter->number, 1, $meta);
+        }
 
         return view('read', compact(
             'manga',

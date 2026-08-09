@@ -10,7 +10,6 @@ class Bookmark extends Model
         'user_id',
         'manga_id',
         'api_manga_id',
-        'slug',
         'title',
         'cover_image',
         'author',

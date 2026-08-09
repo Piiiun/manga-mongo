@@ -126,12 +126,21 @@
                 @if($readingHistories->count() > 0)
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         @foreach($readingHistories as $history)
+                            @php
+                                $hTitle = $history->title ?? $history->manga?->title ?? 'Unknown';
+                                $hSlug = $history->api_manga_id ?? $history->manga?->slug;
+                                $hCover = $history->cover_image ?? $history->manga?->cover_image;
+                                if ($hCover && !\Illuminate\Support\Str::startsWith($hCover, ['http://', 'https://'])) {
+                                    $hCover = asset('storage/manga/' . $hCover);
+                                }
+                                $hCover = $hCover ?: asset('images/no-cover.jpg');
+                            @endphp
                             <div class="group relative">
-                                <a href="{{ route('manga.read', [$history->manga->slug, $history->chapter_number]) }}" 
+                                <a href="{{ route('manga.read', [$hSlug, $history->chapter_number]) }}" 
                                    class="block">
                                     <div class="relative aspect-2/3 rounded-lg overflow-hidden bg-gray-800 mb-2">
-                                        <img src="{{ asset('storage/manga/' . $history->manga->cover_image) }}" 
-                                             alt="{{ $history->manga->title }}"
+                                        <img src="{{ $hCover }}" 
+                                             alt="{{ $hTitle }}"
                                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                         
                                         {{-- Progress Badge --}}
@@ -140,7 +149,7 @@
                                         </div>
                                     </div>
                                     <h3 class="text-black dark:text-white text-sm font-semibold line-clamp-2 mb-1">
-                                        {{ $history->manga->title }}
+                                        {{ $hTitle }}
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-xs">
                                         {{ $history->last_read_at->diffForHumans() }}
