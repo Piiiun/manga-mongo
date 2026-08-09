@@ -17,7 +17,10 @@ class ChapterController extends Controller
         // Try to find local Manga by slug first (DB-backed)
         $manga = Manga::where('slug', $manga_slug)->first();
 
-        if ($manga) {
+        // Only use local DB chapters if the manga has chapters in DB.
+        // Manga records created from bookmarking have no local chapters,
+        // so we fall through to the API-backed path.
+        if ($manga && Chapter::where('manga_id', $manga->id)->exists()) {
             // Local DB-backed chapter
             $chapter = Chapter::where('manga_id', $manga->id)
                 ->where('number', $chapter_number)
@@ -77,13 +80,17 @@ class ChapterController extends Controller
 
         $mangaData = $detail['data'];
 
-        // Minimal manga object for view compatibility
-        $manga = (object) [
-            'id' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
-            'title' => $mangaData['title'] ?? ($mangaData['name'] ?? 'Unknown'),
-            'slug' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
-            'description' => $mangaData['description'] ?? null,
-        ];
+        // Use local Manga model if available (e.g. from bookmark), otherwise build minimal object
+        if ($manga) {
+            $manga->description = $manga->description ?? ($mangaData['description'] ?? null);
+        } else {
+            $manga = (object) [
+                'id' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
+                'title' => $mangaData['title'] ?? ($mangaData['name'] ?? 'Unknown'),
+                'slug' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
+                'description' => $mangaData['description'] ?? null,
+            ];
+        }
 
         // Fetch all chapters via API and map to simple objects
         $allChaptersRaw = $service->getAllChapters($manga->slug);
