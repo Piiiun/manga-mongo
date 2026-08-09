@@ -39,7 +39,7 @@ export function initBookmarkFeature() {
                 bookmarkIds = (synced.bookmarks && synced.bookmarks.length
                     ? synced.bookmarks
                     : await fetchUserBookmarks()
-                ).map((id) => Number(id));
+                );
             } else {
                 bookmarkIds = getBookmarkIds();
             }
@@ -52,8 +52,8 @@ export function initBookmarkFeature() {
         if (!buttons.length) return;
 
         buttons.forEach((button) => {
-            const mangaId = Number(button.dataset.mangaId);
-            if (Number.isNaN(mangaId)) return;
+            const mangaId = button.dataset.mangaId;
+            if (!mangaId) return;
 
             updateBookmarkUI(button, bookmarkIds.includes(mangaId));
 
@@ -72,7 +72,7 @@ export function initBookmarkFeature() {
                             : bookmarkIds.filter((id) => id !== mangaId);
                     } else {
                         const exists = bookmarkIds.includes(mangaId);
-                        bookmarkIds = exists ? removeBookmark(mangaId).map((b) => Number(b.manga_id)) : addBookmark(mangaId).map((b) => Number(b.manga_id));
+                        bookmarkIds = exists ? removeBookmark(mangaId).map((b) => b.manga_id) : addBookmark(mangaId).map((b) => b.manga_id);
                     }
 
                     updateBookmarkUI(button, bookmarkIds.includes(mangaId));

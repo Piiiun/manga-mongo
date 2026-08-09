@@ -76,12 +76,38 @@ class MangaApiService
     }
 
     /**
-     * Get chapter list by manga_id.
+     * Get chapter list by manga_id (supports pagination).
      */
-    public function getChapters(string $mangaId)
+    public function getChapters(string $mangaId, int $page = 1)
     {
-        $url = "{$this->baseUrl}/chapters/{$mangaId}";
+        $url = "{$this->baseUrl}/chapters/{$mangaId}?page={$page}";
         return $this->request($url);
+    }
+
+    /**
+     * Get ALL chapters for a manga by fetching every page.
+     *
+     * @return array<int, array>
+     */
+    public function getAllChapters(string $mangaId): array
+    {
+        $all = [];
+        $page = 1;
+
+        do {
+            $response = $this->getChapters($mangaId, $page);
+            if (!$response) {
+                break;
+            }
+
+            $data = $response['data'] ?? [];
+            $all = array_merge($all, $data);
+
+            $totalPages = $response['pagination']['total_pages'] ?? 1;
+            $page++;
+        } while ($page <= $totalPages);
+
+        return $all;
     }
 
     /**

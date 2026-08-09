@@ -26,6 +26,22 @@ class ApiDate
         return $this->carbon?->diffForHumans();
     }
 
+    /**
+     * Expose underlying Carbon instance for sorting / comparisons.
+     */
+    public function toCarbon(): ?Carbon
+    {
+        return $this->carbon;
+    }
+
+    /**
+     * Unix timestamp — used by Blade data-date attribute for sorting.
+     */
+    public function timestamp(): ?int
+    {
+        return $this->carbon?->getTimestamp();
+    }
+
     public function __toString(): string
     {
         return (string) $this->carbon ?? '';

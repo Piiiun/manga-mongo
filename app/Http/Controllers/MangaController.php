@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manga;
 use App\Services\MangaApiService;
 use App\Support\ApiManga;
+use App\Support\ApiMangaDetail;
 use App\Support\ApiPaginator;
 use Illuminate\Http\Request;
 
@@ -75,14 +76,18 @@ class MangaController extends Controller
 
     public function show($slug)
     {
-        // Cari manga berdasarkan slug
-        $manga = Manga::with(['genres', 'chapters.pages'])
-            ->withCount('bookmarks')
-            ->where('slug', $slug)
-            ->firstOrFail();
+        // Ambil detail manga dari API Shinigami
+        $detailResponse = $this->api->getDetail($slug);
 
-        // Increment views
-        $manga->increment('views');
+        if (!$detailResponse || !isset($detailResponse['data'])) {
+            abort(404, 'Manga tidak ditemukan');
+        }
+
+        // Ambil semua chapter dari API (mendukung pagination)
+        $chapters = $this->api->getAllChapters($slug);
+
+        // Buat DTO ApiMangaDetail dari response API
+        $manga = ApiMangaDetail::fromDetail($detailResponse['data'], $chapters);
 
         // Return view detail
         return view('manga-detail', compact('manga'));
