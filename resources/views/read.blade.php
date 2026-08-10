@@ -346,18 +346,16 @@
                             : (isset($page->image_path) ? asset('storage/' . $page->image_path) : '');
                     @endphp
                     <div class="manga-page w-full" data-page="{{ $page->page_number }}">
-                        <div class="relative w-full" style="aspect-ratio: 2 / 3;">
-                            <img 
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                                data-src="{{ $pageSrc }}"
-                                alt="Page {{ $page->page_number }}"
-                                class="lazyload absolute inset-0 w-full h-full object-contain"
-                                loading="lazy"
-                                decoding="async"
-                                draggable="false"
-                                onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
-                            >
-                        </div>
+                        <img 
+                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                            data-src="{{ $pageSrc }}"
+                            alt="Page {{ $page->page_number }}"
+                            class="lazyload w-full h-auto"
+                            loading="lazy"
+                            decoding="async"
+                            draggable="false"
+                            onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
+                        >
                         <noscript>
                             <img
                                 src="{{ $pageSrc }}"
@@ -489,134 +487,29 @@
             </button>
         </div>
 
-        {{-- Comment Section --}}
-        <div id="comments-section" class="max-w-4xl mx-auto px-4 mt-12 mb-24">
-            <div class="bg-slate-200/50 dark:bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-                <div class="sm:flex items-center justify-between mb-2 sm:mb-6">
-                    <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white flex items-center gap-2">
-                        <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {{-- Comment Button (opens modal) --}}
+        <div class="max-w-4xl mx-auto px-4 mt-8 mb-16">
+            <button onclick="window.openCommentsModal()"
+                    class="w-full flex items-center justify-between gap-3 bg-slate-200/50 dark:bg-gray-900/50 border border-gray-800 hover:border-amber-500/50 rounded-xl p-4 transition-colors group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                         </svg>
-                        Diskusi Chapter {{ $chapter->number }}
-                    </h2>
-                    <span class="text-xs sm:text-sm font-normal text-gray-600 dark:text-gray-400">({{ $chapterCommentsCount }} komentar)</span>
-                </div>
-
-                {{-- Success/Error Messages --}}
-                @if (session('success'))
-                    <div class="bg-green-500/20 border border-green-500 text-green-400 px-4 py-3 rounded-lg mb-4">
-                        {{ session('success') }}
                     </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-4">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                {{-- Comment Form --}}
-                @auth
-                    <form method="POST" action="{{ route('comments.store.chapter', [$manga->slug, $chapter->number]) }}" class="mb-8">
-                        @csrf
-                        <input type="hidden" name="chapter_number" value="{{ $chapter->number }}">
-                        <div class="flex gap-3">
-                            {{-- Form --}}
-                            <div class="flex-1">
-                                <textarea name="content" 
-                                        rows="3" 
-                                        required
-                                        maxlength="1000"
-                                        placeholder="Bagaimana pendapat kamu tentang chapter ini?"
-                                        class="w-full px-4 py-3 bg-gray-300 dark:bg-gray-800 border border-gray-700 rounded-lg text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
-                                
-                                <div class="flex items-center justify-between mt-1 sm:mt-3">
-                                    <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer mb-2 sm:mb-0">
-                                        <input type="checkbox" name="is_spoiler" value="1" class="rounded border-gray-600 text-amber-500 focus:ring-amber-500">
-                                        <span class="flex items-center gap-1">
-                                            <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            Tandai sebagai spoiler
-                                        </span>
-                                    </label>
-                                    
-                                    <button type="submit" 
-                                            class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-2xl sm:rounded-lg transition-colors">
-                                        <span class="hidden sm:block">Kirim Komentar</span>
-                                        <svg class="sm:hidden w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
-                                            <path d="M11.5003 12H5.41872M5.24634 12.7972L4.24158 15.7986C3.69128 17.4424 3.41613 18.2643 3.61359 18.7704C3.78506 19.21 4.15335 19.5432 4.6078 19.6701C5.13111 19.8161 5.92151 19.4604 7.50231 18.7491L17.6367 14.1886C19.1797 13.4942 19.9512 13.1471 20.1896 12.6648C20.3968 12.2458 20.3968 11.7541 20.1896 11.3351C19.9512 10.8529 19.1797 10.5057 17.6367 9.81135L7.48483 5.24303C5.90879 4.53382 5.12078 4.17921 4.59799 4.32468C4.14397 4.45101 3.77572 4.78336 3.60365 5.22209C3.40551 5.72728 3.67772 6.54741 4.22215 8.18767L5.24829 11.2793C5.34179 11.561 5.38855 11.7019 5.407 11.8459C5.42338 11.9738 5.42321 12.1032 5.40651 12.231C5.38768 12.375 5.34057 12.5157 5.24634 12.7972Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                @else
-                    <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
-                        <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
-                        <a href="{{ route('login') }}" 
-                        class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
-                            Login Sekarang
-                        </a>
-                    </div>
-                @endauth
-
-                {{-- Comments List (prepared earlier) --}}
-
-                {{-- Sort Options --}}
-                @if($comments->count() > 0)
-                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-800">
-                        <h3 class="text-lg font-semibold text-black dark:text-white">
-                            Semua Komentar ({{ $comments->count() }})
-                        </h3>
-                        
-                        <select class="bg-slate-200 dark:bg-gray-800 border border-gray-700 text-black dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                                onchange="window.sortComments && window.sortComments(this.value)">
-                            <option value="newest">Terbaru</option>
-                            <option value="oldest">Terlama</option>
-                            <option value="most-liked">Paling Disukai</option>
-                        </select>
-                    </div>
-                    
-                    <div id="comments-container" class="space-y-4">
-                        @foreach($comments as $comment)
-                            <x-comment-item :comment="$comment" :manga="$manga" />
-                        @endforeach
-                    </div>
-                @else
-                    <div class="text-center py-12">
-                        <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                        <p class="text-gray-600 dark:text-gray-400 text-lg mb-2">Belum ada komentar</p>
-                        <p class="text-gray-400 dark:text-gray-500 text-sm">Jadilah yang pertama berkomentar tentang chapter ini!</p>
-                    </div>
-                @endif
-            </div>
-
-            {{-- Info Tips --}}
-            <div class="mt-6 bg-slate-300/30 dark:bg-gray-900/30 border border-gray-800 rounded-lg p-4">
-                <div class="flex items-start gap-3">
-                    <svg class="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        <p class="font-semibold text-gray-700 dark:text-gray-300 mb-1">Tips Berkomentar:</p>
-                        <ul class="space-y-1 list-disc list-inside">
-                            <li>Gunakan tag spoiler jika membahas plot penting</li>
-                            <li>Hormati pendapat pembaca lain</li>
-                            <li>Jangan spam atau post link berbahaya</li>
-                        </ul>
+                    <div class="text-left">
+                        <p class="text-black dark:text-white font-semibold text-sm sm:text-base">Diskusi Chapter {{ $chapter->number }}</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{{ $chapterCommentsCount }} komentar</p>
                     </div>
                 </div>
-            </div>
+                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-amber-400 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
         </div>
     </div>
 
+    <x-chapter-comments-modal :comments="$comments" :manga="$manga" :chapter="$chapter" :chapterCommentsCount="$chapterCommentsCount" />
     <x-share-modal :manga="$manga"/>
 
     @push('scripts')
