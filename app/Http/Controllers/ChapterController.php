@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manga;
 use App\Models\Chapter;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\MangaApiService;
@@ -28,13 +29,20 @@ class ChapterController extends Controller
                     'pages' => function ($query) {
                         $query->orderBy('page_number', 'asc');
                     },
-                    'comments' => function ($q) {
-                        $q->topLevel()
-                            ->with(['user', 'replies.user', 'replies.replies.user'])
-                            ->orderBy('created_at', 'desc');
-                    }
                 ])
                 ->firstOrFail();
+
+            // Load chapter comments by chapter_number (works for both local & API-backed)
+            $comments = Comment::where('manga_id', $manga->id)
+                ->forChapterNumber((int) $chapter_number)
+                ->topLevel()
+                ->with(['user', 'replies.user', 'replies.replies.user'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $chapterCommentsCount = Comment::where('manga_id', $manga->id)
+                ->forChapterNumber((int) $chapter_number)
+                ->count();
 
             // Get all chapters untuk dropdown
             $allChapters = Chapter::where('manga_id', $manga->id)
@@ -75,6 +83,8 @@ class ChapterController extends Controller
                 'allChapters',
                 'previousChapter',
                 'nextChapter',
+                'comments',
+                'chapterCommentsCount',
                 'chapterIsLocal'
             ));
         }
@@ -88,16 +98,21 @@ class ChapterController extends Controller
 
         $mangaData = $detail['data'];
 
-        // Use local Manga model if available (e.g. from bookmark), otherwise build minimal object
+        // Use local Manga model if available (e.g. from bookmark), otherwise create one
         if ($manga) {
             $manga->description = $manga->description ?? ($mangaData['description'] ?? null);
         } else {
-            $manga = (object) [
-                'id' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
-                'title' => $mangaData['title'] ?? ($mangaData['name'] ?? 'Unknown'),
-                'slug' => $mangaData['manga_id'] ?? ($mangaData['id'] ?? $manga_slug),
-                'description' => $mangaData['description'] ?? null,
-            ];
+            $manga = Manga::updateOrCreate(
+                ['slug' => $mangaData['manga_id'] ?? $manga_slug],
+                [
+                    'title' => $mangaData['title'] ?? 'Unknown',
+                    'description' => $mangaData['description'] ?? null,
+                    'cover_image' => $mangaData['cover_portrait'] ?? $mangaData['cover'] ?? null,
+                    'status' => $mangaData['status'] ?? null,
+                    'rating' => isset($mangaData['rating']) ? (float) $mangaData['rating'] : null,
+                    'views' => $mangaData['views'] ?? 0,
+                ]
+            );
         }
 
         // Fetch all chapters via API and map to simple objects
@@ -139,14 +154,22 @@ class ChapterController extends Controller
         $previousChapter = $allChapters->filter(fn ($x) => $x->number < $apiChapter->number)->sortByDesc('number')->first();
         $nextChapter = $allChapters->filter(fn ($x) => $x->number > $apiChapter->number)->sortBy('number')->first();
 
-        // API-backed chapters have no local comments; provide safe defaults
-        $chapterCommentsCount = 0;
-        $comments = collect([]);
+        // Load chapter comments from DB by chapter_number
+        $comments = Comment::where('manga_id', $manga->id)
+            ->forChapterNumber((int) $chapter_number)
+            ->topLevel()
+            ->with(['user', 'replies.user', 'replies.replies.user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $chapterCommentsCount = Comment::where('manga_id', $manga->id)
+            ->forChapterNumber((int) $chapter_number)
+            ->count();
+
         $chapterIsLocal = false;
 
         // Track reading history for API-backed manga
         if (Auth::check()) {
-            $mangaId = isset($manga->id) && is_numeric($manga->id) ? (int) $manga->id : null;
             $meta = [
                 'api_manga_id' => $manga->slug,
                 'title' => $manga->title,
@@ -157,7 +180,7 @@ class ChapterController extends Controller
                 'rating' => $manga->rating ?? (isset($mangaData['rating']) ? (float) $mangaData['rating'] : null),
             ];
 
-            Auth::user()->trackReading($mangaId, $apiChapter->number, 1, $meta);
+            Auth::user()->trackReading($manga->id, $apiChapter->number, 1, $meta);
         }
 
         return view('read', compact(

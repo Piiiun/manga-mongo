@@ -89,8 +89,37 @@ class MangaController extends Controller
         // Buat DTO ApiMangaDetail dari response API
         $manga = ApiMangaDetail::fromDetail($detailResponse['data'], $chapters);
 
+        // Ensure manga exists in DB for comments/bookmarks/history
+        $dbManga = Manga::where('slug', $manga->slug)->first();
+        if (!$dbManga) {
+            $dbManga = Manga::create([
+                'title' => $manga->title,
+                'slug' => $manga->slug,
+                'alternative_title' => $manga->alternative_title,
+                'description' => $manga->description,
+                'cover_image' => $manga->cover_image,
+                'author' => $manga->author,
+                'artist' => $manga->artist,
+                'status' => $manga->status,
+                'type' => $manga->type,
+                'rating' => $manga->rating,
+                'released_at' => $manga->release_year,
+                'views' => $manga->views,
+            ]);
+        }
+
+        // Load manga-level comments from DB (exclude chapter comments)
+        $comments = $dbManga->comments()
+            ->topLevel()
+            ->forManga()
+            ->with(['user', 'replies.user', 'replies.replies.user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $commentsCount = $dbManga->comments()->forManga()->count();
+
         // Return view detail
-        return view('manga-detail', compact('manga'));
+        return view('manga-detail', compact('manga', 'dbManga', 'comments', 'commentsCount'));
     }
 
     public function detail($slug)

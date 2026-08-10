@@ -1,4 +1,12 @@
-@props(['comment', 'level' => 0, 'manga' => null, 'chapter' => null])
+@props(['comment', 'level' => 0, 'manga' => null])
+
+@php
+    $mangaSlug = $manga instanceof \App\Models\Manga ? $manga->slug : ($manga->slug ?? null);
+    $isChapterComment = !empty($comment->chapter_number);
+    $replyRoute = $isChapterComment
+        ? route('comments.store.chapter', [$mangaSlug ?? $comment->manga?->slug, $comment->chapter_number])
+        : route('comments.store.manga', $mangaSlug ?? $comment->manga?->slug);
+@endphp
 
 <div class="comment-item {{ $level > 0 ? 'ml-1 sm:ml-2 pl-3 sm:pl-4 border-l-2 border-amber-500/30' : '' }}" data-comment-id="{{ $comment->id }}">
     <div class="flex gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-200/50 dark:bg-gray-800/30 rounded-lg {{ $comment->is_spoiler ? 'border-2 border-red-500/30' : '' }}">
@@ -99,9 +107,12 @@
             {{-- Reply Form (hidden by default) --}}
             @auth
                 <div id="reply-form-{{ $comment->id }}" class="hidden mt-3 sm:mt-4">
-                    <form method="POST" action="{{ $chapter ? route('comments.store.chapter', [$manga ?? $comment->manga, $chapter]) : route('comments.store.manga', $manga ?? $comment->manga) }}">
-                        @csrfs
+                    <form method="POST" action="{{ $replyRoute }}">
+                        @csrf
                         <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                        @if($isChapterComment)
+                            <input type="hidden" name="chapter_number" value="{{ $comment->chapter_number }}">
+                        @endif
                         
                         <textarea name="content" 
                                   rows="2" 

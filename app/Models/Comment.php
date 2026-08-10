@@ -10,6 +10,7 @@ class Comment extends Model
         'user_id',
         'manga_id',
         'chapter_id',
+        'chapter_number',
         'parent_id',
         'content',
         'is_spoiler',
@@ -71,13 +72,19 @@ class Comment extends Model
         return $query->whereNull('parent_id');
     }
 
-    // Scope untuk manga comments (bukan chapter)
+    // Scope untuk manga-level comments (bukan chapter comment)
     public function scopeForManga($query)
     {
-        return $query->whereNull('chapter_id');
+        return $query->whereNull('chapter_number');
     }
 
-    // Scope untuk chapter comments
+    // Scope untuk chapter comments berdasarkan nomor chapter
+    public function scopeForChapterNumber($query, int $chapterNumber)
+    {
+        return $query->where('chapter_number', $chapterNumber);
+    }
+
+    // Scope untuk chapter comments berdasarkan chapter_id (legacy)
     public function scopeForChapter($query, $chapterId)
     {
         return $query->where('chapter_id', $chapterId);

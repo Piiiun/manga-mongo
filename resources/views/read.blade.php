@@ -346,16 +346,18 @@
                             : (isset($page->image_path) ? asset('storage/' . $page->image_path) : '');
                     @endphp
                     <div class="manga-page w-full" data-page="{{ $page->page_number }}">
-                        <img 
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                            data-src="{{ $pageSrc }}"
-                            alt="Page {{ $page->page_number }}"
-                            class="lazyload w-full h-auto"
-                            loading="lazy"
-                            decoding="async"
-                            draggable="false"
-                            onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
-                        >
+                        <div class="relative w-full" style="aspect-ratio: 2 / 3;">
+                            <img 
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                data-src="{{ $pageSrc }}"
+                                alt="Page {{ $page->page_number }}"
+                                class="lazyload absolute inset-0 w-full h-full object-contain"
+                                loading="lazy"
+                                decoding="async"
+                                draggable="false"
+                                onerror="this.src='https://via.placeholder.com/800x1200/1f2937/9ca3af?text=Image+Not+Found'"
+                            >
+                        </div>
                         <noscript>
                             <img
                                 src="{{ $pageSrc }}"
@@ -515,12 +517,12 @@
 
                 {{-- Comment Form --}}
                 @auth
-                    @if(isset($chapterIsLocal) && $chapterIsLocal)
-                        <form method="POST" action="{{ route('comments.store.chapter', [$manga, $chapter]) }}" class="mb-8">
-                            @csrf
-                            <div class="flex gap-3">
-                                {{-- Form --}}
-                                <div class="flex-1">
+                    <form method="POST" action="{{ route('comments.store.chapter', [$manga->slug, $chapter->number]) }}" class="mb-8">
+                        @csrf
+                        <input type="hidden" name="chapter_number" value="{{ $chapter->number }}">
+                        <div class="flex gap-3">
+                            {{-- Form --}}
+                            <div class="flex-1">
                                 <textarea name="content" 
                                         rows="3" 
                                         required
@@ -550,18 +552,17 @@
                             </div>
                         </div>
                     </form>
-                    @else
-                        <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
-                            <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                            </svg>
-                            <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
-                            <a href="{{ route('login') }}" 
-                            class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
-                                Login Sekarang
-                            </a>
-                        </div>
-                    @endif
+                @else
+                    <div class="bg-slate-200 dark:bg-gray-800/50 border border-gray-700 rounded-lg p-6 text-center mb-8">
+                        <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Login untuk berkomentar dan berdiskusi dengan pembaca lain</p>
+                        <a href="{{ route('login') }}" 
+                        class="inline-block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2.5 rounded-lg transition-colors">
+                            Login Sekarang
+                        </a>
+                    </div>
                 @endauth
 
                 {{-- Comments List (prepared earlier) --}}
@@ -583,7 +584,7 @@
                     
                     <div id="comments-container" class="space-y-4">
                         @foreach($comments as $comment)
-                            <x-comment-item :comment="$comment" :manga="$manga" :chapter="$chapter" />
+                            <x-comment-item :comment="$comment" :manga="$manga" />
                         @endforeach
                     </div>
                 @else
