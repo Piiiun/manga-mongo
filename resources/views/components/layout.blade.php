@@ -20,6 +20,22 @@
 
     <meta name="theme-color" content="#020617">
 
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('theme');
+                // Default to dark unless user explicitly chose 'light'
+                if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                } else {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {
+                // ignore
+            }
+        })();
+    </script>
+
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description ?? 'Baca manga dan komik favoritmu secara online di MangaMongo.' }}">
     <meta property="og:type" content="website">

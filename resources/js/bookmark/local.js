@@ -34,15 +34,14 @@ export function getBookmarks() {
 }
 
 export function getBookmarkIds() {
-    return getBookmarks().map((item) => Number(item.manga_id));
+    return getBookmarks().map((item) => item.manga_id);
 }
 
 export function addBookmark(mangaId, meta = {}) {
-    const numericId = Number(mangaId);
     let bookmarks = readStorage();
 
-    if (!bookmarks.some((item) => Number(item.manga_id) === numericId)) {
-        bookmarks.push({ manga_id: numericId, ...meta });
+    if (!bookmarks.some((item) => item.manga_id === mangaId)) {
+        bookmarks.push({ manga_id: mangaId, ...meta });
         writeStorage(bookmarks);
     }
 
@@ -50,16 +49,14 @@ export function addBookmark(mangaId, meta = {}) {
 }
 
 export function removeBookmark(mangaId) {
-    const numericId = Number(mangaId);
-    const bookmarks = readStorage().filter((item) => Number(item.manga_id) !== numericId);
+    const bookmarks = readStorage().filter((item) => item.manga_id !== mangaId);
     writeStorage(bookmarks);
     return bookmarks;
 }
 
 export function toggleBookmark(mangaId) {
-    const numericId = Number(mangaId);
-    const exists = getBookmarkIds().includes(numericId);
-    return exists ? removeBookmark(numericId) : addBookmark(numericId);
+    const exists = getBookmarkIds().includes(mangaId);
+    return exists ? removeBookmark(mangaId) : addBookmark(mangaId);
 }
 
 export function clearBookmarks() {

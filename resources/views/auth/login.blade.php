@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black shadow shadow-amber-300 font-bold py-3 px-4 rounded-lg transition-colors">
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black shadow shadow-amber-300 font-bold py-3 px-4 rounded-lg transition-colors cursor-pointer">
                     Login
                 </button>
                 

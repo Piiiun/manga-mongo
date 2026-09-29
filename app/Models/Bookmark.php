@@ -9,6 +9,15 @@ class Bookmark extends Model
     protected $fillable = [
         'user_id',
         'manga_id',
+        'api_manga_id',
+        'title',
+        'cover_image',
+        'author',
+        'status',
+        'type',
+        'rating',
+        'description',
+        'source',
     ];
 
     public function user()

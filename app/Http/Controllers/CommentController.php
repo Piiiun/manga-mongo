@@ -11,15 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     // Store manga comment
-    public function storeManga(Request $request, Manga $manga)
+    public function storeManga(Request $request, $manga)
     {
+        $mangaModel = $this->resolveManga($manga);
+
+        if (!$mangaModel) {
+            return back()->with('error', 'Manga tidak ditemukan!');
+        }
+
         $request->validate([
-            'content' => 'required|string|max:1000',    
+            'content' => 'required|string|max:1000',
             'is_spoiler' => 'nullable|boolean',
             'parent_id' => 'nullable|exists:comments,id',
         ]);
 
-        $comment = $manga->comments()->create([
+        $mangaModel->comments()->create([
             'user_id' => Auth::id(),
             'content' => $request->content,
             'is_spoiler' => $request->boolean('is_spoiler'),
@@ -30,18 +36,41 @@ class CommentController extends Controller
     }
 
     // Store chapter comment
-    public function storeChapter(Request $request, Manga $manga, Chapter $chapter)
+    public function storeChapter(Request $request, $manga, $chapter = null)
     {
+        $mangaModel = $this->resolveManga($manga);
+
+        if (!$mangaModel) {
+            return back()->with('error', 'Manga tidak ditemukan!');
+        }
+
         $request->validate([
             'content' => 'required|string|max:1000',
             'is_spoiler' => 'nullable|boolean',
             'parent_id' => 'nullable|exists:comments,id',
+            'chapter_number' => 'nullable|integer',
         ]);
 
-        $comment = Comment::create([
+        $chapterNumber = $request->integer('chapter_number');
+        $chapterId = null;
+
+        // Try to find local chapter
+        if ($chapter) {
+            $chapterModel = $chapter instanceof Chapter
+                ? $chapter
+                : Chapter::where('manga_id', $mangaModel->id)
+                    ->where('id', $chapter)
+                    ->orWhere('number', $chapter)
+                    ->first();
+            $chapterId = $chapterModel?->id;
+            $chapterNumber = $chapterNumber ?: $chapterModel?->number;
+        }
+
+        Comment::create([
             'user_id' => Auth::id(),
-            'manga_id' => $manga->id,
-            'chapter_id' => $chapter->id,
+            'manga_id' => $mangaModel->id,
+            'chapter_id' => $chapterId,
+            'chapter_number' => $chapterNumber,
             'content' => $request->content,
             'is_spoiler' => $request->boolean('is_spoiler'),
             'parent_id' => $request->parent_id,
@@ -101,5 +130,17 @@ class CommentController extends Controller
             'liked' => $liked,
             'likes' => $comment->likes,
         ]);
+    }
+
+    /**
+     * Resolve manga from slug string or Manga model.
+     */
+    protected function resolveManga($manga): ?Manga
+    {
+        if ($manga instanceof Manga) {
+            return $manga;
+        }
+
+        return Manga::where('slug', $manga)->first();
     }
 }

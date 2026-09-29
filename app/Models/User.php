@@ -68,18 +68,29 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&size=200&background=f59e0b&color=000';
     }
 
-    public function trackReading($mangaId, $chapterNumber, $page = 1)
+    public function trackReading($mangaId, $chapterNumber, $page = 1, array $meta = [])
     {
-        return $this->readingHistories()->updateOrCreate(
+        $history = $this->readingHistories()->updateOrCreate(
             [
                 'manga_id' => $mangaId,
                 'chapter_number' => $chapterNumber,
             ],
-            [
+            array_merge([
                 'last_page' => $page,
                 'last_read_at' => now(),
-            ]
+            ], $meta)
         );
+
+        // Enforce max history entries per user — delete oldest beyond the limit
+        $count = $this->readingHistories()->count();
+        if ($count > ReadingHistory::MAX_PER_USER) {
+            $this->readingHistories()
+                ->orderBy('last_read_at', 'asc')
+                ->limit($count - ReadingHistory::MAX_PER_USER)
+                ->delete();
+        }
+
+        return $history;
     }
 
     public function getLastReadChapter($mangaId)

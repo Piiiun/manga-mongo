@@ -8,7 +8,7 @@
 
                         {{-- background blur besar (opsional) --}}
                         <div class="pointer-events-none absolute inset-0 opacity-50">
-                            <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-25 w-full h-full object-cover blur-lg scale-110">
+                            <img src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}" alt="" class="grayscale-25 w-full h-full object-cover blur-lg scale-110">
                         </div>
 
                         {{-- KONTEN KIRI --}}
@@ -74,7 +74,7 @@
                         {{-- KONTEN KANAN: COVER --}}
                         <div class="relative aspect-3/4 self-center lg:self-stretch">
                             <div class="overflow-hidden rounded-3xl shadow-xl shadow-black/40">
-                                <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
+                                <img src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}" alt="{{ $manga->title }}"
                                      class="h-88 w-full object-cover">
                             </div>
 

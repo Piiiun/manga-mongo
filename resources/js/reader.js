@@ -259,11 +259,8 @@ function initCommentSorting() {
     };
     
     window.scrollToComments = function() {
-        const commentsSection = document.querySelector('#comments-section');
-        if (commentsSection) {
-            commentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        if (window.openCommentsModal) {
+            window.openCommentsModal();
         }
     };
 }

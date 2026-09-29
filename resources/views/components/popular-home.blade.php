@@ -53,7 +53,7 @@
                 
                 {{-- Background Image Overlay --}}
                 <div class="absolute inset-0 dark:opacity-50 transition-opacity group-hover:opacity-70 dark:group-hover:opacity-40">
-                    <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
+                    <img src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
                          class="h-full w-full object-cover blur-xs">
                     <div class="absolute inset-0 bg-linear-to-r from-white via-white/95 to-white/30 dark:from-gray-900 dark:via-gray-900/90 dark:to-gray-900/20"></div>
@@ -70,7 +70,7 @@
 
                 {{-- Cover Image --}}
                 <div class="relative z-10 h-24 w-16 sm:h-32 sm:w-24 shrink-0 overflow-hidden rounded-lg shadow-lg ring-1 ring-gray-200 dark:ring-transparent">
-                    <img src="{{ asset('storage/manga/' . $manga->cover_image) }}" 
+                    <img src="{{ Str::startsWith($manga->cover_image, 'http') ? $manga->cover_image : asset('storage/manga/' . $manga->cover_image) }}" 
                          alt="{{ $manga->title }}"
                          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
                 </div>
@@ -79,13 +79,13 @@
                 <div class="relative z-10 flex flex-1 flex-col gap-1.5 sm:gap-2 py-3 sm:py-4 pr-3 sm:pr-4">
                     {{-- Title dan Badge --}}
                     <div class="flex items-start gap-2">
-                        <a href="{{ route('manga.detail', $manga->slug) }}" class="group/title flex-1">
+                        <a href="{{ $manga->slug ? route('manga.detail', $manga->slug) : '#' }}" class="group/title flex-1">
                             <h3 class="line-clamp-2 text-sm sm:text-base font-bold text-gray-900 dark:text-white transition-colors group-hover/title:text-amber-500 dark:group-hover/title:text-amber-400">
                                 {{ $manga->title }}
                             </h3>
                         </a>
                         
-                        @if ($manga->rating >= 8.0)
+                        @if (($manga->rating ?? 0) >= 8.0)
                             <span class="shrink-0 rounded bg-linear-to-r from-red-600 to-red-500 px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-bold text-white shadow-lg">
                                 HOT
                             </span>
